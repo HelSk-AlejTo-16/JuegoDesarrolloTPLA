@@ -1,0 +1,2786 @@
+fileFormatVersion: 2
+guid: a52d4d37a83c11f4b82cc048cc364645
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7698553846943754661
+    second: AnimacionAtaque_0
+  - first:
+      213: -1384786267115670631
+    second: AnimacionAtaque_1
+  - first:
+      213: -1440909034368094474
+    second: AnimacionAtaque_2
+  - first:
+      213: -3334430710447798968
+    second: AnimacionAtaque_3
+  - first:
+      213: 706324953370865555
+    second: AnimacionAtaque_4
+  - first:
+      213: 5470697476451001721
+    second: AnimacionAtaque_5
+  - first:
+      213: 7153342461837643024
+    second: AnimacionAtaque_6
+  - first:
+      213: -4440938105144044765
+    second: AnimacionAtaque_7
+  - first:
+      213: 5611227054267443402
+    second: AnimacionAtaque_8
+  - first:
+      213: 5085426105366008617
+    second: AnimacionAtaque_9
+  - first:
+      213: -5944975064171772974
+    second: AnimacionAtaque_10
+  - first:
+      213: 8453557219054886239
+    second: AnimacionAtaque_11
+  - first:
+      213: 8250424803024714937
+    second: AnimacionAtaque_12
+  - first:
+      213: 3192414116779983574
+    second: AnimacionAtaque_13
+  - first:
+      213: -93637379244940178
+    second: AnimacionAtaque_14
+  - first:
+      213: 4832280704941303662
+    second: AnimacionAtaque_15
+  - first:
+      213: 2019649599523079408
+    second: AnimacionAtaque_16
+  - first:
+      213: 8464855389925241744
+    second: AnimacionAtaque_17
+  - first:
+      213: -4538215452627535925
+    second: AnimacionAtaque_18
+  - first:
+      213: -1568143039964727670
+    second: AnimacionAtaque_19
+  - first:
+      213: -6064114433837131447
+    second: AnimacionAtaque_20
+  - first:
+      213: 2083858454958437455
+    second: AnimacionAtaque_21
+  - first:
+      213: 2924316572177154344
+    second: AnimacionAtaque_22
+  - first:
+      213: -8143747589813822659
+    second: AnimacionAtaque_23
+  - first:
+      213: 5254431921797616139
+    second: AnimacionAtaque_24
+  - first:
+      213: 8008492431423626640
+    second: AnimacionAtaque_25
+  - first:
+      213: 8708645188712351280
+    second: AnimacionAtaque_26
+  - first:
+      213: -3412544511200085653
+    second: AnimacionAtaque_27
+  - first:
+      213: -1778769811642562342
+    second: AnimacionAtaque_28
+  - first:
+      213: -8528565013825361268
+    second: AnimacionAtaque_29
+  - first:
+      213: -6560844510298085432
+    second: AnimacionAtaque_30
+  - first:
+      213: -8834354016030445304
+    second: AnimacionAtaque_31
+  - first:
+      213: 6025025376796021970
+    second: AnimacionAtaque_32
+  - first:
+      213: -3467165726641946890
+    second: AnimacionAtaque_33
+  - first:
+      213: 7777725231955763778
+    second: AnimacionAtaque_34
+  - first:
+      213: -7169321111048643057
+    second: AnimacionAtaque_35
+  - first:
+      213: 7365724074298938279
+    second: AnimacionAtaque_36
+  - first:
+      213: -2940737711911905812
+    second: AnimacionAtaque_37
+  - first:
+      213: -3520488631001932542
+    second: AnimacionAtaque_38
+  - first:
+      213: -6579590683381889017
+    second: AnimacionAtaque_39
+  - first:
+      213: -6141378127982856594
+    second: AnimacionAtaque_40
+  - first:
+      213: 6445878830362745736
+    second: AnimacionAtaque_41
+  - first:
+      213: 8542752045780487410
+    second: AnimacionAtaque_42
+  - first:
+      213: -8217257673705196953
+    second: AnimacionAtaque_43
+  - first:
+      213: 308036811554472566
+    second: AnimacionAtaque_44
+  - first:
+      213: -9042927660088199950
+    second: AnimacionAtaque_45
+  - first:
+      213: -8665690025992140847
+    second: AnimacionAtaque_46
+  - first:
+      213: -2666580555316913414
+    second: AnimacionAtaque_47
+  - first:
+      213: 8452854849929639565
+    second: AnimacionAtaque_48
+  - first:
+      213: 2977631523483393138
+    second: AnimacionAtaque_49
+  - first:
+      213: -5773291613518680100
+    second: AnimacionAtaque_50
+  - first:
+      213: 7717730302577057512
+    second: AnimacionAtaque_51
+  - first:
+      213: 4757987660731536897
+    second: AnimacionAtaque_52
+  - first:
+      213: 8518920751887674735
+    second: AnimacionAtaque_53
+  - first:
+      213: 9004123523607359858
+    second: AnimacionAtaque_54
+  - first:
+      213: -7024461092305278153
+    second: AnimacionAtaque_55
+  - first:
+      213: -1521583374176594583
+    second: AnimacionAtaque_56
+  - first:
+      213: 8309592223081005213
+    second: AnimacionAtaque_57
+  - first:
+      213: 2889134325549587202
+    second: AnimacionAtaque_58
+  - first:
+      213: -8681266722602001636
+    second: AnimacionAtaque_59
+  - first:
+      213: 2559672396475101248
+    second: AnimacionAtaque_60
+  - first:
+      213: -8249040774693843724
+    second: AnimacionAtaque_61
+  - first:
+      213: 4643170777792281793
+    second: AnimacionAtaque_62
+  - first:
+      213: -6004288125527721085
+    second: AnimacionAtaque_63
+  - first:
+      213: -7631304093667967661
+    second: AnimacionAtaque_64
+  - first:
+      213: -4729278996932157459
+    second: AnimacionAtaque_65
+  - first:
+      213: 4057472385320231232
+    second: AnimacionAtaque_66
+  - first:
+      213: -3216973837782776679
+    second: AnimacionAtaque_67
+  - first:
+      213: -3635214221672087549
+    second: AnimacionAtaque_68
+  - first:
+      213: 8298332979798890669
+    second: AnimacionAtaque_69
+  - first:
+      213: 3333253665381050209
+    second: AnimacionAtaque_70
+  - first:
+      213: 1594917168122833634
+    second: AnimacionAtaque_71
+  - first:
+      213: -6421213755802831409
+    second: AnimacionAtaque_72
+  - first:
+      213: 5615843735503867175
+    second: AnimacionAtaque_73
+  - first:
+      213: 532423821950321886
+    second: AnimacionAtaque_74
+  - first:
+      213: -3881202594902846909
+    second: AnimacionAtaque_75
+  - first:
+      213: 5086778978039000616
+    second: AnimacionAtaque_76
+  - first:
+      213: -4779168642890551022
+    second: AnimacionAtaque_77
+  - first:
+      213: 8779213781506509291
+    second: AnimacionAtaque_78
+  - first:
+      213: 2949616164637636365
+    second: AnimacionAtaque_79
+  - first:
+      213: 3120557247996655865
+    second: AnimacionAtaque_80
+  - first:
+      213: 8973205398087001319
+    second: AnimacionAtaque_81
+  - first:
+      213: -7589570215850465803
+    second: AnimacionAtaque_82
+  - first:
+      213: 5522366830086960237
+    second: AnimacionAtaque_83
+  - first:
+      213: 3970417402398280760
+    second: AnimacionAtaque_84
+  - first:
+      213: -331250142114155314
+    second: AnimacionAtaque_85
+  - first:
+      213: 4438318355034024702
+    second: AnimacionAtaque_86
+  - first:
+      213: 3718851762636444834
+    second: AnimacionAtaque_87
+  - first:
+      213: 2938359987458845341
+    second: AnimacionAtaque_88
+  - first:
+      213: 6485384635352958072
+    second: AnimacionAtaque_89
+  - first:
+      213: 6316738374545249947
+    second: AnimacionAtaque_90
+  - first:
+      213: -2398195250543483524
+    second: AnimacionAtaque_91
+  - first:
+      213: -2651128689323196142
+    second: AnimacionAtaque_92
+  - first:
+      213: -9064019587102796763
+    second: AnimacionAtaque_93
+  - first:
+      213: -6537238531583975659
+    second: AnimacionAtaque_94
+  - first:
+      213: -7289339151431027580
+    second: AnimacionAtaque_95
+  - first:
+      213: -3083504679376231702
+    second: AnimacionAtaque_96
+  - first:
+      213: 6138349152534374270
+    second: AnimacionAtaque_97
+  - first:
+      213: 872990677802171657
+    second: AnimacionAtaque_98
+  - first:
+      213: -7468352368105920039
+    second: AnimacionAtaque_99
+  - first:
+      213: -5662370620307951755
+    second: AnimacionAtaque_100
+  - first:
+      213: -7281119908869371272
+    second: AnimacionAtaque_101
+  - first:
+      213: 8758429495158505948
+    second: AnimacionAtaque_102
+  - first:
+      213: 4214374484491901014
+    second: AnimacionAtaque_103
+  - first:
+      213: 3384450804673488251
+    second: AnimacionAtaque_104
+  - first:
+      213: -699871226098841583
+    second: AnimacionAtaque_105
+  - first:
+      213: -450157761439137308
+    second: AnimacionAtaque_106
+  - first:
+      213: 4750621657911143385
+    second: AnimacionAtaque_107
+  - first:
+      213: 5596581888646207622
+    second: AnimacionAtaque_108
+  - first:
+      213: -695943055398803558
+    second: AnimacionAtaque_109
+  - first:
+      213: -7469251832947899091
+    second: AnimacionAtaque_110
+  - first:
+      213: -4195923306814360528
+    second: AnimacionAtaque_111
+  - first:
+      213: 8421379344551514100
+    second: AnimacionAtaque_112
+  - first:
+      213: -7926347709921240180
+    second: AnimacionAtaque_113
+  - first:
+      213: 1330123128492368481
+    second: AnimacionAtaque_114
+  - first:
+      213: 187902972208236449
+    second: AnimacionAtaque_115
+  - first:
+      213: 7765933806892775278
+    second: AnimacionAtaque_116
+  - first:
+      213: 2090095507538442461
+    second: AnimacionAtaque_117
+  - first:
+      213: 4510064260474918973
+    second: AnimacionAtaque_118
+  - first:
+      213: -6931534214639625957
+    second: AnimacionAtaque_119
+  - first:
+      213: -3828301847183211124
+    second: AnimacionAtaque_120
+  - first:
+      213: 4506197571837657647
+    second: AnimacionAtaque_121
+  - first:
+      213: 1786719243986172135
+    second: AnimacionAtaque_122
+  - first:
+      213: 5894320199147173550
+    second: AnimacionAtaque_123
+  - first:
+      213: 2205095493152513236
+    second: AnimacionAtaque_124
+  - first:
+      213: -6489490237699709553
+    second: AnimacionAtaque_125
+  - first:
+      213: -6977357810014070302
+    second: AnimacionAtaque_126
+  - first:
+      213: -1493673206143283580
+    second: AnimacionAtaque_127
+  - first:
+      213: -149116404636242702
+    second: AnimacionAtaque_128
+  - first:
+      213: -2181103890880904077
+    second: AnimacionAtaque_129
+  - first:
+      213: -910179469246452999
+    second: AnimacionAtaque_130
+  - first:
+      213: -3413527655467902027
+    second: AnimacionAtaque_131
+  - first:
+      213: -4449492978035687333
+    second: AnimacionAtaque_132
+  - first:
+      213: -6048784619240003289
+    second: AnimacionAtaque_133
+  - first:
+      213: -9078233831260422397
+    second: AnimacionAtaque_134
+  - first:
+      213: -5882164086931711179
+    second: AnimacionAtaque_135
+  - first:
+      213: -1222116051670004430
+    second: AnimacionAtaque_136
+  - first:
+      213: 1274588928695483255
+    second: AnimacionAtaque_137
+  - first:
+      213: -8489675792782755739
+    second: AnimacionAtaque_138
+  - first:
+      213: -394434584232695291
+    second: AnimacionAtaque_139
+  - first:
+      213: 552257000788342831
+    second: AnimacionAtaque_140
+  - first:
+      213: 2051709178655592634
+    second: AnimacionAtaque_141
+  - first:
+      213: -8767966373168324766
+    second: AnimacionAtaque_142
+  - first:
+      213: 442772118863451480
+    second: AnimacionAtaque_143
+  - first:
+      213: -5406065794134813687
+    second: AnimacionAtaque_144
+  - first:
+      213: -3666568065166633120
+    second: AnimacionAtaque_145
+  - first:
+      213: -2282211080891019620
+    second: AnimacionAtaque_146
+  - first:
+      213: 8540187607192574263
+    second: AnimacionAtaque_147
+  - first:
+      213: 2031175810503529666
+    second: AnimacionAtaque_148
+  - first:
+      213: -2868585184094879638
+    second: AnimacionAtaque_149
+  - first:
+      213: 3620172649531784312
+    second: AnimacionAtaque_150
+  - first:
+      213: -2445498298863625738
+    second: AnimacionAtaque_151
+  - first:
+      213: 2487580414060223085
+    second: AnimacionAtaque_152
+  - first:
+      213: 7684864681423439434
+    second: AnimacionAtaque_153
+  - first:
+      213: -3002819238881946820
+    second: AnimacionAtaque_154
+  - first:
+      213: 3912122031330531525
+    second: AnimacionAtaque_155
+  - first:
+      213: -1286609262751032398
+    second: AnimacionAtaque_156
+  - first:
+      213: -4768809296804809569
+    second: AnimacionAtaque_157
+  - first:
+      213: -2649497464539579656
+    second: AnimacionAtaque_158
+  - first:
+      213: 5030648327425917280
+    second: AnimacionAtaque_159
+  - first:
+      213: -5027748106453174936
+    second: AnimacionAtaque_160
+  - first:
+      213: 5193249128190518107
+    second: AnimacionAtaque_161
+  - first:
+      213: -990798239575025915
+    second: AnimacionAtaque_162
+  - first:
+      213: -2947072899134081756
+    second: AnimacionAtaque_163
+  - first:
+      213: 8388052571336290827
+    second: AnimacionAtaque_164
+  - first:
+      213: -3355278252884209727
+    second: AnimacionAtaque_165
+  - first:
+      213: 1479631023070533969
+    second: AnimacionAtaque_166
+  - first:
+      213: -6122655019261225372
+    second: AnimacionAtaque_167
+  - first:
+      213: 2648315023847710493
+    second: AnimacionAtaque_168
+  - first:
+      213: 309879500203285093
+    second: AnimacionAtaque_169
+  - first:
+      213: 4506395883369047890
+    second: AnimacionAtaque_170
+  - first:
+      213: -371229677941794445
+    second: AnimacionAtaque_171
+  - first:
+      213: -2412577688609347006
+    second: AnimacionAtaque_172
+  - first:
+      213: -381965323254625973
+    second: AnimacionAtaque_173
+  - first:
+      213: -98681740995169364
+    second: AnimacionAtaque_174
+  - first:
+      213: -5561610299141871458
+    second: AnimacionAtaque_175
+  - first:
+      213: 6569929116000152297
+    second: AnimacionAtaque_176
+  - first:
+      213: -7607851960796780928
+    second: AnimacionAtaque_177
+  - first:
+      213: 5103765950780099881
+    second: AnimacionAtaque_178
+  - first:
+      213: -2617695282415318293
+    second: AnimacionAtaque_179
+  - first:
+      213: 6842478466835132443
+    second: AnimacionAtaque_180
+  - first:
+      213: 7841779821706830558
+    second: AnimacionAtaque_181
+  - first:
+      213: 580821907409191052
+    second: AnimacionAtaque_182
+  - first:
+      213: -3358103484612739718
+    second: AnimacionAtaque_183
+  - first:
+      213: 3494030074629106587
+    second: AnimacionAtaque_184
+  - first:
+      213: 157467193397787756
+    second: AnimacionAtaque_185
+  - first:
+      213: 1287950487037290582
+    second: AnimacionAtaque_186
+  - first:
+      213: -7988961380825380871
+    second: AnimacionAtaque_187
+  - first:
+      213: 3247254716010364322
+    second: AnimacionAtaque_188
+  - first:
+      213: 1492090652737681735
+    second: AnimacionAtaque_Orange_0
+  - first:
+      213: -2309084559911986419
+    second: AnimacionAtaque_Orange_1
+  - first:
+      213: 5107702571275317766
+    second: AnimacionAtaque_Orange_2
+  - first:
+      213: 9218660888619770873
+    second: AnimacionAtaque_Orange_3
+  - first:
+      213: 7382703909973013133
+    second: AnimacionAtaque_Orange_4
+  - first:
+      213: -1440605272934959937
+    second: AnimacionAtaque_Orange_5
+  - first:
+      213: -1763290559840578568
+    second: AnimacionAtaque_Orange_6
+  - first:
+      213: 7086834781119891286
+    second: AnimacionAtaque_Orange_7
+  - first:
+      213: -6760860028363418966
+    second: AnimacionAtaque_Purple_0
+  - first:
+      213: -7663555437872608062
+    second: AnimacionAtaque_Purple_1
+  - first:
+      213: -4730367823470583034
+    second: AnimacionAtaque_Purple_2
+  - first:
+      213: -8566513870148484236
+    second: AnimacionAtaque_Purple_3
+  - first:
+      213: 5888779966332985301
+    second: AnimacionAtaque_Purple_4
+  - first:
+      213: -127834736267891169
+    second: AnimacionAtaque_Purple_5
+  - first:
+      213: -2313031770941374921
+    second: AnimacionAtaque_Purple_6
+  - first:
+      213: -722754131157359132
+    second: AnimacionAtaque_Purple_7
+  - first:
+      213: 455538067167071359
+    second: AnimacionAtaque_Blue_0
+  - first:
+      213: 3740329887451835105
+    second: AnimacionAtaque_Blue_1
+  - first:
+      213: 2617999103979434534
+    second: AnimacionAtaque_Blue_2
+  - first:
+      213: 7402601317099067800
+    second: AnimacionAtaque_Blue_3
+  - first:
+      213: -5420009383794247115
+    second: AnimacionAtaque_Blue_4
+  - first:
+      213: 559617415227604837
+    second: AnimacionAtaque_Blue_5
+  - first:
+      213: -1574346903464004359
+    second: AnimacionAtaque_Blue_6
+  - first:
+      213: -7667409624605371746
+    second: AnimacionAtaque_Blue_7
+  - first:
+      213: 3584422560334119528
+    second: AnimacionAtaque_Green_0
+  - first:
+      213: 5574759105993453696
+    second: AnimacionAtaque_Green_1
+  - first:
+      213: -5263662169583589973
+    second: AnimacionAtaque_Green_2
+  - first:
+      213: -8344885816691612991
+    second: AnimacionAtaque_Green_3
+  - first:
+      213: 1020890664207761888
+    second: AnimacionAtaque_Green_4
+  - first:
+      213: -1102624811185080379
+    second: AnimacionAtaque_Green_5
+  - first:
+      213: 3431674177554190176
+    second: AnimacionAtaque_Green_6
+  - first:
+      213: 8347017222306194456
+    second: AnimacionAtaque_Green_7
+  - first:
+      213: -4085136872766459917
+    second: AnimacionAtaque_Brown_0
+  - first:
+      213: -5121098420321182421
+    second: AnimacionAtaque_Brown_1
+  - first:
+      213: 3344571435492975972
+    second: AnimacionAtaque_Brown_2
+  - first:
+      213: 6877872077566834369
+    second: AnimacionAtaque_Brown_3
+  - first:
+      213: -359840350184616370
+    second: AnimacionAtaque_Brown_4
+  - first:
+      213: 5803206368863002265
+    second: AnimacionAtaque_Brown_5
+  - first:
+      213: 8388730558046168402
+    second: AnimacionAtaque_Brown_6
+  - first:
+      213: -4344381293197693312
+    second: AnimacionAtaque_Brown_7
+  - first:
+      213: 8305045234124786693
+    second: AnimacionAtaque_Gray_0
+  - first:
+      213: -8019301290270811141
+    second: AnimacionAtaque_Gray_1
+  - first:
+      213: -629631902208631816
+    second: AnimacionAtaque_Gray_2
+  - first:
+      213: 1717008924240609991
+    second: AnimacionAtaque_Gray_3
+  - first:
+      213: 5964570496653740263
+    second: AnimacionAtaque_Gray_4
+  - first:
+      213: -5251103723137387403
+    second: AnimacionAtaque_Gray_5
+  - first:
+      213: -5970272180655915401
+    second: AnimacionAtaque_Gray_6
+  - first:
+      213: -8611215156956540440
+    second: AnimacionAtaque_Gray_7
+  - first:
+      213: -3791844325688852611
+    second: AnimacionAtaque_Pink_0
+  - first:
+      213: 309972932606114334
+    second: AnimacionAtaque_Pink_1
+  - first:
+      213: 4458540657747743961
+    second: AnimacionAtaque_Pink_2
+  - first:
+      213: -270396204613245519
+    second: AnimacionAtaque_Pink_3
+  - first:
+      213: -1645036992909234991
+    second: AnimacionAtaque_Pink_4
+  - first:
+      213: -8555818736607657332
+    second: AnimacionAtaque_Pink_5
+  - first:
+      213: 541714488232477478
+    second: AnimacionAtaque_Pink_6
+  - first:
+      213: 6392631950913426897
+    second: AnimacionAtaque_Pink_7
+  - first:
+      213: 6449390437038046302
+    second: AnimacionAtaque_Red_0
+  - first:
+      213: -6136640675690138416
+    second: AnimacionAtaque_Red_1
+  - first:
+      213: 6139557052569665077
+    second: AnimacionAtaque_Red_2
+  - first:
+      213: -8247259343428982952
+    second: AnimacionAtaque_Red_3
+  - first:
+      213: -7267582822055093801
+    second: AnimacionAtaque_Red_4
+  - first:
+      213: -1379216271228163870
+    second: AnimacionAtaque_Red_5
+  - first:
+      213: 5652976414885545549
+    second: AnimacionAtaque_Red_6
+  - first:
+      213: 7183153234187437875
+    second: AnimacionAtaque_Red_7
+  - first:
+      213: 5660505165430783797
+    second: AnimacionAtaque_Shadow_0
+  - first:
+      213: -7571824089539060695
+    second: AnimacionAtaque_Shadow_1
+  - first:
+      213: 28002734732264364
+    second: AnimacionAtaque_Shadow_2
+  - first:
+      213: 536565020401856760
+    second: AnimacionAtaque_Shadow_3
+  - first:
+      213: -4634892163172862629
+    second: AnimacionAtaque_Shadow_4
+  - first:
+      213: 2681078464717223194
+    second: AnimacionAtaque_Shadow_5
+  - first:
+      213: -4291919970716859757
+    second: AnimacionAtaque_Shadow_6
+  - first:
+      213: 565423884864618587
+    second: AnimacionAtaque_Shadow_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 1
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: AnimacionAtaque_Orange_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7493c111b88f4b410800000000000000
+      internalID: 1492090652737681735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Orange_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 512
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0b5b1aa3db74ffd0800000000000000
+      internalID: -2309084559911986419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Orange_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 512
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 602f6334d6432e640800000000000000
+      internalID: 5107702571275317766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Orange_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 512
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f3e7f25c334fef70800000000000000
+      internalID: 9218660888619770873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Orange_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 512
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8234d34712a47660800000000000000
+      internalID: 7382703909973013133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Orange_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 512
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb4382d0321f10ce0800000000000000
+      internalID: -1440605272934959937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Orange_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 512
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f317e004988787e0800000000000000
+      internalID: -1763290559840578568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Orange_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 512
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 657c88e8fae795260800000000000000
+      internalID: 7086834781119891286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Purple_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 448
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa2d241ff999c22a0800000000000000
+      internalID: -6760860028363418966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Purple_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 448
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cc0719bee495a590800000000000000
+      internalID: -7663555437872608062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Purple_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 448
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6032911f68b5a5eb0800000000000000
+      internalID: -4730367823470583034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Purple_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 448
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 473c75eb501ad1980800000000000000
+      internalID: -8566513870148484236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Purple_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 448
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5dfd6b5ed2629b150800000000000000
+      internalID: 5888779966332985301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Purple_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 448
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1eebc21cf6d93ef0800000000000000
+      internalID: -127834736267891169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Purple_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 448
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73eb8dafbd576efd0800000000000000
+      internalID: -2313031770941374921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Purple_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 448
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e56b6072f248f5f0800000000000000
+      internalID: -722754131157359132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Blue_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7c49236575625600800000000000000
+      internalID: 455538067167071359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Blue_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 384
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1eae75c273258e330800000000000000
+      internalID: 3740329887451835105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Blue_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 384
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6223cf67050055420800000000000000
+      internalID: 2617999103979434534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Blue_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 384
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 899578f5da25bb660800000000000000
+      internalID: 7402601317099067800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Blue_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 384
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53af8af8e2248c4b0800000000000000
+      internalID: -5420009383794247115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Blue_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 384
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56f73ccf21924c700800000000000000
+      internalID: 559617415227604837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Blue_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 384
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f4bac125dbc62ae0800000000000000
+      internalID: -1574346903464004359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Blue_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 384
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e925cf1f193e79590800000000000000
+      internalID: -7667409624605371746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Green_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 320
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8628c99d35d6eb130800000000000000
+      internalID: 3584422560334119528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Green_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 320
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0803d1dded58d5d40800000000000000
+      internalID: 5574759105993453696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Green_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 320
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba5ee441527b3f6b0800000000000000
+      internalID: -5263662169583589973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Green_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 320
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c2a6e41092013c80800000000000000
+      internalID: -8344885816691612991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Green_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 320
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e1cd9276aeea2e00800000000000000
+      internalID: 1020890664207761888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Green_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 320
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c7f7c08390b2b0f0800000000000000
+      internalID: -1102624811185080379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Green_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 320
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06f8ff19b71cf9f20800000000000000
+      internalID: 3431674177554190176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Green_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 320
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 814e0a570ff86d370800000000000000
+      internalID: 8347017222306194456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Brown_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ffa7ef78adae47c0800000000000000
+      internalID: -4085136872766459917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Brown_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2d11f49e143ee8b0800000000000000
+      internalID: -5121098420321182421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Brown_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4652a72100e4a6e20800000000000000
+      internalID: 3344571435492975972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Brown_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c6f2f9c63c137f50800000000000000
+      internalID: 6877872077566834369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Brown_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4ec467ab17910bf0800000000000000
+      internalID: -359840350184616370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Brown_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99e1d5e1271298050800000000000000
+      internalID: 5803206368863002265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Brown_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2556ec44ff1ca6470800000000000000
+      internalID: 8388730558046168402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Brown_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08e691a3b38a5b3c0800000000000000
+      internalID: -4344381293197693312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Gray_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50c0f8f63a2714370800000000000000
+      internalID: 8305045234124786693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Gray_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bfb939ee6f7b5b090800000000000000
+      internalID: -8019301290270811141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Gray_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8fbd991fe191347f0800000000000000
+      internalID: -629631902208631816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Gray_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c2898df48a04d710800000000000000
+      internalID: 1717008924240609991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Gray_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e842dad34966c250800000000000000
+      internalID: 5964570496653740263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Gray_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5743aaf3cf45027b0800000000000000
+      internalID: -5251103723137387403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Gray_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77e7b936515552da0800000000000000
+      internalID: -5970272180655915401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Gray_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e1552d5071de7880800000000000000
+      internalID: -8611215156956540440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Pink_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7f3cb30da9a06bc0800000000000000
+      internalID: -3791844325688852611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Pink_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1a39f96dbe3d4400800000000000000
+      internalID: 309972932606114334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Pink_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d4d0b91b1befdd30800000000000000
+      internalID: 4458540657747743961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Pink_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b5e963a51c5f3cf0800000000000000
+      internalID: -270396204613245519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Pink_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1dca44b1297ab29e0800000000000000
+      internalID: -1645036992909234991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Pink_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c828ed19030a34980800000000000000
+      internalID: -8555818736607657332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Pink_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62387c8f47e848700800000000000000
+      internalID: 541714488232477478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Pink_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d5d106c3e037b850800000000000000
+      internalID: 6392631950913426897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Red_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5c3471ae66d08950800000000000000
+      internalID: 6449390437038046302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Red_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d4b64b91d546daa0800000000000000
+      internalID: -6136640675690138416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Red_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53eb8ac4c96143550800000000000000
+      internalID: 6139557052569665077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Red_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 857e460b259db8d80800000000000000
+      internalID: -8247259343428982952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Red_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d9dcabbdeb542b90800000000000000
+      internalID: -7267582822055093801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Red_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e8a105db1a0cdce0800000000000000
+      internalID: -1379216271228163870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Red_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d460aec3918637e40800000000000000
+      internalID: 5652976414885545549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Red_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 337c0fafecfafa360800000000000000
+      internalID: 7183153234187437875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Shadow_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53ff3c215772e8e40800000000000000
+      internalID: 5660505165430783797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Shadow_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92c57499b1a7be690800000000000000
+      internalID: -7571824089539060695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Shadow_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca3c470c65c736000800000000000000
+      internalID: 28002734732264364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Shadow_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f0f3ff0b03427700800000000000000
+      internalID: 536565020401856760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Shadow_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b55f6d1622e8dafb0800000000000000
+      internalID: -4634892163172862629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Shadow_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a157b60a8aa153520800000000000000
+      internalID: 2681078464717223194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Shadow_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3924405b6890074c0800000000000000
+      internalID: -4291919970716859757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AnimacionAtaque_Shadow_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5080ec070ac8d700800000000000000
+      internalID: 565423884864618587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      AnimacionAtaque_0: -7698553846943754661
+      AnimacionAtaque_1: -1384786267115670631
+      AnimacionAtaque_10: -5944975064171772974
+      AnimacionAtaque_100: -5662370620307951755
+      AnimacionAtaque_101: -7281119908869371272
+      AnimacionAtaque_102: 8758429495158505948
+      AnimacionAtaque_103: 4214374484491901014
+      AnimacionAtaque_104: 3384450804673488251
+      AnimacionAtaque_105: -699871226098841583
+      AnimacionAtaque_106: -450157761439137308
+      AnimacionAtaque_107: 4750621657911143385
+      AnimacionAtaque_108: 5596581888646207622
+      AnimacionAtaque_109: -695943055398803558
+      AnimacionAtaque_11: 8453557219054886239
+      AnimacionAtaque_110: -7469251832947899091
+      AnimacionAtaque_111: -4195923306814360528
+      AnimacionAtaque_112: 8421379344551514100
+      AnimacionAtaque_113: -7926347709921240180
+      AnimacionAtaque_114: 1330123128492368481
+      AnimacionAtaque_115: 187902972208236449
+      AnimacionAtaque_116: 7765933806892775278
+      AnimacionAtaque_117: 2090095507538442461
+      AnimacionAtaque_118: 4510064260474918973
+      AnimacionAtaque_119: -6931534214639625957
+      AnimacionAtaque_12: 8250424803024714937
+      AnimacionAtaque_120: -3828301847183211124
+      AnimacionAtaque_121: 4506197571837657647
+      AnimacionAtaque_122: 1786719243986172135
+      AnimacionAtaque_123: 5894320199147173550
+      AnimacionAtaque_124: 2205095493152513236
+      AnimacionAtaque_125: -6489490237699709553
+      AnimacionAtaque_126: -6977357810014070302
+      AnimacionAtaque_127: -1493673206143283580
+      AnimacionAtaque_128: -149116404636242702
+      AnimacionAtaque_129: -2181103890880904077
+      AnimacionAtaque_13: 3192414116779983574
+      AnimacionAtaque_130: -910179469246452999
+      AnimacionAtaque_131: -3413527655467902027
+      AnimacionAtaque_132: -4449492978035687333
+      AnimacionAtaque_133: -6048784619240003289
+      AnimacionAtaque_134: -9078233831260422397
+      AnimacionAtaque_135: -5882164086931711179
+      AnimacionAtaque_136: -1222116051670004430
+      AnimacionAtaque_137: 1274588928695483255
+      AnimacionAtaque_138: -8489675792782755739
+      AnimacionAtaque_139: -394434584232695291
+      AnimacionAtaque_14: -93637379244940178
+      AnimacionAtaque_140: 552257000788342831
+      AnimacionAtaque_141: 2051709178655592634
+      AnimacionAtaque_142: -8767966373168324766
+      AnimacionAtaque_143: 442772118863451480
+      AnimacionAtaque_144: -5406065794134813687
+      AnimacionAtaque_145: -3666568065166633120
+      AnimacionAtaque_146: -2282211080891019620
+      AnimacionAtaque_147: 8540187607192574263
+      AnimacionAtaque_148: 2031175810503529666
+      AnimacionAtaque_149: -2868585184094879638
+      AnimacionAtaque_15: 4832280704941303662
+      AnimacionAtaque_150: 3620172649531784312
+      AnimacionAtaque_151: -2445498298863625738
+      AnimacionAtaque_152: 2487580414060223085
+      AnimacionAtaque_153: 7684864681423439434
+      AnimacionAtaque_154: -3002819238881946820
+      AnimacionAtaque_155: 3912122031330531525
+      AnimacionAtaque_156: -1286609262751032398
+      AnimacionAtaque_157: -4768809296804809569
+      AnimacionAtaque_158: -2649497464539579656
+      AnimacionAtaque_159: 5030648327425917280
+      AnimacionAtaque_16: 2019649599523079408
+      AnimacionAtaque_160: -5027748106453174936
+      AnimacionAtaque_161: 5193249128190518107
+      AnimacionAtaque_162: -990798239575025915
+      AnimacionAtaque_163: -2947072899134081756
+      AnimacionAtaque_164: 8388052571336290827
+      AnimacionAtaque_165: -3355278252884209727
+      AnimacionAtaque_166: 1479631023070533969
+      AnimacionAtaque_167: -6122655019261225372
+      AnimacionAtaque_168: 2648315023847710493
+      AnimacionAtaque_169: 309879500203285093
+      AnimacionAtaque_17: 8464855389925241744
+      AnimacionAtaque_170: 4506395883369047890
+      AnimacionAtaque_171: -371229677941794445
+      AnimacionAtaque_172: -2412577688609347006
+      AnimacionAtaque_173: -381965323254625973
+      AnimacionAtaque_174: -98681740995169364
+      AnimacionAtaque_175: -5561610299141871458
+      AnimacionAtaque_176: 6569929116000152297
+      AnimacionAtaque_177: -7607851960796780928
+      AnimacionAtaque_178: 5103765950780099881
+      AnimacionAtaque_179: -2617695282415318293
+      AnimacionAtaque_18: -4538215452627535925
+      AnimacionAtaque_180: 6842478466835132443
+      AnimacionAtaque_181: 7841779821706830558
+      AnimacionAtaque_182: 580821907409191052
+      AnimacionAtaque_183: -3358103484612739718
+      AnimacionAtaque_184: 3494030074629106587
+      AnimacionAtaque_185: 157467193397787756
+      AnimacionAtaque_186: 1287950487037290582
+      AnimacionAtaque_187: -7988961380825380871
+      AnimacionAtaque_188: 3247254716010364322
+      AnimacionAtaque_19: -1568143039964727670
+      AnimacionAtaque_2: -1440909034368094474
+      AnimacionAtaque_20: -6064114433837131447
+      AnimacionAtaque_21: 2083858454958437455
+      AnimacionAtaque_22: 2924316572177154344
+      AnimacionAtaque_23: -8143747589813822659
+      AnimacionAtaque_24: 5254431921797616139
+      AnimacionAtaque_25: 8008492431423626640
+      AnimacionAtaque_26: 8708645188712351280
+      AnimacionAtaque_27: -3412544511200085653
+      AnimacionAtaque_28: -1778769811642562342
+      AnimacionAtaque_29: -8528565013825361268
+      AnimacionAtaque_3: -3334430710447798968
+      AnimacionAtaque_30: -6560844510298085432
+      AnimacionAtaque_31: -8834354016030445304
+      AnimacionAtaque_32: 6025025376796021970
+      AnimacionAtaque_33: -3467165726641946890
+      AnimacionAtaque_34: 7777725231955763778
+      AnimacionAtaque_35: -7169321111048643057
+      AnimacionAtaque_36: 7365724074298938279
+      AnimacionAtaque_37: -2940737711911905812
+      AnimacionAtaque_38: -3520488631001932542
+      AnimacionAtaque_39: -6579590683381889017
+      AnimacionAtaque_4: 706324953370865555
+      AnimacionAtaque_40: -6141378127982856594
+      AnimacionAtaque_41: 6445878830362745736
+      AnimacionAtaque_42: 8542752045780487410
+      AnimacionAtaque_43: -8217257673705196953
+      AnimacionAtaque_44: 308036811554472566
+      AnimacionAtaque_45: -9042927660088199950
+      AnimacionAtaque_46: -8665690025992140847
+      AnimacionAtaque_47: -2666580555316913414
+      AnimacionAtaque_48: 8452854849929639565
+      AnimacionAtaque_49: 2977631523483393138
+      AnimacionAtaque_5: 5470697476451001721
+      AnimacionAtaque_50: -5773291613518680100
+      AnimacionAtaque_51: 7717730302577057512
+      AnimacionAtaque_52: 4757987660731536897
+      AnimacionAtaque_53: 8518920751887674735
+      AnimacionAtaque_54: 9004123523607359858
+      AnimacionAtaque_55: -7024461092305278153
+      AnimacionAtaque_56: -1521583374176594583
+      AnimacionAtaque_57: 8309592223081005213
+      AnimacionAtaque_58: 2889134325549587202
+      AnimacionAtaque_59: -8681266722602001636
+      AnimacionAtaque_6: 7153342461837643024
+      AnimacionAtaque_60: 2559672396475101248
+      AnimacionAtaque_61: -8249040774693843724
+      AnimacionAtaque_62: 4643170777792281793
+      AnimacionAtaque_63: -6004288125527721085
+      AnimacionAtaque_64: -7631304093667967661
+      AnimacionAtaque_65: -4729278996932157459
+      AnimacionAtaque_66: 4057472385320231232
+      AnimacionAtaque_67: -3216973837782776679
+      AnimacionAtaque_68: -3635214221672087549
+      AnimacionAtaque_69: 8298332979798890669
+      AnimacionAtaque_7: -4440938105144044765
+      AnimacionAtaque_70: 3333253665381050209
+      AnimacionAtaque_71: 1594917168122833634
+      AnimacionAtaque_72: -6421213755802831409
+      AnimacionAtaque_73: 5615843735503867175
+      AnimacionAtaque_74: 532423821950321886
+      AnimacionAtaque_75: -3881202594902846909
+      AnimacionAtaque_76: 5086778978039000616
+      AnimacionAtaque_77: -4779168642890551022
+      AnimacionAtaque_78: 8779213781506509291
+      AnimacionAtaque_79: 2949616164637636365
+      AnimacionAtaque_8: 5611227054267443402
+      AnimacionAtaque_80: 3120557247996655865
+      AnimacionAtaque_81: 8973205398087001319
+      AnimacionAtaque_82: -7589570215850465803
+      AnimacionAtaque_83: 5522366830086960237
+      AnimacionAtaque_84: 3970417402398280760
+      AnimacionAtaque_85: -331250142114155314
+      AnimacionAtaque_86: 4438318355034024702
+      AnimacionAtaque_87: 3718851762636444834
+      AnimacionAtaque_88: 2938359987458845341
+      AnimacionAtaque_89: 6485384635352958072
+      AnimacionAtaque_9: 5085426105366008617
+      AnimacionAtaque_90: 6316738374545249947
+      AnimacionAtaque_91: -2398195250543483524
+      AnimacionAtaque_92: -2651128689323196142
+      AnimacionAtaque_93: -9064019587102796763
+      AnimacionAtaque_94: -6537238531583975659
+      AnimacionAtaque_95: -7289339151431027580
+      AnimacionAtaque_96: -3083504679376231702
+      AnimacionAtaque_97: 6138349152534374270
+      AnimacionAtaque_98: 872990677802171657
+      AnimacionAtaque_99: -7468352368105920039
+      AnimacionAtaque_Blue_0: 455538067167071359
+      AnimacionAtaque_Blue_1: 3740329887451835105
+      AnimacionAtaque_Blue_2: 2617999103979434534
+      AnimacionAtaque_Blue_3: 7402601317099067800
+      AnimacionAtaque_Blue_4: -5420009383794247115
+      AnimacionAtaque_Blue_5: 559617415227604837
+      AnimacionAtaque_Blue_6: -1574346903464004359
+      AnimacionAtaque_Blue_7: -7667409624605371746
+      AnimacionAtaque_Brown_0: -4085136872766459917
+      AnimacionAtaque_Brown_1: -5121098420321182421
+      AnimacionAtaque_Brown_2: 3344571435492975972
+      AnimacionAtaque_Brown_3: 6877872077566834369
+      AnimacionAtaque_Brown_4: -359840350184616370
+      AnimacionAtaque_Brown_5: 5803206368863002265
+      AnimacionAtaque_Brown_6: 8388730558046168402
+      AnimacionAtaque_Brown_7: -4344381293197693312
+      AnimacionAtaque_Gray_0: 8305045234124786693
+      AnimacionAtaque_Gray_1: -8019301290270811141
+      AnimacionAtaque_Gray_2: -629631902208631816
+      AnimacionAtaque_Gray_3: 1717008924240609991
+      AnimacionAtaque_Gray_4: 5964570496653740263
+      AnimacionAtaque_Gray_5: -5251103723137387403
+      AnimacionAtaque_Gray_6: -5970272180655915401
+      AnimacionAtaque_Gray_7: -8611215156956540440
+      AnimacionAtaque_Green_0: 3584422560334119528
+      AnimacionAtaque_Green_1: 5574759105993453696
+      AnimacionAtaque_Green_2: -5263662169583589973
+      AnimacionAtaque_Green_3: -8344885816691612991
+      AnimacionAtaque_Green_4: 1020890664207761888
+      AnimacionAtaque_Green_5: -1102624811185080379
+      AnimacionAtaque_Green_6: 3431674177554190176
+      AnimacionAtaque_Green_7: 8347017222306194456
+      AnimacionAtaque_Orange_0: 1492090652737681735
+      AnimacionAtaque_Orange_1: -2309084559911986419
+      AnimacionAtaque_Orange_2: 5107702571275317766
+      AnimacionAtaque_Orange_3: 9218660888619770873
+      AnimacionAtaque_Orange_4: 7382703909973013133
+      AnimacionAtaque_Orange_5: -1440605272934959937
+      AnimacionAtaque_Orange_6: -1763290559840578568
+      AnimacionAtaque_Orange_7: 7086834781119891286
+      AnimacionAtaque_Pink_0: -3791844325688852611
+      AnimacionAtaque_Pink_1: 309972932606114334
+      AnimacionAtaque_Pink_2: 4458540657747743961
+      AnimacionAtaque_Pink_3: -270396204613245519
+      AnimacionAtaque_Pink_4: -1645036992909234991
+      AnimacionAtaque_Pink_5: -8555818736607657332
+      AnimacionAtaque_Pink_6: 541714488232477478
+      AnimacionAtaque_Pink_7: 6392631950913426897
+      AnimacionAtaque_Purple_0: -6760860028363418966
+      AnimacionAtaque_Purple_1: -7663555437872608062
+      AnimacionAtaque_Purple_2: -4730367823470583034
+      AnimacionAtaque_Purple_3: -8566513870148484236
+      AnimacionAtaque_Purple_4: 5888779966332985301
+      AnimacionAtaque_Purple_5: -127834736267891169
+      AnimacionAtaque_Purple_6: -2313031770941374921
+      AnimacionAtaque_Purple_7: -722754131157359132
+      AnimacionAtaque_Red_0: 6449390437038046302
+      AnimacionAtaque_Red_1: -6136640675690138416
+      AnimacionAtaque_Red_2: 6139557052569665077
+      AnimacionAtaque_Red_3: -8247259343428982952
+      AnimacionAtaque_Red_4: -7267582822055093801
+      AnimacionAtaque_Red_5: -1379216271228163870
+      AnimacionAtaque_Red_6: 5652976414885545549
+      AnimacionAtaque_Red_7: 7183153234187437875
+      AnimacionAtaque_Shadow_0: 5660505165430783797
+      AnimacionAtaque_Shadow_1: -7571824089539060695
+      AnimacionAtaque_Shadow_2: 28002734732264364
+      AnimacionAtaque_Shadow_3: 536565020401856760
+      AnimacionAtaque_Shadow_4: -4634892163172862629
+      AnimacionAtaque_Shadow_5: 2681078464717223194
+      AnimacionAtaque_Shadow_6: -4291919970716859757
+      AnimacionAtaque_Shadow_7: 565423884864618587
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

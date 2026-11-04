@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b34b36d95d1310409be2bff0578155c, type: 3}
+  m_Name: Item_ChilePolvo
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemID: item_chile_polvo
+  itemName: Gasolina
+  description: Botecito con gasolina y un trapo empapado. Ingrediente inflamable para armar una Molotov con Intelecto.
+  combatUseMessage: Enrique arroja gasolina inflamable!
+  placeholderColor: {r: 0.92, g: 0.38, b: 0.12, a: 1}
+  icon: {fileID: -2142726812009774420, guid: 457c2ee17531fdd438a4408b2df779ed, type: 3}
+  category: 1
+  healAmount: 0
+  damageAmount: 12
+  curesStatusEffects: 0
+  weaponAttackBonus: 0
+  weaponMotricidadBonus: 0

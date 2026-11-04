@@ -1,0 +1,422 @@
+fileFormatVersion: 2
+guid: 8f104f1f88422df46bd889d849a9a3d4
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8774169888851216240
+    second: Cardo_Run_0
+  - first:
+      213: -1623119607646576581
+    second: Cardo_Run_1
+  - first:
+      213: 7480569466400786695
+    second: Cardo_Run_2
+  - first:
+      213: -3053273523062906186
+    second: Cardo_Run_3
+  - first:
+      213: -6788356538021443256
+    second: Cardo_Run_4
+  - first:
+      213: -3094196533992829988
+    second: Cardo_Run_5
+  - first:
+      213: -4819204854439065845
+    second: Cardo_Run_6
+  - first:
+      213: 305627188712579619
+    second: Cardo_Run_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 210
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Cardo_Run_0
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 193
+        width: 240
+        height: 350
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 098381049f2eb3680800000000000000
+      internalID: -8774169888851216240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cardo_Run_1
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 193
+        width: 240
+        height: 350
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b30214601558979e0800000000000000
+      internalID: -1623119607646576581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cardo_Run_2
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 193
+        width: 240
+        height: 350
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 709c372cb4250d760800000000000000
+      internalID: 7480569466400786695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cardo_Run_3
+      rect:
+        serializedVersion: 2
+        x: 836
+        y: 193
+        width: 240
+        height: 350
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b2eabf58e790a5d0800000000000000
+      internalID: -3053273523062906186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cardo_Run_4
+      rect:
+        serializedVersion: 2
+        x: 1107
+        y: 193
+        width: 240
+        height: 350
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8490886e1b9eac1a0800000000000000
+      internalID: -6788356538021443256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cardo_Run_5
+      rect:
+        serializedVersion: 2
+        x: 1378
+        y: 193
+        width: 240
+        height: 350
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdbcc1665a43f05d0800000000000000
+      internalID: -3094196533992829988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cardo_Run_6
+      rect:
+        serializedVersion: 2
+        x: 1652
+        y: 193
+        width: 240
+        height: 350
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b074257d7bebe1db0800000000000000
+      internalID: -4819204854439065845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cardo_Run_7
+      rect:
+        serializedVersion: 2
+        x: 1922
+        y: 193
+        width: 240
+        height: 350
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3222ae01f4ecd3400800000000000000
+      internalID: 305627188712579619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Cardo_Idle_0: -8774169888851216240
+      Cardo_Idle_1: -1623119607646576581
+      Cardo_Idle_2: 7480569466400786695
+      Cardo_Idle_3: -3053273523062906186
+      Cardo_Idle_4: -6788356538021443256
+      Cardo_Idle_5: -3094196533992829988
+      Cardo_Idle_6: -4819204854439065845
+      Cardo_Idle_7: 305627188712579619
+      Cardo_Run_0: -8774169888851216240
+      Cardo_Run_1: -1623119607646576581
+      Cardo_Run_2: 7480569466400786695
+      Cardo_Run_3: -3053273523062906186
+      Cardo_Run_4: -6788356538021443256
+      Cardo_Run_5: -3094196533992829988
+      Cardo_Run_6: -4819204854439065845
+      Cardo_Run_7: 305627188712579619
+      Hoja de sprites_ caminante pixelado_0: -8774169888851216240
+      Hoja de sprites_ caminante pixelado_1: -1623119607646576581
+      Hoja de sprites_ caminante pixelado_10: 9188026371800865783
+      Hoja de sprites_ caminante pixelado_11: 1222991151922427552
+      Hoja de sprites_ caminante pixelado_12: 4450579735515426385
+      Hoja de sprites_ caminante pixelado_13: 2821005110829916923
+      Hoja de sprites_ caminante pixelado_14: -6682211885574898704
+      Hoja de sprites_ caminante pixelado_15: -7439657221370298098
+      Hoja de sprites_ caminante pixelado_16: -4488451115470942027
+      Hoja de sprites_ caminante pixelado_17: 557326793526125298
+      Hoja de sprites_ caminante pixelado_18: 4678025665933622531
+      Hoja de sprites_ caminante pixelado_19: 4143931725724534142
+      Hoja de sprites_ caminante pixelado_2: 7480569466400786695
+      Hoja de sprites_ caminante pixelado_20: 4575014178241699353
+      Hoja de sprites_ caminante pixelado_21: 2816083415389911327
+      Hoja de sprites_ caminante pixelado_22: 1765932242679463401
+      Hoja de sprites_ caminante pixelado_23: -9187985831954656653
+      Hoja de sprites_ caminante pixelado_24: -1500251114055887402
+      Hoja de sprites_ caminante pixelado_25: 45257975817450571
+      Hoja de sprites_ caminante pixelado_26: 8710785119129445927
+      Hoja de sprites_ caminante pixelado_27: 4857578697888094478
+      Hoja de sprites_ caminante pixelado_28: -6358932437185051542
+      Hoja de sprites_ caminante pixelado_29: 8093228006159980183
+      Hoja de sprites_ caminante pixelado_3: -3053273523062906186
+      Hoja de sprites_ caminante pixelado_30: 7201525792293074044
+      Hoja de sprites_ caminante pixelado_31: -2238952101887653207
+      Hoja de sprites_ caminante pixelado_32: -1638153741021277118
+      Hoja de sprites_ caminante pixelado_33: -5275466358696397424
+      Hoja de sprites_ caminante pixelado_34: -3730308422182145762
+      Hoja de sprites_ caminante pixelado_35: -1523175106900312374
+      Hoja de sprites_ caminante pixelado_36: 1278612858375114343
+      Hoja de sprites_ caminante pixelado_37: 5353056591482066137
+      Hoja de sprites_ caminante pixelado_38: 5550205307596383910
+      Hoja de sprites_ caminante pixelado_39: 7842413931749240303
+      Hoja de sprites_ caminante pixelado_4: -6788356538021443256
+      Hoja de sprites_ caminante pixelado_40: 1381678548111902041
+      Hoja de sprites_ caminante pixelado_41: 4861205142893065904
+      Hoja de sprites_ caminante pixelado_42: 6814153131038200467
+      Hoja de sprites_ caminante pixelado_43: -4497380199471830463
+      Hoja de sprites_ caminante pixelado_44: 4134371463831203550
+      Hoja de sprites_ caminante pixelado_45: 2230333421396288640
+      Hoja de sprites_ caminante pixelado_46: 9001742149147397262
+      Hoja de sprites_ caminante pixelado_47: 6527088682740781596
+      Hoja de sprites_ caminante pixelado_5: -3094196533992829988
+      Hoja de sprites_ caminante pixelado_6: -4819204854439065845
+      Hoja de sprites_ caminante pixelado_7: 305627188712579619
+      Hoja de sprites_ caminante pixelado_8: -613274841658072290
+      Hoja de sprites_ caminante pixelado_9: -5143075004051432596
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

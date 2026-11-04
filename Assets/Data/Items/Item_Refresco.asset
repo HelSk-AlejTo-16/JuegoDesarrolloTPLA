@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b34b36d95d1310409be2bff0578155c, type: 3}
+  m_Name: Item_Refresco
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemID: item_refresco
+  itemName: Refresco Frio
+  description: Refresco de cola bien helado en envase de vidrio. Pura azucar y cafeina para seguir pedaleando.
+  combatUseMessage: Enrique se toma un refresco bien frio de un trago y recupera energia!
+  placeholderColor: {r: 0.35, g: 0.95, b: 0.48, a: 1}
+  icon: {fileID: 4348664510329381291, guid: ed53148bcda3dee40b69994eef5adbf3, type: 3}
+  category: 0
+  healAmount: 35
+  damageAmount: 0
+  curesStatusEffects: 0
+  weaponAttackBonus: 0
+  weaponMotricidadBonus: 0

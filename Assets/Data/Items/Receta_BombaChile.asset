@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04433c0ffb5aced4289cee0aa0788237, type: 3}
+  m_Name: Receta_BombaChile
+  m_EditorClassIdentifier: Assembly-CSharp::CraftingRecipeData
+  recipeName: Molotov Improvisada
+  intelectoComment: 'VOZ [INTELECTO]: "Vidrio fragil mas combustible inflamable. Al estallar en llamas frente a su cara ignorara toda su defensa y lo dejara confundido."'
+  materialA: {fileID: 11400000, guid: 651fd6e8662204f4dadef7cd8618d1a0, type: 2}
+  materialB: {fileID: 11400000, guid: cb4ba7bb6f41c80458a868ba0d50997e, type: 2}
+  damageIgnoringDefense: 30
+  healAmount: 0
+  appliesConfusion: 1

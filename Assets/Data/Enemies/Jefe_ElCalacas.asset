@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cae795ed11ec39345bcc9a2589328c52, type: 3}
+  m_Name: Jefe_ElCalacas
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  enemyName: El Calacas
+  enemyType: 2
+  maxHP: 130
+  attack: 14
+  defense: 5
+  motricidad: 9
+  placeholderColor: {r: 0.48, g: 0.16, b: 0.65, a: 1}
+  enemySprite: {fileID: 4723107735738678597, guid: 95ea710d024db8d4b88957d3d8f09c2a, type: 3}
+  animatorController: {fileID: 9100000, guid: d9812a8267094e946b47aa6a9645492a, type: 2}
+  idleFrames:
+  - {fileID: 4723107735738678597, guid: 95ea710d024db8d4b88957d3d8f09c2a, type: 3}
+  - {fileID: -7385789195546760866, guid: 95ea710d024db8d4b88957d3d8f09c2a, type: 3}
+  - {fileID: 3234629978573100161, guid: 95ea710d024db8d4b88957d3d8f09c2a, type: 3}
+  - {fileID: 6373048116405451881, guid: 95ea710d024db8d4b88957d3d8f09c2a, type: 3}
+  - {fileID: 7264182050183361747, guid: 95ea710d024db8d4b88957d3d8f09c2a, type: 3}
+  - {fileID: -2834552850196481573, guid: 95ea710d024db8d4b88957d3d8f09c2a, type: 3}
+  idleAltFrames:
+  - {fileID: -6188768998144020764, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
+  - {fileID: 8893443453730532091, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
+  - {fileID: -2638866428267449571, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
+  - {fileID: 8150759692636176867, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
+  - {fileID: 7579204882187213897, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
+  - {fileID: -5366198773294189, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
+  - {fileID: 789186541819579165, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
+  - {fileID: 6601435321489166827, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
+  - {fileID: 8295018443228217620, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
+  - {fileID: -7230391701638731982, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
+  - {fileID: -1917972503027654631, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
+  walkFrames:
+  - {fileID: 4035959289877228764, guid: 1055445982dae434f8e207aaeff889c2, type: 3}
+  - {fileID: -982904232830982447, guid: 1055445982dae434f8e207aaeff889c2, type: 3}
+  - {fileID: -350908408369970039, guid: 1055445982dae434f8e207aaeff889c2, type: 3}
+  - {fileID: -5409570386352685021, guid: 1055445982dae434f8e207aaeff889c2, type: 3}
+  - {fileID: 1553940418269799609, guid: 1055445982dae434f8e207aaeff889c2, type: 3}
+  - {fileID: 2416434504916517810, guid: 1055445982dae434f8e207aaeff889c2, type: 3}
+  - {fileID: -6428935122508569504, guid: 1055445982dae434f8e207aaeff889c2, type: 3}
+  - {fileID: 7144598999076838305, guid: 1055445982dae434f8e207aaeff889c2, type: 3}
+  runFrames:
+  - {fileID: 4944230376442633554, guid: 1ba825f42c8fb7c42841c211a0c9f60b, type: 3}
+  - {fileID: -2274363484027164459, guid: 1ba825f42c8fb7c42841c211a0c9f60b, type: 3}
+  - {fileID: 8284087734974297348, guid: 1ba825f42c8fb7c42841c211a0c9f60b, type: 3}
+  - {fileID: 5304202850863732263, guid: 1ba825f42c8fb7c42841c211a0c9f60b, type: 3}
+  - {fileID: 2833043080597125133, guid: 1ba825f42c8fb7c42841c211a0c9f60b, type: 3}
+  - {fileID: -2217414122262695004, guid: 1ba825f42c8fb7c42841c211a0c9f60b, type: 3}
+  - {fileID: -4440497016933152808, guid: 1ba825f42c8fb7c42841c211a0c9f60b, type: 3}
+  - {fileID: 8676454946275842879, guid: 1ba825f42c8fb7c42841c211a0c9f60b, type: 3}
+  attackFrames:
+  - {fileID: -8915327726919978405, guid: 01f4a60b0de8e9940ac6cbf2dc8b8c21, type: 3}
+  - {fileID: 4416717768442454902, guid: 01f4a60b0de8e9940ac6cbf2dc8b8c21, type: 3}
+  - {fileID: -8053095777402275025, guid: 01f4a60b0de8e9940ac6cbf2dc8b8c21, type: 3}
+  - {fileID: 4688295478533005478, guid: 01f4a60b0de8e9940ac6cbf2dc8b8c21, type: 3}
+  - {fileID: 3156989228384878200, guid: 01f4a60b0de8e9940ac6cbf2dc8b8c21, type: 3}
+  attack2Frames:
+  - {fileID: -837275676153275556, guid: be2e27e2c5fa8f442ba76cb022d18834, type: 3}
+  - {fileID: -8404040051688745268, guid: be2e27e2c5fa8f442ba76cb022d18834, type: 3}
+  - {fileID: -3526194569594660169, guid: be2e27e2c5fa8f442ba76cb022d18834, type: 3}
+  attack3Frames: []
+  specialFrames:
+  - {fileID: -9068871714124230211, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
+  - {fileID: -5513262646514174557, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
+  - {fileID: -6198531488440642195, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
+  - {fileID: 6701770154028129973, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
+  - {fileID: 4992887672371064048, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
+  - {fileID: -3184613127404677753, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
+  - {fileID: 8424837872123440092, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
+  - {fileID: 3798137279224281753, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
+  - {fileID: 4026758805451945358, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
+  - {fileID: -7511474146149648203, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
+  - {fileID: 4579650692572802719, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
+  - {fileID: -3165374164444364719, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
+  - {fileID: -1987673134061919338, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
+  hurtFrames:
+  - {fileID: -2048800907179887802, guid: 614c90c7e1db8de43b30f5e901743e24, type: 3}
+  - {fileID: 490842205202310979, guid: 614c90c7e1db8de43b30f5e901743e24, type: 3}
+  - {fileID: -3720053754089064719, guid: 614c90c7e1db8de43b30f5e901743e24, type: 3}
+  deadFrames:
+  - {fileID: 2649847697073447219, guid: 1fd23dae521044246a5205c6c3fa232d, type: 3}
+  - {fileID: -8293461521501190705, guid: 1fd23dae521044246a5205c6c3fa232d, type: 3}
+  - {fileID: -1631342717326862633, guid: 1fd23dae521044246a5205c6c3fa232d, type: 3}
+  - {fileID: -3927913518680497933, guid: 1fd23dae521044246a5205c6c3fa232d, type: 3}
+  halfHealthDialogueLines:
+  - 'EL CALACAS: "Nada mal para un simple repartidor de Santa Felipina... Pero apenas estoy calentando."'
+  - 'VOZ [MUNDO INTERNO]: "El aire se vuelve helado. Ten cuidado, Enrique."'

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b34b36d95d1310409be2bff0578155c, type: 3}
+  m_Name: Item_Torta
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemID: item_torta
+  itemName: Torta Callejera
+  description: Torta de milanesa envuelta en papel estraza. Pesada pero altamente restauradora.
+  combatUseMessage: Enrique devora una torta callejera en segundos y recupera fuerzas!
+  placeholderColor: {r: 0.88, g: 0.65, b: 0.25, a: 1}
+  icon: {fileID: 2493030267779117134, guid: ff3db27107d411848bbe700c75b5c879, type: 3}
+  category: 0
+  healAmount: 60
+  damageAmount: 0
+  curesStatusEffects: 1
+  weaponAttackBonus: 0
+  weaponMotricidadBonus: 0

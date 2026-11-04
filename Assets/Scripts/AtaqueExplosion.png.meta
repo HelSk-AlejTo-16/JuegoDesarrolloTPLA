@@ -1,0 +1,3218 @@
+fileFormatVersion: 2
+guid: 1b319c20ce845c9408fa864904979a23
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4805104254212925340
+    second: AtaqueExplosion_0
+  - first:
+      213: 4898015907611044606
+    second: AtaqueExplosion_1
+  - first:
+      213: 295541956380799291
+    second: AtaqueExplosion_2
+  - first:
+      213: -40149228234815826
+    second: AtaqueExplosion_3
+  - first:
+      213: -3434530380619449357
+    second: AtaqueExplosion_4
+  - first:
+      213: 1491546155692436950
+    second: AtaqueExplosion_5
+  - first:
+      213: -65259994338419590
+    second: AtaqueExplosion_6
+  - first:
+      213: 4657812890559952766
+    second: AtaqueExplosion_7
+  - first:
+      213: -8169265266945994599
+    second: AtaqueExplosion_8
+  - first:
+      213: 163835654345283682
+    second: AtaqueExplosion_9
+  - first:
+      213: 5186851540968094989
+    second: AtaqueExplosion_10
+  - first:
+      213: 5976696896983048402
+    second: AtaqueExplosion_11
+  - first:
+      213: -3291577423076699463
+    second: AtaqueExplosion_12
+  - first:
+      213: -1221869627658081020
+    second: AtaqueExplosion_13
+  - first:
+      213: 2339197857536364439
+    second: AtaqueExplosion_14
+  - first:
+      213: -5960963084075469664
+    second: AtaqueExplosion_15
+  - first:
+      213: -6172272817418451842
+    second: AtaqueExplosion_16
+  - first:
+      213: -7017092493804924344
+    second: AtaqueExplosion_17
+  - first:
+      213: -7420688395281754097
+    second: AtaqueExplosion_18
+  - first:
+      213: -1437361648735163869
+    second: AtaqueExplosion_19
+  - first:
+      213: -1282781427005133700
+    second: AtaqueExplosion_20
+  - first:
+      213: 1616228508795331360
+    second: AtaqueExplosion_21
+  - first:
+      213: -7089306348759638520
+    second: AtaqueExplosion_22
+  - first:
+      213: 3335850665574194778
+    second: AtaqueExplosion_23
+  - first:
+      213: 717604685673857534
+    second: AtaqueExplosion_24
+  - first:
+      213: -5284248912571471198
+    second: AtaqueExplosion_25
+  - first:
+      213: -1728917326683318968
+    second: AtaqueExplosion_26
+  - first:
+      213: 925080605808068640
+    second: AtaqueExplosion_27
+  - first:
+      213: 3910830966147267642
+    second: AtaqueExplosion_28
+  - first:
+      213: -4560478388575625409
+    second: AtaqueExplosion_29
+  - first:
+      213: -1057446222628332774
+    second: AtaqueExplosion_30
+  - first:
+      213: 7191979955976542844
+    second: AtaqueExplosion_31
+  - first:
+      213: -8994422824560321933
+    second: AtaqueExplosion_32
+  - first:
+      213: 8758567739655416195
+    second: AtaqueExplosion_33
+  - first:
+      213: -5183442924003727997
+    second: AtaqueExplosion_34
+  - first:
+      213: 2427312503307664344
+    second: AtaqueExplosion_35
+  - first:
+      213: 6114768085078564335
+    second: AtaqueExplosion_36
+  - first:
+      213: 3812537144404145306
+    second: AtaqueExplosion_37
+  - first:
+      213: -5633482178414517703
+    second: AtaqueExplosion_38
+  - first:
+      213: 530291369017898264
+    second: AtaqueExplosion_39
+  - first:
+      213: 4142398931591686102
+    second: AtaqueExplosion_40
+  - first:
+      213: 8435535186719839510
+    second: AtaqueExplosion_41
+  - first:
+      213: 9154431789388903916
+    second: AtaqueExplosion_42
+  - first:
+      213: -1156140384042976524
+    second: AtaqueExplosion_43
+  - first:
+      213: 406495506608898869
+    second: AtaqueExplosion_44
+  - first:
+      213: -3441180985346557365
+    second: AtaqueExplosion_45
+  - first:
+      213: -6890672627439108613
+    second: AtaqueExplosion_46
+  - first:
+      213: -753113305121962
+    second: AtaqueExplosion_47
+  - first:
+      213: -1864124884436569033
+    second: AtaqueExplosion_48
+  - first:
+      213: 6761726442935988637
+    second: AtaqueExplosion_49
+  - first:
+      213: 1647882343890173428
+    second: AtaqueExplosion_50
+  - first:
+      213: -6190552708786951973
+    second: AtaqueExplosion_51
+  - first:
+      213: -2617138668900470533
+    second: AtaqueExplosion_52
+  - first:
+      213: 7451913938864020291
+    second: AtaqueExplosion_53
+  - first:
+      213: 2977831919876496374
+    second: AtaqueExplosion_54
+  - first:
+      213: -1613000576047021445
+    second: AtaqueExplosion_55
+  - first:
+      213: -5215034770393914325
+    second: AtaqueExplosion_56
+  - first:
+      213: 7853132432793976113
+    second: AtaqueExplosion_57
+  - first:
+      213: -3514761493809307502
+    second: AtaqueExplosion_58
+  - first:
+      213: -8010442777845919715
+    second: AtaqueExplosion_59
+  - first:
+      213: 1312176813275595505
+    second: AtaqueExplosion_60
+  - first:
+      213: -2953921862041597474
+    second: AtaqueExplosion_61
+  - first:
+      213: -3810507014814852777
+    second: AtaqueExplosion_62
+  - first:
+      213: -8049257518392026983
+    second: AtaqueExplosion_63
+  - first:
+      213: -6557275745725045289
+    second: AtaqueExplosion_64
+  - first:
+      213: 2753199661142798417
+    second: AtaqueExplosion_65
+  - first:
+      213: -297612990649849772
+    second: AtaqueExplosion_66
+  - first:
+      213: -6901442423867641641
+    second: AtaqueExplosion_67
+  - first:
+      213: 3122690752301659061
+    second: AtaqueExplosion_68
+  - first:
+      213: -6472101333919194684
+    second: AtaqueExplosion_69
+  - first:
+      213: 3197934510832902664
+    second: AtaqueExplosion_70
+  - first:
+      213: 1396314968379515290
+    second: AtaqueExplosion_71
+  - first:
+      213: 9528897655396648
+    second: AtaqueExplosion_72
+  - first:
+      213: -6156817557207830649
+    second: AtaqueExplosion_73
+  - first:
+      213: 7672629562052864317
+    second: AtaqueExplosion_74
+  - first:
+      213: -8144403721041660922
+    second: AtaqueExplosion_75
+  - first:
+      213: -8768904660315568582
+    second: AtaqueExplosion_76
+  - first:
+      213: 4932801895567113412
+    second: AtaqueExplosion_77
+  - first:
+      213: -3098375880785308331
+    second: AtaqueExplosion_78
+  - first:
+      213: 3085058369830124118
+    second: AtaqueExplosion_79
+  - first:
+      213: 5960856630131980823
+    second: AtaqueExplosion_80
+  - first:
+      213: 1479679645735581314
+    second: AtaqueExplosion_81
+  - first:
+      213: 5448646556675647423
+    second: AtaqueExplosion_82
+  - first:
+      213: -8962420356560567881
+    second: AtaqueExplosion_83
+  - first:
+      213: 8366292754560553713
+    second: AtaqueExplosion_84
+  - first:
+      213: -4511934630325195356
+    second: AtaqueExplosion_85
+  - first:
+      213: 2204446006849509180
+    second: AtaqueExplosion_86
+  - first:
+      213: -212792084771978309
+    second: AtaqueExplosion_87
+  - first:
+      213: 8656394485785371240
+    second: AtaqueExplosion_88
+  - first:
+      213: -6690059738812593186
+    second: AtaqueExplosion_89
+  - first:
+      213: -7615933051490485354
+    second: AtaqueExplosion_90
+  - first:
+      213: -7592056305429514524
+    second: AtaqueExplosion_91
+  - first:
+      213: -1455260889127562238
+    second: AtaqueExplosion_92
+  - first:
+      213: 3178251950244284338
+    second: AtaqueExplosion_93
+  - first:
+      213: 3509202010963389139
+    second: AtaqueExplosion_94
+  - first:
+      213: -1867756982585486492
+    second: AtaqueExplosion_95
+  - first:
+      213: -8534504451704811471
+    second: AtaqueExplosion_96
+  - first:
+      213: -8443417785939586527
+    second: AtaqueExplosion_97
+  - first:
+      213: 3319810430526325001
+    second: AtaqueExplosion_98
+  - first:
+      213: 4377209254609284988
+    second: AtaqueExplosion_99
+  - first:
+      213: -188410421044714369
+    second: AtaqueExplosion_100
+  - first:
+      213: -8184253112473874944
+    second: AtaqueExplosion_101
+  - first:
+      213: -7723874012541447352
+    second: AtaqueExplosion_102
+  - first:
+      213: -8453698747099621747
+    second: AtaqueExplosion_103
+  - first:
+      213: 8648265195911348061
+    second: AtaqueExplosion_104
+  - first:
+      213: -8019034565076828303
+    second: AtaqueExplosion_105
+  - first:
+      213: 2562575429061778832
+    second: AtaqueExplosion_106
+  - first:
+      213: -6497471143290224837
+    second: AtaqueExplosion_107
+  - first:
+      213: 8982796719870826511
+    second: AtaqueExplosion_108
+  - first:
+      213: -85038430393574103
+    second: AtaqueExplosion_109
+  - first:
+      213: 5251925239074373698
+    second: AtaqueExplosion_110
+  - first:
+      213: 3760808085992368550
+    second: AtaqueExplosion_111
+  - first:
+      213: -4605193745493999867
+    second: AtaqueExplosion_112
+  - first:
+      213: 4267774265787133585
+    second: AtaqueExplosion_113
+  - first:
+      213: -1936838343068123586
+    second: AtaqueExplosion_114
+  - first:
+      213: -1489416816088718022
+    second: AtaqueExplosion_115
+  - first:
+      213: 7017197274095840121
+    second: AtaqueExplosion_116
+  - first:
+      213: -9017584495550498038
+    second: AtaqueExplosion_117
+  - first:
+      213: -2020087278506996717
+    second: AtaqueExplosion_118
+  - first:
+      213: 5099112750616670983
+    second: AtaqueExplosion_119
+  - first:
+      213: -5811820384113728706
+    second: AtaqueExplosion_120
+  - first:
+      213: -6059390508701275396
+    second: AtaqueExplosion_121
+  - first:
+      213: -8165275580464516087
+    second: AtaqueExplosion_122
+  - first:
+      213: -2664818111389623379
+    second: AtaqueExplosion_123
+  - first:
+      213: 6048737254998811361
+    second: AtaqueExplosion_124
+  - first:
+      213: -8129321174597145916
+    second: AtaqueExplosion_125
+  - first:
+      213: 3582671712935122555
+    second: AtaqueExplosion_126
+  - first:
+      213: 1445144732675064955
+    second: AtaqueExplosion_127
+  - first:
+      213: 8608054392692373502
+    second: AtaqueExplosion_128
+  - first:
+      213: 8319667788956606203
+    second: AtaqueExplosion_129
+  - first:
+      213: 8878981450361178258
+    second: AtaqueExplosion_130
+  - first:
+      213: 6410011764942957650
+    second: AtaqueExplosion_131
+  - first:
+      213: -6653709479872589524
+    second: AtaqueExplosion_132
+  - first:
+      213: -3334758585701772064
+    second: AtaqueExplosion_133
+  - first:
+      213: 1763219561549735855
+    second: AtaqueExplosion_134
+  - first:
+      213: 6552369259305954062
+    second: AtaqueExplosion_135
+  - first:
+      213: 2773718099779292551
+    second: AtaqueExplosion_136
+  - first:
+      213: -4886747787857810309
+    second: AtaqueExplosion_137
+  - first:
+      213: 6120448370650830098
+    second: AtaqueExplosion_138
+  - first:
+      213: 8926660607104020499
+    second: AtaqueExplosion_139
+  - first:
+      213: -1577834050732369577
+    second: AtaqueExplosion_140
+  - first:
+      213: -2851029042571799111
+    second: AtaqueExplosion_141
+  - first:
+      213: -3543104040834018368
+    second: AtaqueExplosion_142
+  - first:
+      213: 6215744816560655636
+    second: AtaqueExplosion_143
+  - first:
+      213: -5846594647138448813
+    second: AtaqueExplosion_144
+  - first:
+      213: 4388279250607673792
+    second: AtaqueExplosion_145
+  - first:
+      213: 6676187305324444752
+    second: AtaqueExplosion_146
+  - first:
+      213: 7233266877009811746
+    second: AtaqueExplosion_147
+  - first:
+      213: -2040849311391161022
+    second: AtaqueExplosion_148
+  - first:
+      213: -7697804615840994543
+    second: AtaqueExplosion_149
+  - first:
+      213: -7982073239814605544
+    second: AtaqueExplosion_150
+  - first:
+      213: 742091381283743942
+    second: AtaqueExplosion_151
+  - first:
+      213: -4788872992201649301
+    second: AtaqueExplosion_152
+  - first:
+      213: -3672253399993643430
+    second: AtaqueExplosion_153
+  - first:
+      213: -5214305206690408334
+    second: AtaqueExplosion_154
+  - first:
+      213: -4918589565913262366
+    second: AtaqueExplosion_155
+  - first:
+      213: -1714564828390757003
+    second: AtaqueExplosion_156
+  - first:
+      213: 2896166969788754014
+    second: AtaqueExplosion_157
+  - first:
+      213: 8246220817442866718
+    second: AtaqueExplosion_158
+  - first:
+      213: -4753083470993827647
+    second: AtaqueExplosion_159
+  - first:
+      213: -8190462153558145917
+    second: AtaqueExplosion_160
+  - first:
+      213: -8537357022094325219
+    second: AtaqueExplosion_161
+  - first:
+      213: 4681283223367269161
+    second: AtaqueExplosion_162
+  - first:
+      213: -2276041375839660215
+    second: AtaqueExplosion_163
+  - first:
+      213: -5996816262384628576
+    second: AtaqueExplosion_164
+  - first:
+      213: 7889470411308251907
+    second: AtaqueExplosion_165
+  - first:
+      213: 25154539870064551
+    second: AtaqueExplosion_166
+  - first:
+      213: 5753791053388878807
+    second: AtaqueExplosion_167
+  - first:
+      213: 6408705130428058378
+    second: AtaqueExplosion_168
+  - first:
+      213: -5144518336934529433
+    second: AtaqueExplosion_169
+  - first:
+      213: -1824870105242775981
+    second: AtaqueExplosion_170
+  - first:
+      213: -3771520937631495362
+    second: AtaqueExplosion_171
+  - first:
+      213: 8278289947618903477
+    second: AtaqueExplosion_172
+  - first:
+      213: -1623101085312475474
+    second: AtaqueExplosion_173
+  - first:
+      213: -8979549168978822483
+    second: AtaqueExplosion_174
+  - first:
+      213: -2072727155530190501
+    second: AtaqueExplosion_175
+  - first:
+      213: 3905131564793922332
+    second: AtaqueExplosion_176
+  - first:
+      213: 25249787241145877
+    second: AtaqueExplosion_177
+  - first:
+      213: -1889994189777371214
+    second: AtaqueExplosion_178
+  - first:
+      213: -1738997653939142865
+    second: AtaqueExplosion_179
+  - first:
+      213: 7824565618301855884
+    second: AtaqueExplosion_Orange_0
+  - first:
+      213: -1205153233657138720
+    second: AtaqueExplosion_Orange_1
+  - first:
+      213: 3224849192916231285
+    second: AtaqueExplosion_Orange_2
+  - first:
+      213: 7677690905158791731
+    second: AtaqueExplosion_Orange_3
+  - first:
+      213: 1472304860338496306
+    second: AtaqueExplosion_Orange_4
+  - first:
+      213: -3157436123480219070
+    second: AtaqueExplosion_Orange_5
+  - first:
+      213: 2435346523189644607
+    second: AtaqueExplosion_Orange_6
+  - first:
+      213: -5291094687736881267
+    second: AtaqueExplosion_Orange_7
+  - first:
+      213: -6586142836222118898
+    second: AtaqueExplosion_Orange_8
+  - first:
+      213: 7529705200629121155
+    second: AtaqueExplosion_Orange_9
+  - first:
+      213: 7861419495724857809
+    second: AtaqueExplosion_Purple_0
+  - first:
+      213: -7437482992966381788
+    second: AtaqueExplosion_Purple_1
+  - first:
+      213: 396169248788828575
+    second: AtaqueExplosion_Purple_2
+  - first:
+      213: -1407330429357696660
+    second: AtaqueExplosion_Purple_3
+  - first:
+      213: 3416681001798563033
+    second: AtaqueExplosion_Purple_4
+  - first:
+      213: 2336464258007187857
+    second: AtaqueExplosion_Purple_5
+  - first:
+      213: 9163030066494783923
+    second: AtaqueExplosion_Purple_6
+  - first:
+      213: -8999740785698678360
+    second: AtaqueExplosion_Purple_7
+  - first:
+      213: 4376054114101435948
+    second: AtaqueExplosion_Purple_8
+  - first:
+      213: 4597148133001668855
+    second: AtaqueExplosion_Purple_9
+  - first:
+      213: -7404448274090094814
+    second: AtaqueExplosion_Blue_0
+  - first:
+      213: -5292361405163893048
+    second: AtaqueExplosion_Blue_1
+  - first:
+      213: -3943801519450331906
+    second: AtaqueExplosion_Blue_2
+  - first:
+      213: -7227045604086019744
+    second: AtaqueExplosion_Blue_3
+  - first:
+      213: 5651740152310973582
+    second: AtaqueExplosion_Blue_4
+  - first:
+      213: 612603913939573027
+    second: AtaqueExplosion_Blue_5
+  - first:
+      213: -1432701514198054555
+    second: AtaqueExplosion_Blue_6
+  - first:
+      213: 227587796220193463
+    second: AtaqueExplosion_Blue_7
+  - first:
+      213: 5317174739057534550
+    second: AtaqueExplosion_Blue_8
+  - first:
+      213: 2001115603633517309
+    second: AtaqueExplosion_Blue_9
+  - first:
+      213: 3291911519801125995
+    second: AtaqueExplosion_Green_0
+  - first:
+      213: 960429639981198652
+    second: AtaqueExplosion_Green_1
+  - first:
+      213: -3578040196241116474
+    second: AtaqueExplosion_Green_2
+  - first:
+      213: -5951014941819915304
+    second: AtaqueExplosion_Green_3
+  - first:
+      213: -332582014101691124
+    second: AtaqueExplosion_Green_4
+  - first:
+      213: 2434387484895313610
+    second: AtaqueExplosion_Green_5
+  - first:
+      213: 8945609513524083033
+    second: AtaqueExplosion_Green_6
+  - first:
+      213: -938521782945761472
+    second: AtaqueExplosion_Green_7
+  - first:
+      213: 1714684092471204029
+    second: AtaqueExplosion_Green_8
+  - first:
+      213: -5131117647872722369
+    second: AtaqueExplosion_Green_9
+  - first:
+      213: 3353966617435288291
+    second: AtaqueExplosion_Brown_0
+  - first:
+      213: -2816474735566545939
+    second: AtaqueExplosion_Brown_1
+  - first:
+      213: -6029648729718962485
+    second: AtaqueExplosion_Brown_2
+  - first:
+      213: -8017450493918440439
+    second: AtaqueExplosion_Brown_3
+  - first:
+      213: -1349397872947885751
+    second: AtaqueExplosion_Brown_4
+  - first:
+      213: -7092016084292749340
+    second: AtaqueExplosion_Brown_5
+  - first:
+      213: -5068253483006069583
+    second: AtaqueExplosion_Brown_6
+  - first:
+      213: 1657633739279520574
+    second: AtaqueExplosion_Brown_7
+  - first:
+      213: -1662095870437717382
+    second: AtaqueExplosion_Brown_8
+  - first:
+      213: 8529744025969544691
+    second: AtaqueExplosion_Brown_9
+  - first:
+      213: -1175118713788082671
+    second: AtaqueExplosion_Gray_0
+  - first:
+      213: 6037619670351786050
+    second: AtaqueExplosion_Gray_1
+  - first:
+      213: 7613058550481189206
+    second: AtaqueExplosion_Gray_2
+  - first:
+      213: -6225282888740397940
+    second: AtaqueExplosion_Gray_3
+  - first:
+      213: -3103026875339779263
+    second: AtaqueExplosion_Gray_4
+  - first:
+      213: -8582655890782815124
+    second: AtaqueExplosion_Gray_5
+  - first:
+      213: 6389295887647412139
+    second: AtaqueExplosion_Gray_6
+  - first:
+      213: 7211360981330061686
+    second: AtaqueExplosion_Gray_7
+  - first:
+      213: 2430420360559234726
+    second: AtaqueExplosion_Gray_8
+  - first:
+      213: 5501553545415758872
+    second: AtaqueExplosion_Gray_9
+  - first:
+      213: -2884694661852465565
+    second: AtaqueExplosion_Pink_0
+  - first:
+      213: -185324033312271945
+    second: AtaqueExplosion_Pink_1
+  - first:
+      213: 7233853642294575335
+    second: AtaqueExplosion_Pink_2
+  - first:
+      213: -3104070190701657616
+    second: AtaqueExplosion_Pink_3
+  - first:
+      213: -1071745656646806612
+    second: AtaqueExplosion_Pink_4
+  - first:
+      213: 6577758868883380720
+    second: AtaqueExplosion_Pink_5
+  - first:
+      213: 589497204257022916
+    second: AtaqueExplosion_Pink_6
+  - first:
+      213: 1547966857603378559
+    second: AtaqueExplosion_Pink_7
+  - first:
+      213: 1568062558883233169
+    second: AtaqueExplosion_Pink_8
+  - first:
+      213: 4010235887203815768
+    second: AtaqueExplosion_Pink_9
+  - first:
+      213: -1172191403412423493
+    second: AtaqueExplosion_Red_0
+  - first:
+      213: -958094915314971483
+    second: AtaqueExplosion_Red_1
+  - first:
+      213: 2946202806525035655
+    second: AtaqueExplosion_Red_2
+  - first:
+      213: 5438762319154253072
+    second: AtaqueExplosion_Red_3
+  - first:
+      213: -601657565729097034
+    second: AtaqueExplosion_Red_4
+  - first:
+      213: -7310731190618744293
+    second: AtaqueExplosion_Red_5
+  - first:
+      213: 2384228642555904707
+    second: AtaqueExplosion_Red_6
+  - first:
+      213: 7686753883499110322
+    second: AtaqueExplosion_Red_7
+  - first:
+      213: -4837616806610794698
+    second: AtaqueExplosion_Red_8
+  - first:
+      213: -6745501961819457728
+    second: AtaqueExplosion_Red_9
+  - first:
+      213: -4270181378891537896
+    second: AtaqueExplosion_Shadow_0
+  - first:
+      213: 8958234466896939096
+    second: AtaqueExplosion_Shadow_1
+  - first:
+      213: 689865691048084610
+    second: AtaqueExplosion_Shadow_2
+  - first:
+      213: 6888149631314924493
+    second: AtaqueExplosion_Shadow_3
+  - first:
+      213: 6103010655943685249
+    second: AtaqueExplosion_Shadow_4
+  - first:
+      213: -3739353260267502284
+    second: AtaqueExplosion_Shadow_5
+  - first:
+      213: -7718359878741400322
+    second: AtaqueExplosion_Shadow_6
+  - first:
+      213: 226507474488130396
+    second: AtaqueExplosion_Shadow_7
+  - first:
+      213: 7684266002814907590
+    second: AtaqueExplosion_Shadow_8
+  - first:
+      213: 5757268965682646493
+    second: AtaqueExplosion_Shadow_9
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 1
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: AtaqueExplosion_Orange_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c88ed9839f0769c60800000000000000
+      internalID: 7824565618301855884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Orange_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 512
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e1f3f7e48f664fe0800000000000000
+      internalID: -1205153233657138720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Orange_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 512
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5742af54147f0cc20800000000000000
+      internalID: 3224849192916231285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Orange_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 512
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 332bc393333ac8a60800000000000000
+      internalID: 7677690905158791731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Orange_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 512
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 233ae89487dae6410800000000000000
+      internalID: 1472304860338496306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Orange_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 512
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 242a9f213988e24d0800000000000000
+      internalID: -3157436123480219070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Orange_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 512
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3d83b382c61cc120800000000000000
+      internalID: 2435346523189644607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Orange_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 512
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8f9c783a614296b0800000000000000
+      internalID: -5291094687736881267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Orange_8
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 512
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e043ffe3cf15994a0800000000000000
+      internalID: -6586142836222118898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Orange_9
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 512
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38009e26cf2ee7860800000000000000
+      internalID: 7529705200629121155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Purple_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 448
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d9b209316f591d60800000000000000
+      internalID: 7861419495724857809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Purple_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 448
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42fca359f90c8c890800000000000000
+      internalID: -7437482992966381788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Purple_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 448
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f91ddf035d97f7500800000000000000
+      internalID: 396169248788828575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Purple_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 448
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c69598c4e68287ce0800000000000000
+      internalID: -1407330429357696660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Purple_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 448
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d4770fc44d7a6f20800000000000000
+      internalID: 3416681001798563033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Purple_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 448
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1914ae01dd9cc6020800000000000000
+      internalID: 2336464258007187857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Purple_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 448
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b145a33c4f992f70800000000000000
+      internalID: 9163030066494783923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Purple_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 448
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a9d5d5207f7a1380800000000000000
+      internalID: -8999740785698678360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Purple_8
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 448
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2e17ec080edabc30800000000000000
+      internalID: 4376054114101435948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Purple_9
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 448
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f82a67ced95ccf30800000000000000
+      internalID: 4597148133001668855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Blue_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22f0b11768d1e3990800000000000000
+      internalID: -7404448274090094814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Blue_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 384
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ce08369751cd86b0800000000000000
+      internalID: -5292361405163893048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Blue_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 384
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef46488c96dc449c0800000000000000
+      internalID: -3943801519450331906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Blue_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 384
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06987e8405064bb90800000000000000
+      internalID: -7227045604086019744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Blue_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 384
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e84ce4d69b30f6e40800000000000000
+      internalID: 5651740152310973582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Blue_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 384
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 329d1669308608800800000000000000
+      internalID: 612603913939573027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Blue_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 384
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5698f0940950e1ce0800000000000000
+      internalID: -1432701514198054555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Blue_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 384
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ba2be415ed882300800000000000000
+      internalID: 227587796220193463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Blue_8
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 384
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 656643ae0466ac940800000000000000
+      internalID: 5317174739057534550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Blue_9
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 384
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df231150a0465cb10800000000000000
+      internalID: 2001115603633517309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Green_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 320
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6c23c106183fad20800000000000000
+      internalID: 3291911519801125995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Green_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 320
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3de5d24ba1245d00800000000000000
+      internalID: 960429639981198652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Green_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 320
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c2baf6166f385ec0800000000000000
+      internalID: -3578040196241116474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Green_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 320
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d338c3b07fb96da0800000000000000
+      internalID: -5951014941819915304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Green_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 320
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c05e8c69b6e626bf0800000000000000
+      internalID: -332582014101691124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Green_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 320
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ace77d2058ea8c120800000000000000
+      internalID: 2434387484895313610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Green_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 320
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95935f8e470352c70800000000000000
+      internalID: 8945609513524083033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Green_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 320
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0473d813963b9f2f0800000000000000
+      internalID: -938521782945761472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Green_8
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 320
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db852c9e818cbc710800000000000000
+      internalID: 1714684092471204029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Green_9
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 320
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3afec16fab9ac8b0800000000000000
+      internalID: -5131117647872722369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Brown_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e2bfb45edeab8e20800000000000000
+      internalID: 3353966617435288291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Brown_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: deb91bb762fd9e8d0800000000000000
+      internalID: -2816474735566545939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Brown_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc647b04d62625ca0800000000000000
+      internalID: -6029648729718962485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Brown_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90416b9014b4cb090800000000000000
+      internalID: -8017450493918440439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Brown_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9490642b8c9f54de0800000000000000
+      internalID: -1349397872947885751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Brown_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e7bf5a42f8149d90800000000000000
+      internalID: -7092016084292749340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Brown_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b479c95f42f9a9b0800000000000000
+      internalID: -5068253483006069583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Brown_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3355757a19110710800000000000000
+      internalID: 1657633739279520574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Brown_8
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7a8aebac9c0fe8e0800000000000000
+      internalID: -1662095870437717382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Brown_9
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3fdcce4cffcbf5670800000000000000
+      internalID: 8529744025969544691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Gray_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1165fbf71c321bfe0800000000000000
+      internalID: -1175118713788082671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Gray_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 240ba3cf91fe9c350800000000000000
+      internalID: 6037619670351786050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Gray_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6597eab7a6407a960800000000000000
+      internalID: 7613058550481189206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Gray_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8c9f46123a5b99a0800000000000000
+      internalID: -6225282888740397940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Gray_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 143d1e65f75dfe4d0800000000000000
+      internalID: -3103026875339779263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Gray_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6cf970b0f744e880800000000000000
+      internalID: -8582655890782815124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Gray_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: baf861402c65ba850800000000000000
+      internalID: 6389295887647412139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Gray_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6796a47ea96e31460800000000000000
+      internalID: 7211360981330061686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Gray_8
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ae8206e0769ab120800000000000000
+      internalID: 2430420360559234726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Gray_9
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8141c431dc1795c40800000000000000
+      internalID: 5501553545415758872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Pink_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36671d22d7187f7d0800000000000000
+      internalID: -2884694661852465565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Pink_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b1541a06c89d6df0800000000000000
+      internalID: -185324033312271945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Pink_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e04222af8fc36460800000000000000
+      internalID: 7233853642294575335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Pink_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f1495d8b902ce4d0800000000000000
+      internalID: -3104070190701657616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Pink_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca3dffde0056021f0800000000000000
+      internalID: -1071745656646806612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Pink_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f918fd37d4e84b50800000000000000
+      internalID: 6577758868883380720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Pink_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c363df75905e2800800000000000000
+      internalID: 589497204257022916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Pink_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7de68fc7ab7b7510800000000000000
+      internalID: 1547966857603378559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Pink_8
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19d33dfd690e2c510800000000000000
+      internalID: 1568062558883233169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Pink_9
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8519e42da4837a730800000000000000
+      internalID: 4010235887203815768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Red_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbcf5de012a8bbfe0800000000000000
+      internalID: -1172191403412423493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Red_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ac0b8f20c924b2f0800000000000000
+      internalID: -958094915314971483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Red_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7840f27c7d303e820800000000000000
+      internalID: 2946202806525035655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Red_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01d08f2738d5a7b40800000000000000
+      internalID: 5438762319154253072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Red_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ba7a46b1ab76a7f0800000000000000
+      internalID: -601657565729097034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Red_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1a1dce47b01b8a90800000000000000
+      internalID: -7310731190618744293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Red_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c24bd6715b761120800000000000000
+      internalID: 2384228642555904707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Red_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2bf91dd4ee5dcaa60800000000000000
+      internalID: 7686753883499110322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Red_8
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 637018a25255ddcb0800000000000000
+      internalID: -4837616806610794698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Red_9
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 047fc0674b92362a0800000000000000
+      internalID: -6745501961819457728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Shadow_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 812aea809a44db4c0800000000000000
+      internalID: -4270181378891537896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Shadow_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8588d0ee8ca025c70800000000000000
+      internalID: 8958234466896939096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Shadow_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28486a1e035e29900800000000000000
+      internalID: 689865691048084610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Shadow_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc3934e389f979f50800000000000000
+      internalID: 6888149631314924493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Shadow_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18472ff3bdf32b450800000000000000
+      internalID: 6103010655943685249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Shadow_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4358e0095062b1cc0800000000000000
+      internalID: -3739353260267502284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Shadow_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef4edfa7590e2e490800000000000000
+      internalID: -7718359878741400322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Shadow_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5bf5d31957b42300800000000000000
+      internalID: 226507474488130396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Shadow_8
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c4b461773ff3aa60800000000000000
+      internalID: 7684266002814907590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtaqueExplosion_Shadow_9
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddd05e7fe9de5ef40800000000000000
+      internalID: 5757268965682646493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      AtaqueExplosion_0: 4805104254212925340
+      AtaqueExplosion_1: 4898015907611044606
+      AtaqueExplosion_10: 5186851540968094989
+      AtaqueExplosion_100: -188410421044714369
+      AtaqueExplosion_101: -8184253112473874944
+      AtaqueExplosion_102: -7723874012541447352
+      AtaqueExplosion_103: -8453698747099621747
+      AtaqueExplosion_104: 8648265195911348061
+      AtaqueExplosion_105: -8019034565076828303
+      AtaqueExplosion_106: 2562575429061778832
+      AtaqueExplosion_107: -6497471143290224837
+      AtaqueExplosion_108: 8982796719870826511
+      AtaqueExplosion_109: -85038430393574103
+      AtaqueExplosion_11: 5976696896983048402
+      AtaqueExplosion_110: 5251925239074373698
+      AtaqueExplosion_111: 3760808085992368550
+      AtaqueExplosion_112: -4605193745493999867
+      AtaqueExplosion_113: 4267774265787133585
+      AtaqueExplosion_114: -1936838343068123586
+      AtaqueExplosion_115: -1489416816088718022
+      AtaqueExplosion_116: 7017197274095840121
+      AtaqueExplosion_117: -9017584495550498038
+      AtaqueExplosion_118: -2020087278506996717
+      AtaqueExplosion_119: 5099112750616670983
+      AtaqueExplosion_12: -3291577423076699463
+      AtaqueExplosion_120: -5811820384113728706
+      AtaqueExplosion_121: -6059390508701275396
+      AtaqueExplosion_122: -8165275580464516087
+      AtaqueExplosion_123: -2664818111389623379
+      AtaqueExplosion_124: 6048737254998811361
+      AtaqueExplosion_125: -8129321174597145916
+      AtaqueExplosion_126: 3582671712935122555
+      AtaqueExplosion_127: 1445144732675064955
+      AtaqueExplosion_128: 8608054392692373502
+      AtaqueExplosion_129: 8319667788956606203
+      AtaqueExplosion_13: -1221869627658081020
+      AtaqueExplosion_130: 8878981450361178258
+      AtaqueExplosion_131: 6410011764942957650
+      AtaqueExplosion_132: -6653709479872589524
+      AtaqueExplosion_133: -3334758585701772064
+      AtaqueExplosion_134: 1763219561549735855
+      AtaqueExplosion_135: 6552369259305954062
+      AtaqueExplosion_136: 2773718099779292551
+      AtaqueExplosion_137: -4886747787857810309
+      AtaqueExplosion_138: 6120448370650830098
+      AtaqueExplosion_139: 8926660607104020499
+      AtaqueExplosion_14: 2339197857536364439
+      AtaqueExplosion_140: -1577834050732369577
+      AtaqueExplosion_141: -2851029042571799111
+      AtaqueExplosion_142: -3543104040834018368
+      AtaqueExplosion_143: 6215744816560655636
+      AtaqueExplosion_144: -5846594647138448813
+      AtaqueExplosion_145: 4388279250607673792
+      AtaqueExplosion_146: 6676187305324444752
+      AtaqueExplosion_147: 7233266877009811746
+      AtaqueExplosion_148: -2040849311391161022
+      AtaqueExplosion_149: -7697804615840994543
+      AtaqueExplosion_15: -5960963084075469664
+      AtaqueExplosion_150: -7982073239814605544
+      AtaqueExplosion_151: 742091381283743942
+      AtaqueExplosion_152: -4788872992201649301
+      AtaqueExplosion_153: -3672253399993643430
+      AtaqueExplosion_154: -5214305206690408334
+      AtaqueExplosion_155: -4918589565913262366
+      AtaqueExplosion_156: -1714564828390757003
+      AtaqueExplosion_157: 2896166969788754014
+      AtaqueExplosion_158: 8246220817442866718
+      AtaqueExplosion_159: -4753083470993827647
+      AtaqueExplosion_16: -6172272817418451842
+      AtaqueExplosion_160: -8190462153558145917
+      AtaqueExplosion_161: -8537357022094325219
+      AtaqueExplosion_162: 4681283223367269161
+      AtaqueExplosion_163: -2276041375839660215
+      AtaqueExplosion_164: -5996816262384628576
+      AtaqueExplosion_165: 7889470411308251907
+      AtaqueExplosion_166: 25154539870064551
+      AtaqueExplosion_167: 5753791053388878807
+      AtaqueExplosion_168: 6408705130428058378
+      AtaqueExplosion_169: -5144518336934529433
+      AtaqueExplosion_17: -7017092493804924344
+      AtaqueExplosion_170: -1824870105242775981
+      AtaqueExplosion_171: -3771520937631495362
+      AtaqueExplosion_172: 8278289947618903477
+      AtaqueExplosion_173: -1623101085312475474
+      AtaqueExplosion_174: -8979549168978822483
+      AtaqueExplosion_175: -2072727155530190501
+      AtaqueExplosion_176: 3905131564793922332
+      AtaqueExplosion_177: 25249787241145877
+      AtaqueExplosion_178: -1889994189777371214
+      AtaqueExplosion_179: -1738997653939142865
+      AtaqueExplosion_18: -7420688395281754097
+      AtaqueExplosion_19: -1437361648735163869
+      AtaqueExplosion_2: 295541956380799291
+      AtaqueExplosion_20: -1282781427005133700
+      AtaqueExplosion_21: 1616228508795331360
+      AtaqueExplosion_22: -7089306348759638520
+      AtaqueExplosion_23: 3335850665574194778
+      AtaqueExplosion_24: 717604685673857534
+      AtaqueExplosion_25: -5284248912571471198
+      AtaqueExplosion_26: -1728917326683318968
+      AtaqueExplosion_27: 925080605808068640
+      AtaqueExplosion_28: 3910830966147267642
+      AtaqueExplosion_29: -4560478388575625409
+      AtaqueExplosion_3: -40149228234815826
+      AtaqueExplosion_30: -1057446222628332774
+      AtaqueExplosion_31: 7191979955976542844
+      AtaqueExplosion_32: -8994422824560321933
+      AtaqueExplosion_33: 8758567739655416195
+      AtaqueExplosion_34: -5183442924003727997
+      AtaqueExplosion_35: 2427312503307664344
+      AtaqueExplosion_36: 6114768085078564335
+      AtaqueExplosion_37: 3812537144404145306
+      AtaqueExplosion_38: -5633482178414517703
+      AtaqueExplosion_39: 530291369017898264
+      AtaqueExplosion_4: -3434530380619449357
+      AtaqueExplosion_40: 4142398931591686102
+      AtaqueExplosion_41: 8435535186719839510
+      AtaqueExplosion_42: 9154431789388903916
+      AtaqueExplosion_43: -1156140384042976524
+      AtaqueExplosion_44: 406495506608898869
+      AtaqueExplosion_45: -3441180985346557365
+      AtaqueExplosion_46: -6890672627439108613
+      AtaqueExplosion_47: -753113305121962
+      AtaqueExplosion_48: -1864124884436569033
+      AtaqueExplosion_49: 6761726442935988637
+      AtaqueExplosion_5: 1491546155692436950
+      AtaqueExplosion_50: 1647882343890173428
+      AtaqueExplosion_51: -6190552708786951973
+      AtaqueExplosion_52: -2617138668900470533
+      AtaqueExplosion_53: 7451913938864020291
+      AtaqueExplosion_54: 2977831919876496374
+      AtaqueExplosion_55: -1613000576047021445
+      AtaqueExplosion_56: -5215034770393914325
+      AtaqueExplosion_57: 7853132432793976113
+      AtaqueExplosion_58: -3514761493809307502
+      AtaqueExplosion_59: -8010442777845919715
+      AtaqueExplosion_6: -65259994338419590
+      AtaqueExplosion_60: 1312176813275595505
+      AtaqueExplosion_61: -2953921862041597474
+      AtaqueExplosion_62: -3810507014814852777
+      AtaqueExplosion_63: -8049257518392026983
+      AtaqueExplosion_64: -6557275745725045289
+      AtaqueExplosion_65: 2753199661142798417
+      AtaqueExplosion_66: -297612990649849772
+      AtaqueExplosion_67: -6901442423867641641
+      AtaqueExplosion_68: 3122690752301659061
+      AtaqueExplosion_69: -6472101333919194684
+      AtaqueExplosion_7: 4657812890559952766
+      AtaqueExplosion_70: 3197934510832902664
+      AtaqueExplosion_71: 1396314968379515290
+      AtaqueExplosion_72: 9528897655396648
+      AtaqueExplosion_73: -6156817557207830649
+      AtaqueExplosion_74: 7672629562052864317
+      AtaqueExplosion_75: -8144403721041660922
+      AtaqueExplosion_76: -8768904660315568582
+      AtaqueExplosion_77: 4932801895567113412
+      AtaqueExplosion_78: -3098375880785308331
+      AtaqueExplosion_79: 3085058369830124118
+      AtaqueExplosion_8: -8169265266945994599
+      AtaqueExplosion_80: 5960856630131980823
+      AtaqueExplosion_81: 1479679645735581314
+      AtaqueExplosion_82: 5448646556675647423
+      AtaqueExplosion_83: -8962420356560567881
+      AtaqueExplosion_84: 8366292754560553713
+      AtaqueExplosion_85: -4511934630325195356
+      AtaqueExplosion_86: 2204446006849509180
+      AtaqueExplosion_87: -212792084771978309
+      AtaqueExplosion_88: 8656394485785371240
+      AtaqueExplosion_89: -6690059738812593186
+      AtaqueExplosion_9: 163835654345283682
+      AtaqueExplosion_90: -7615933051490485354
+      AtaqueExplosion_91: -7592056305429514524
+      AtaqueExplosion_92: -1455260889127562238
+      AtaqueExplosion_93: 3178251950244284338
+      AtaqueExplosion_94: 3509202010963389139
+      AtaqueExplosion_95: -1867756982585486492
+      AtaqueExplosion_96: -8534504451704811471
+      AtaqueExplosion_97: -8443417785939586527
+      AtaqueExplosion_98: 3319810430526325001
+      AtaqueExplosion_99: 4377209254609284988
+      AtaqueExplosion_Blue_0: -7404448274090094814
+      AtaqueExplosion_Blue_1: -5292361405163893048
+      AtaqueExplosion_Blue_2: -3943801519450331906
+      AtaqueExplosion_Blue_3: -7227045604086019744
+      AtaqueExplosion_Blue_4: 5651740152310973582
+      AtaqueExplosion_Blue_5: 612603913939573027
+      AtaqueExplosion_Blue_6: -1432701514198054555
+      AtaqueExplosion_Blue_7: 227587796220193463
+      AtaqueExplosion_Blue_8: 5317174739057534550
+      AtaqueExplosion_Blue_9: 2001115603633517309
+      AtaqueExplosion_Brown_0: 3353966617435288291
+      AtaqueExplosion_Brown_1: -2816474735566545939
+      AtaqueExplosion_Brown_2: -6029648729718962485
+      AtaqueExplosion_Brown_3: -8017450493918440439
+      AtaqueExplosion_Brown_4: -1349397872947885751
+      AtaqueExplosion_Brown_5: -7092016084292749340
+      AtaqueExplosion_Brown_6: -5068253483006069583
+      AtaqueExplosion_Brown_7: 1657633739279520574
+      AtaqueExplosion_Brown_8: -1662095870437717382
+      AtaqueExplosion_Brown_9: 8529744025969544691
+      AtaqueExplosion_Gray_0: -1175118713788082671
+      AtaqueExplosion_Gray_1: 6037619670351786050
+      AtaqueExplosion_Gray_2: 7613058550481189206
+      AtaqueExplosion_Gray_3: -6225282888740397940
+      AtaqueExplosion_Gray_4: -3103026875339779263
+      AtaqueExplosion_Gray_5: -8582655890782815124
+      AtaqueExplosion_Gray_6: 6389295887647412139
+      AtaqueExplosion_Gray_7: 7211360981330061686
+      AtaqueExplosion_Gray_8: 2430420360559234726
+      AtaqueExplosion_Gray_9: 5501553545415758872
+      AtaqueExplosion_Green_0: 3291911519801125995
+      AtaqueExplosion_Green_1: 960429639981198652
+      AtaqueExplosion_Green_2: -3578040196241116474
+      AtaqueExplosion_Green_3: -5951014941819915304
+      AtaqueExplosion_Green_4: -332582014101691124
+      AtaqueExplosion_Green_5: 2434387484895313610
+      AtaqueExplosion_Green_6: 8945609513524083033
+      AtaqueExplosion_Green_7: -938521782945761472
+      AtaqueExplosion_Green_8: 1714684092471204029
+      AtaqueExplosion_Green_9: -5131117647872722369
+      AtaqueExplosion_Orange_0: 7824565618301855884
+      AtaqueExplosion_Orange_1: -1205153233657138720
+      AtaqueExplosion_Orange_2: 3224849192916231285
+      AtaqueExplosion_Orange_3: 7677690905158791731
+      AtaqueExplosion_Orange_4: 1472304860338496306
+      AtaqueExplosion_Orange_5: -3157436123480219070
+      AtaqueExplosion_Orange_6: 2435346523189644607
+      AtaqueExplosion_Orange_7: -5291094687736881267
+      AtaqueExplosion_Orange_8: -6586142836222118898
+      AtaqueExplosion_Orange_9: 7529705200629121155
+      AtaqueExplosion_Pink_0: -2884694661852465565
+      AtaqueExplosion_Pink_1: -185324033312271945
+      AtaqueExplosion_Pink_2: 7233853642294575335
+      AtaqueExplosion_Pink_3: -3104070190701657616
+      AtaqueExplosion_Pink_4: -1071745656646806612
+      AtaqueExplosion_Pink_5: 6577758868883380720
+      AtaqueExplosion_Pink_6: 589497204257022916
+      AtaqueExplosion_Pink_7: 1547966857603378559
+      AtaqueExplosion_Pink_8: 1568062558883233169
+      AtaqueExplosion_Pink_9: 4010235887203815768
+      AtaqueExplosion_Purple_0: 7861419495724857809
+      AtaqueExplosion_Purple_1: -7437482992966381788
+      AtaqueExplosion_Purple_2: 396169248788828575
+      AtaqueExplosion_Purple_3: -1407330429357696660
+      AtaqueExplosion_Purple_4: 3416681001798563033
+      AtaqueExplosion_Purple_5: 2336464258007187857
+      AtaqueExplosion_Purple_6: 9163030066494783923
+      AtaqueExplosion_Purple_7: -8999740785698678360
+      AtaqueExplosion_Purple_8: 4376054114101435948
+      AtaqueExplosion_Purple_9: 4597148133001668855
+      AtaqueExplosion_Red_0: -1172191403412423493
+      AtaqueExplosion_Red_1: -958094915314971483
+      AtaqueExplosion_Red_2: 2946202806525035655
+      AtaqueExplosion_Red_3: 5438762319154253072
+      AtaqueExplosion_Red_4: -601657565729097034
+      AtaqueExplosion_Red_5: -7310731190618744293
+      AtaqueExplosion_Red_6: 2384228642555904707
+      AtaqueExplosion_Red_7: 7686753883499110322
+      AtaqueExplosion_Red_8: -4837616806610794698
+      AtaqueExplosion_Red_9: -6745501961819457728
+      AtaqueExplosion_Shadow_0: -4270181378891537896
+      AtaqueExplosion_Shadow_1: 8958234466896939096
+      AtaqueExplosion_Shadow_2: 689865691048084610
+      AtaqueExplosion_Shadow_3: 6888149631314924493
+      AtaqueExplosion_Shadow_4: 6103010655943685249
+      AtaqueExplosion_Shadow_5: -3739353260267502284
+      AtaqueExplosion_Shadow_6: -7718359878741400322
+      AtaqueExplosion_Shadow_7: 226507474488130396
+      AtaqueExplosion_Shadow_8: 7684266002814907590
+      AtaqueExplosion_Shadow_9: 5757268965682646493
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
