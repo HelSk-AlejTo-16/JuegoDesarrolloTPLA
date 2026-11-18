@@ -24,6 +24,7 @@ public enum BattleState
 	START,
 	DIALOGUE,
 	PLAYERTURN,
+	DETECTIVETURN,
 	PLAYING_GIF,
 	ENEMYTURN,
 	WON,
@@ -92,6 +93,12 @@ public class CombatEnemyInstance
 
 	public int attackDebuff;
 
+	public int defenseDebuff;
+
+	public int motricidadDebuff;
+
+	public int vulnerabilityTurns;
+
 	public bool hasTriggeredHalfHealthDialogue;
 
 	[NonSerialized]
@@ -133,6 +140,8 @@ public class BattleManager : MonoBehaviour
 	{
 		public bool isPlayer;
 
+		public bool isDetective;
+
 		public int enemyIndex;
 
 		public int motricidad;
@@ -140,6 +149,21 @@ public class BattleManager : MonoBehaviour
 
 	[Header("1. Estado Actual del Combate")]
 	public BattleState state;
+
+	[Header("1b. Integración del Compañero Detective y Jefe Nivel 2")]
+	[Tooltip("Estado de validación de equipo: si es true, el Detective entra al combate y a la cola de turnos.")]
+	public bool hasDetectiveInParty;
+
+	public DetectiveStats detectiveStats;
+
+	public DetectiveActionMenu detectiveActionMenu;
+
+	public Level2BossController activeLevel2BossController;
+
+	private List<string> lastDetectiveAutoLevelUpLog = new List<string>();
+
+	private int lastDetectiveExpGained;
+	private int lastDetectiveLevelsGained;
 
 	[Header("2. Referencias del Jugador y Enemigos Activos")]
 	public PlayerStats playerStats;
@@ -296,6 +320,10 @@ public class BattleManager : MonoBehaviour
 
 	public Sprite enriquePortrait;
 
+	public Sprite detectiveCombatPortrait;
+
+	private bool lastEnemyTargetWasDetective = false;
+
 	public Sprite corporeoPortrait;
 
 	public Sprite intelectoPortrait;
@@ -404,11 +432,20 @@ public class BattleManager : MonoBehaviour
 	[Tooltip("SonidoMuerteEnemigo: Efecto de sonido cuando un enemigo es derrotado.")]
 	public AudioClip sfxMuerteEnemigo;
 
-	private bool isCurrentEncounterBoss;
+	[Tooltip("Efecto de sonido de disparo con el Revólver .38 del Detective Vargas.")]
+	public AudioClip sfxDisparoRevolver38;
 
-	private string currentBossNextScene;
+	[Tooltip("Efecto de sonido de recarga de tambor del Revólver .38 del Detective Vargas.")]
+	public AudioClip sfxRecargaRevolver;
 
-	private string[] currentBossVictoryNarrative;
+	[HideInInspector]
+	public bool isCurrentEncounterBoss;
+
+	[HideInInspector]
+	public string currentBossNextScene;
+
+	[HideInInspector]
+	public string[] currentBossVictoryNarrative;
 
 	private List<TurnActor> roundTurnOrder = new List<TurnActor>();
 
@@ -432,9 +469,14 @@ public class BattleManager : MonoBehaviour
 
 	private ItemData currentRewardItem;
 
+	private List<InventorySlot> currentRewardBundle;
+
 	private string[] currentRewardDialogueLines;
 
 	private static bool hasAwardedStarterWeapon;
+	private static Sprite[] s_cachedAttackGifFrames;
+	private static Sprite[] s_cachedExplosionGifFrames;
+	private static Sprite s_cachedCombatBgSprite;
 
 	[RuntimeInitializeOnLoadMethod(/*Could not decode attribute arguments.*/)]
 	private static void OnSubsystemRegistration()
@@ -479,67 +521,127 @@ public class BattleManager : MonoBehaviour
 	{
 		if ((Object)(object)sfxAtaqueAliadoPropio == (Object)null)
 		{
-			sfxAtaqueAliadoPropio = AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Sound/EfectodeSonido_AtaqueAliadoPropio/DSGNImpt_EXPLOSION-Mecha Damage_HY_PC-001.wav");
+			sfxAtaqueAliadoPropio = RuntimeAssetCatalog.GetAudioClip(MusicManager.PathSfxAtaqueAliadoPropio);
 		}
 		if ((Object)(object)sfxAtaqueEnemigo == (Object)null)
 		{
-			sfxAtaqueEnemigo = AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Sound/EfectodeSonido_AtaqueEnemigo/DSGNImpt_EXPLOSION-Forced Shutdown_HY_PC-006.wav");
+			sfxAtaqueEnemigo = RuntimeAssetCatalog.GetAudioClip(MusicManager.PathSfxAtaqueEnemigo);
 		}
+#if UNITY_EDITOR
 		if ((Object)(object)sfxAtaqueJefe == (Object)null)
 		{
-			sfxAtaqueJefe = MusicManager.LoadFirstAudioClipInFolderEditor("Assets/Sound/EfectodeSonido_AtaqueJefer");
+			sfxAtaqueJefe = MusicManager.LoadFirstAudioClipInFolderEditor(MusicManager.FolderSfxAtaqueJefe);
 		}
+#endif
 		if ((Object)(object)sfxBotonEnCombate == (Object)null)
 		{
-			sfxBotonEnCombate = AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Sound/EfectodeSonido_BotonEnCombate/DSGNMisc_HIT-Bitcrusher_HY_PC-002.wav");
+			sfxBotonEnCombate = RuntimeAssetCatalog.GetAudioClip(MusicManager.PathSfxBotonEnCombate);
 		}
 		if ((Object)(object)sfxBotonConfirmacionDialogo == (Object)null)
 		{
-			sfxBotonConfirmacionDialogo = AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Sound/EfectodeSonido_BotóndeConfirmaciónDialogo/JDSherbert - Pixel UI SFX Pack - Select 1 (Sine).wav");
+			sfxBotonConfirmacionDialogo = RuntimeAssetCatalog.GetAudioClip(MusicManager.PathSfxBotonConfirmacionDialogo);
 		}
 		if ((Object)(object)sfxCurarse == (Object)null)
 		{
-			sfxCurarse = AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Sound/EfectodeSonido_Curarse/DSGNImpt_EXPLOSION-Magically_HY_PC-001.wav");
+			sfxCurarse = RuntimeAssetCatalog.GetAudioClip(MusicManager.PathSfxCurarse);
 		}
 		if ((Object)(object)sfxEfecto == (Object)null)
 		{
-			sfxEfecto = AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Sound/EfectodeSonido_Efecto/DSGNMisc_HIT-Zap Laser_HY_PC-005.wav");
+			sfxEfecto = RuntimeAssetCatalog.GetAudioClip(MusicManager.PathSfxEfecto);
 		}
 		if ((Object)(object)sfxEsquive == (Object)null)
 		{
-			sfxEsquive = AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Sound/EfectodeSonido_Esquive/JDSherbert - Pixel UI SFX Pack - Cursor 2 (Sine).wav");
+			sfxEsquive = RuntimeAssetCatalog.GetAudioClip(MusicManager.PathSfxEsquive);
 		}
 		if ((Object)(object)sfxFuego == (Object)null)
 		{
-			sfxFuego = AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Sound/EfectodeSonido_Fuego/DSGNImpt_EXPLOSION-Sand Impact_HY_PC-001.wav");
+			sfxFuego = RuntimeAssetCatalog.GetAudioClip(MusicManager.PathSfxFuego);
 		}
 		if ((Object)(object)victoryMenuMusic == (Object)null)
 		{
-			victoryMenuMusic = AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Sound/MusicaDelMenuDesubidadeNivelMenuFindeCombate/VictoryLap_Loopable.wav");
+			victoryMenuMusic = RuntimeAssetCatalog.GetAudioClip(MusicManager.PathMusicVictoryMenu);
 		}
 		if ((Object)(object)gameOverMusic == (Object)null)
 		{
-			gameOverMusic = AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Sound/MusicaGameOver/Clement Panchout _ 80s Zombies Movie _ 2018.wav");
+			gameOverMusic = RuntimeAssetCatalog.GetAudioClip(MusicManager.PathMusicGameOver);
 		}
 		if ((Object)(object)starterRewardWeapon == (Object)null)
 		{
-			starterRewardWeapon = AssetDatabase.LoadAssetAtPath<ItemData>("Assets/Data/Items/Arma_CadenaBicicleta.asset");
+			starterRewardWeapon = RuntimeAssetCatalog.GetItem("Assets/Data/Items/Arma_CadenaBicicleta.asset");
 		}
 		if ((Object)(object)sfxDanoFinalMuerte == (Object)null)
 		{
-			sfxDanoFinalMuerte = AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Sound/SonidoDeDañoFinalMuerte/death_3_alex.wav");
+			sfxDanoFinalMuerte = RuntimeAssetCatalog.GetAudioClip(MusicManager.PathSfxDanoFinalMuerte);
 		}
 		if ((Object)(object)sfxEncuentro == (Object)null)
 		{
-			sfxEncuentro = AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Sound/SonidoDeEncuentro/DSGNImpt_EXPLOSION-Forced Interruption_HY_PC-006.wav");
+			sfxEncuentro = RuntimeAssetCatalog.GetAudioClip(MusicManager.PathSfxEncuentro);
 		}
 		if ((Object)(object)sfxSubidaDeNivel == (Object)null)
 		{
-			sfxSubidaDeNivel = AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Sound/SonidoDeSubidaDeNivel/MAGSpel_CAST-Skill Ready_HY_PC-001.wav");
+			sfxSubidaDeNivel = RuntimeAssetCatalog.GetAudioClip(MusicManager.PathSfxSubidaDeNivel);
 		}
 		if ((Object)(object)sfxMuerteEnemigo == (Object)null)
 		{
-			sfxMuerteEnemigo = AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Sound/SonidoMuerteEnemigo/grunting_2_ian.wav");
+			sfxMuerteEnemigo = RuntimeAssetCatalog.GetAudioClip(MusicManager.PathSfxMuerteEnemigo);
+		}
+		if ((Object)(object)sfxDisparoRevolver38 == (Object)null)
+		{
+			sfxDisparoRevolver38 = RuntimeAssetCatalog.GetAudioClip("Assets/Sound/EfectodeSonido_DisparoRevolver38/Disparo_Revolver38.wav");
+		}
+		if ((Object)(object)sfxRecargaRevolver == (Object)null)
+		{
+			sfxRecargaRevolver = RuntimeAssetCatalog.GetAudioClip("Assets/Sound/EfectodeSonido_RecargaRevolver/Recarga_Revolver.wav");
+		}
+		LoadPortraitsIfMissing();
+	}
+
+	private void EnsureDetectiveCombatPortraitResolved()
+	{
+		if ((Object)(object)detectiveCombatPortrait == (Object)null || detectiveCombatPortrait.name.Contains("Cardo") || detectiveCombatPortrait.name == "1")
+		{
+			Sprite customDet = RuntimeAssetCatalog.GetSprite("Assets/Portraits/Detective.png");
+			if ((Object)(object)customDet != (Object)null)
+			{
+				detectiveCombatPortrait = customDet;
+			}
+			else if ((Object)(object)detectiveCombatPortrait == (Object)null)
+			{
+				detectiveCombatPortrait = RuntimeAssetCatalog.GetSprite("Assets/Sprites/Detective/detective_stand_down.png");
+			}
+		}
+	}
+
+	public void LoadPortraitsIfMissing()
+	{
+		if ((Object)(object)enriquePortrait == (Object)null && PlayerInventoryAndWeaponsUI.Instance != null)
+		{
+			enriquePortrait = PlayerInventoryAndWeaponsUI.Instance.enriquePortrait;
+		}
+		if ((Object)(object)enriquePortrait == (Object)null)
+		{
+			enriquePortrait = RuntimeAssetCatalog.GetSprite("Assets/Portraits/Enrique.png");
+			if ((Object)(object)enriquePortrait == (Object)null)
+			{
+				enriquePortrait = RuntimeAssetCatalog.GetSprite("Assets/Sprites/Personaje/stand_down.png");
+			}
+		}
+		EnsureDetectiveCombatPortraitResolved();
+		if ((Object)(object)corporeoPortrait == (Object)null)
+		{
+			corporeoPortrait = RuntimeAssetCatalog.GetSprite("Assets/Portraits/Musculatura.png");
+		}
+		if ((Object)(object)intelectoPortrait == (Object)null)
+		{
+			intelectoPortrait = RuntimeAssetCatalog.GetSprite("Assets/Portraits/Intelecto.png");
+		}
+		if ((Object)(object)motricidadPortrait == (Object)null)
+		{
+			motricidadPortrait = RuntimeAssetCatalog.GetSprite("Assets/Portraits/Motricidad.png");
+		}
+		if ((Object)(object)mundoInternoPortrait == (Object)null)
+		{
+			mundoInternoPortrait = RuntimeAssetCatalog.GetSprite("Assets/Portraits/MundoInterno.png");
 		}
 	}
 
@@ -578,6 +680,7 @@ public class BattleManager : MonoBehaviour
 		LoadSfxClipsIfMissing();
 		PlayerInventoryAndWeaponsUI.EnsureInScene();
 		PlayerLevelUpAndStatsUI.EnsureInScene();
+		EnforceUnifiedCombatUILayout();
 		SetupCombatPortraitAndWeaponUI();
 		EnsureCombatGreenHealthBar();
 		if ((Object)(object)corporeoButton != (Object)null)
@@ -662,7 +765,7 @@ public class BattleManager : MonoBehaviour
 			UpdateEnemySlotAnimations(Time.deltaTime);
 			UpdateDynamicTargetIndicators(Time.deltaTime);
 		}
-		if (state == BattleState.PLAYERTURN && WasToggleInventoryKeyPressed())
+		if ((state == BattleState.PLAYERTURN || state == BattleState.DETECTIVETURN) && WasToggleInventoryKeyPressed())
 		{
 			PlayerInventoryAndWeaponsUI playerInventoryAndWeaponsUI = PlayerInventoryAndWeaponsUI.EnsureInScene();
 			if ((Object)(object)playerInventoryAndWeaponsUI != (Object)null && !playerInventoryAndWeaponsUI.IsOpen)
@@ -690,14 +793,14 @@ public class BattleManager : MonoBehaviour
 		}
 	}
 
-	public void StartBattle(EnemyData enemy, string[] combatIntroDialogue = null, GameObject mapEnemyObject = null, bool isBoss = false, string bossNextScene = null, string[] bossVictoryNarrative = null, ItemData rewardItem = null, string[] rewardDialogue = null)
+	public void StartBattle(EnemyData enemy, string[] combatIntroDialogue = null, GameObject mapEnemyObject = null, bool isBoss = false, string bossNextScene = null, string[] bossVictoryNarrative = null, ItemData rewardItem = null, string[] rewardDialogue = null, List<InventorySlot> rewardItemsBundle = null)
 	{
 		EnemyData[] enemies = ((!((Object)(object)enemy != (Object)null)) ? Array.Empty<EnemyData>() : new EnemyData[1] { enemy });
 		GameObject[] mapEnemyObjects = ((!((Object)(object)mapEnemyObject != (Object)null)) ? null : new GameObject[1] { mapEnemyObject });
-		StartBattle(enemies, combatIntroDialogue, mapEnemyObjects, isBoss, bossNextScene, bossVictoryNarrative, rewardItem, rewardDialogue);
+		StartBattle(enemies, combatIntroDialogue, mapEnemyObjects, isBoss, bossNextScene, bossVictoryNarrative, rewardItem, rewardDialogue, rewardItemsBundle);
 	}
 
-	public void StartBattle(EnemyData[] enemies, string[] combatIntroDialogue = null, GameObject[] mapEnemyObjects = null, bool isBoss = false, string bossNextScene = null, string[] bossVictoryNarrative = null, ItemData rewardItem = null, string[] rewardDialogue = null)
+	public void StartBattle(EnemyData[] enemies, string[] combatIntroDialogue = null, GameObject[] mapEnemyObjects = null, bool isBoss = false, string bossNextScene = null, string[] bossVictoryNarrative = null, ItemData rewardItem = null, string[] rewardDialogue = null, List<InventorySlot> rewardItemsBundle = null)
 	{
 		if (enemies == null || enemies.Length == 0)
 		{
@@ -708,6 +811,7 @@ public class BattleManager : MonoBehaviour
 		currentBossNextScene = bossNextScene;
 		currentBossVictoryNarrative = bossVictoryNarrative;
 		currentRewardItem = rewardItem;
+		currentRewardBundle = rewardItemsBundle;
 		currentRewardDialogueLines = rewardDialogue;
 		if ((Object)(object)playerStats == (Object)null)
 		{
@@ -763,12 +867,15 @@ public class BattleManager : MonoBehaviour
 			}
 			HideIntelectoPanelSilent();
 			HideMundoInternoPanelSilent();
+			ValidateAndSetupDetectivePartyState();
+			InitializeLevel2BossIfPresent(mapEnemyObjects);
 			PlayEncuentroSfx();
 			if ((Object)(object)MusicManager.Instance != (Object)null)
 			{
 				MusicManager.Instance.PlayBattleMusic();
 			}
 			BuildNewRoundTurnOrder();
+			EnforceUnifiedCombatUILayout();
 			SetupCombatPortraitAndWeaponUI();
 			SetupEnemyVisuals();
 			EnsureCombatGreenHealthBar();
@@ -790,6 +897,123 @@ public class BattleManager : MonoBehaviour
 		}
 	}
 
+	private void ValidateAndSetupDetectivePartyState()
+	{
+		Scene activeScene = SceneManager.GetActiveScene();
+		bool isLevel2OrLater = activeScene.IsValid() && (activeScene.name.Contains("Nivel2") || activeScene.name.Contains("Nivel_2") || activeScene.name.Contains("Guarida") || activeScene.name.Contains("Nivel3") || activeScene.name.Contains("Nivel_3"));
+		CompanionFollowAI companion = Object.FindAnyObjectByType<CompanionFollowAI>();
+		if (isLevel2OrLater || ((Object)(object)companion != (Object)null && companion.isFollowingPlayer))
+		{
+			hasDetectiveInParty = true;
+			if ((Object)(object)companion != (Object)null && !companion.isFollowingPlayer)
+			{
+				companion.ActivateCompanionFollow();
+			}
+		}
+		else if (DetectiveStats.IsDetectiveInPartyGlobal)
+		{
+			hasDetectiveInParty = true;
+		}
+		if (activeScene.IsValid() && activeScene.name.Contains("01_Nivel1"))
+		{
+			hasDetectiveInParty = false;
+		}
+		if ((Object)(object)detectiveActionMenu == (Object)null)
+		{
+			detectiveActionMenu = DetectiveActionMenu.EnsureInBattlePanel(this);
+		}
+		if (hasDetectiveInParty)
+		{
+			if ((Object)(object)detectiveStats == (Object)null)
+			{
+				detectiveStats = DetectiveStats.EnsureInScene();
+			}
+			if ((Object)(object)detectiveStats != (Object)null)
+			{
+				detectiveStats.hasDetectiveInParty = true;
+				detectiveStats.SyncPartyStateWithCompanion();
+				if (detectiveStats.HP_Actual <= 0)
+				{
+					detectiveStats.HP_Actual = 1;
+				}
+				detectiveStats.ResetCombatTemporaryStates();
+			}
+			EnsureDetectiveCombatPortraitResolved();
+			if ((Object)(object)detectiveActionMenu != (Object)null)
+			{
+				detectiveActionMenu.battleManager = this;
+				detectiveActionMenu.detectiveStats = detectiveStats;
+				detectiveActionMenu.HideDetectiveTurnMenu(restoreProtagonistButtons: true);
+				if ((Object)(object)detectiveActionMenu.menuRootPanel != (Object)null)
+				{
+					detectiveActionMenu.menuRootPanel.SetActive(false);
+				}
+				detectiveActionMenu.RefreshAllySlotUI(showSlot: true);
+			}
+		}
+		else if ((Object)(object)detectiveActionMenu != (Object)null)
+		{
+			detectiveActionMenu.RefreshAllySlotUI(showSlot: false);
+			detectiveActionMenu.HideDetectiveTurnMenu(restoreProtagonistButtons: true);
+		}
+	}
+
+	private void InitializeLevel2BossIfPresent(GameObject[] mapEnemyObjects)
+	{
+		if ((Object)(object)activeLevel2BossController == (Object)null && mapEnemyObjects != null)
+		{
+			for (int i = 0; i < mapEnemyObjects.Length; i++)
+			{
+				if ((Object)(object)mapEnemyObjects[i] != (Object)null)
+				{
+					activeLevel2BossController = mapEnemyObjects[i].GetComponent<Level2BossController>();
+					if ((Object)(object)activeLevel2BossController != (Object)null)
+					{
+						break;
+					}
+				}
+			}
+		}
+		bool hasBossLevel2Archetype = false;
+		bool hasCalacasArchetype = false;
+		for (int j = 0; j < activeEnemies.Count; j++)
+		{
+			if (activeEnemies[j] != null && (Object)(object)activeEnemies[j].data != (Object)null)
+			{
+				if (activeEnemies[j].data.enemyType == EnemyType.JefeNivel2Capataz)
+				{
+					hasBossLevel2Archetype = true;
+					break;
+				}
+				if (activeEnemies[j].data.enemyType == EnemyType.JefeElCalacas)
+				{
+					hasCalacasArchetype = true;
+					break;
+				}
+			}
+		}
+		if (hasCalacasArchetype && (Object)(object)activeLevel2BossController == (Object)null)
+		{
+			activeLevel2BossController = ((Component)this).GetComponent<CalacasBossController>();
+			if ((Object)(object)activeLevel2BossController == (Object)null)
+			{
+				activeLevel2BossController = ((Component)this).gameObject.AddComponent<CalacasBossController>();
+			}
+		}
+		else if (hasBossLevel2Archetype && (Object)(object)activeLevel2BossController == (Object)null)
+		{
+			activeLevel2BossController = ((Component)this).GetComponent<Level2BossController>();
+			if ((Object)(object)activeLevel2BossController == (Object)null)
+			{
+				activeLevel2BossController = ((Component)this).gameObject.AddComponent<Level2BossController>();
+			}
+		}
+		if ((Object)(object)activeLevel2BossController != (Object)null)
+		{
+			activeLevel2BossController.InitializeBossCombat();
+		}
+	}
+
 	public void SelectTargetEnemy(int index)
 	{
 		if (index >= 0 && index < activeEnemies.Count && activeEnemies[index].IsAlive)
@@ -802,6 +1026,10 @@ public class BattleManager : MonoBehaviour
 			if (state == BattleState.PLAYERTURN)
 			{
 				SetBattleLog("Objetivo seleccionado: " + activeEnemies[selectedTargetIndex].data.enemyName + ". Elige que voz actuara.");
+			}
+			else if (state == BattleState.DETECTIVETURN)
+			{
+				SetBattleLog("Objetivo del Detective: " + activeEnemies[selectedTargetIndex].data.enemyName + ". Elige una accion tactica.");
 			}
 		}
 	}
@@ -829,37 +1057,54 @@ public class BattleManager : MonoBehaviour
 		roundTurnOrder.Clear();
 		currentTurnCursor = 0;
 		int motricidad = (((Object)(object)playerStats != (Object)null) ? playerStats.GetEffectiveMotricidad() : 12);
+
+		// 1. Enrique (protagonista) actúa siempre primero
 		roundTurnOrder.Add(new TurnActor
 		{
 			isPlayer = true,
+			isDetective = false,
 			enemyIndex = -1,
 			motricidad = motricidad
 		});
+
+		// 2. Detective Vargas (aliado) actúa siempre segundo si está en el equipo y con vida
+		if (hasDetectiveInParty && (Object)(object)detectiveStats != (Object)null && detectiveStats.IsAlive)
+		{
+			roundTurnOrder.Add(new TurnActor
+			{
+				isPlayer = false,
+				isDetective = true,
+				enemyIndex = -2,
+				motricidad = detectiveStats.Velocidad
+			});
+		}
+
+		// 3. Los enemigos actúan después de la patrulla aliada (ordenados entre ellos por su velocidad/motricidad)
+		List<TurnActor> enemyTurns = new List<TurnActor>();
 		for (int i = 0; i < activeEnemies.Count; i++)
 		{
 			if (activeEnemies[i].IsAlive)
 			{
-				roundTurnOrder.Add(new TurnActor
+				int effectiveEnemyMot = Mathf.Max(1, activeEnemies[i].data.motricidad - activeEnemies[i].motricidadDebuff);
+				enemyTurns.Add(new TurnActor
 				{
 					isPlayer = false,
+					isDetective = false,
 					enemyIndex = i,
-					motricidad = activeEnemies[i].data.motricidad
+					motricidad = effectiveEnemyMot
 				});
 			}
 		}
-		roundTurnOrder.Sort((TurnActor a, TurnActor b) =>
+		enemyTurns.Sort((TurnActor a, TurnActor b) =>
 		{
 			int num = b.motricidad.CompareTo(a.motricidad);
 			if (num != 0)
 			{
 				return num;
 			}
-			if (a.isPlayer == b.isPlayer)
-			{
-				return a.enemyIndex.CompareTo(b.enemyIndex);
-			}
-			return (!a.isPlayer) ? 1 : (-1);
+			return a.enemyIndex.CompareTo(b.enemyIndex);
 		});
+		roundTurnOrder.AddRange(enemyTurns);
 	}
 
 	private string GetTurnOrderSummaryText()
@@ -871,6 +1116,10 @@ public class BattleManager : MonoBehaviour
 			{
 				list.Add($"Enrique({item.motricidad})");
 			}
+			else if (item.isDetective && hasDetectiveInParty && (Object)(object)detectiveStats != (Object)null && detectiveStats.IsAlive)
+			{
+				list.Add($"Detective({item.motricidad})");
+			}
 			else if (item.enemyIndex >= 0 && item.enemyIndex < activeEnemies.Count && activeEnemies[item.enemyIndex].IsAlive)
 			{
 				list.Add($"{activeEnemies[item.enemyIndex].data.enemyName}({item.motricidad})");
@@ -881,6 +1130,7 @@ public class BattleManager : MonoBehaviour
 
 	private void ExecuteCurrentTurnInQueue()
 	{
+		lastEnemyTargetWasDetective = false;
 		if (AreAllEnemiesDead())
 		{
 			EndBattle(won: true);
@@ -894,7 +1144,15 @@ public class BattleManager : MonoBehaviour
 		while (currentTurnCursor < roundTurnOrder.Count)
 		{
 			TurnActor turnActor = roundTurnOrder[currentTurnCursor];
-			if (turnActor.isPlayer || (turnActor.enemyIndex >= 0 && turnActor.enemyIndex < activeEnemies.Count && activeEnemies[turnActor.enemyIndex].IsAlive))
+			if (turnActor.isPlayer)
+			{
+				break;
+			}
+			if (turnActor.isDetective && hasDetectiveInParty && (Object)(object)detectiveStats != (Object)null && detectiveStats.IsAlive)
+			{
+				break;
+			}
+			if (!turnActor.isPlayer && !turnActor.isDetective && turnActor.enemyIndex >= 0 && turnActor.enemyIndex < activeEnemies.Count && activeEnemies[turnActor.enemyIndex].IsAlive)
 			{
 				break;
 			}
@@ -910,14 +1168,48 @@ public class BattleManager : MonoBehaviour
 			isMotricidadDefending = false;
 			EnsureValidLivingTarget();
 			state = BattleState.PLAYERTURN;
+			if ((Object)(object)detectiveActionMenu != (Object)null)
+			{
+				detectiveActionMenu.HideDetectiveTurnMenu(restoreProtagonistButtons: true);
+				detectiveActionMenu.RefreshAllySlotUI(showSlot: hasDetectiveInParty);
+			}
 			SetActionButtonsInteractable(interactable: true);
 			UpdateHealthUI();
 			string enemyName = activeEnemies[selectedTargetIndex].data.enemyName;
-			SetBattleLog("TU TURNO (Objetivo: " + enemyName + ") | Cola: " + GetTurnOrderSummaryText());
+			SetBattleLog("TU TURNO — ENRIQUE (Objetivo: " + enemyName + ") | Cola: " + GetTurnOrderSummaryText());
+		}
+		else if (turnActor2.isDetective)
+		{
+			EnsureValidLivingTarget();
+			state = BattleState.DETECTIVETURN;
+			if ((Object)(object)detectiveStats != (Object)null)
+			{
+				detectiveStats.OnStartDetectiveTurn();
+			}
+			HideIntelectoPanelSilent();
+			HideMundoInternoPanelSilent();
+			SetProtagonistInventoryButtonVisible(visible: true);
+			if ((Object)(object)detectiveActionMenu != (Object)null)
+			{
+				detectiveActionMenu.HideDetectiveTurnMenu(restoreProtagonistButtons: true);
+				if ((Object)(object)detectiveActionMenu.menuRootPanel != (Object)null)
+				{
+					detectiveActionMenu.menuRootPanel.SetActive(false);
+				}
+				detectiveActionMenu.RefreshAllySlotUI(showSlot: hasDetectiveInParty);
+			}
+			SetActionButtonsInteractable(interactable: true);
+			UpdateHealthUI();
+			string enemyName = activeEnemies[selectedTargetIndex].data.enemyName;
+			SetBattleLog("TU TURNO — DETECTIVE VARGAS (Objetivo: " + enemyName + ") | Cola: " + GetTurnOrderSummaryText());
 		}
 		else
 		{
 			state = BattleState.ENEMYTURN;
+			if ((Object)(object)detectiveActionMenu != (Object)null)
+			{
+				detectiveActionMenu.HideDetectiveTurnMenu(restoreProtagonistButtons: true);
+			}
 			SetActionButtonsInteractable(interactable: false);
 			((MonoBehaviour)this).StartCoroutine(EnemyTurnCoroutine(turnActor2.enemyIndex));
 		}
@@ -927,6 +1219,300 @@ public class BattleManager : MonoBehaviour
 	{
 		currentTurnCursor++;
 		ExecuteCurrentTurnInQueue();
+	}
+
+	private IEnumerator DetectiveCompanionTurnCoroutine()
+	{
+		if ((Object)(object)detectiveStats == (Object)null || !detectiveStats.IsAlive)
+		{
+			AdvanceTurnQueueAndContinue();
+			yield break;
+		}
+
+		EnsureValidLivingTarget();
+		if (activeEnemies == null || activeEnemies.Count == 0 || selectedTargetIndex < 0 || selectedTargetIndex >= activeEnemies.Count)
+		{
+			AdvanceTurnQueueAndContinue();
+			yield break;
+		}
+
+		CombatEnemyInstance target = activeEnemies[selectedTargetIndex];
+		string enemyName = target.data.enemyName;
+
+		SetBattleLog($"TURNO DEL DETECTIVE VARGAS — Apunta con su revólver .38 Especial hacia {enemyName}...");
+		yield return new WaitForSeconds(0.65f);
+
+		if (state != BattleState.DETECTIVETURN)
+		{
+			yield break;
+		}
+
+		EnsureValidLivingTarget();
+		if (activeEnemies == null || activeEnemies.Count == 0 || selectedTargetIndex < 0 || selectedTargetIndex >= activeEnemies.Count)
+		{
+			AdvanceTurnQueueAndContinue();
+			yield break;
+		}
+		target = activeEnemies[selectedTargetIndex];
+
+		// Inteligencia de combate del detective:
+		// Dispara su revólver .38 (perfora blindaje de jefe y causa daño balístico crítico).
+		// Si está sin munición, aplica culatazo táctico cuerpo a cuerpo.
+		if (detectiveStats.CanFireWeapon(out _))
+		{
+			ExecuteDetectiveFirearmAttack();
+		}
+		else
+		{
+			ExecuteDetectiveMeleeAttack();
+		}
+	}
+
+	public void ForceHideProtagonistExclusiveSubmenusForDetective()
+	{
+		HideIntelectoPanelSilent();
+		HideMundoInternoPanelSilent();
+		SetProtagonistInventoryButtonVisible(visible: false);
+		PlayerInventoryAndWeaponsUI invUI = PlayerInventoryAndWeaponsUI.Instance;
+		if ((Object)(object)invUI != (Object)null && invUI.IsOpen)
+		{
+			invUI.CloseInventoryMenu();
+		}
+	}
+
+	public void SetProtagonistInventoryButtonVisible(bool visible)
+	{
+		if ((Object)(object)combatInventoryButtonRoot != (Object)null)
+		{
+			combatInventoryButtonRoot.SetActive(false);
+		}
+	}
+
+	private int ApplyDamageToEnemyWithBossMechanics(CombatEnemyInstance target, int rawDamageAfterDefense, bool isDirectMelee, bool canBreakBossShield, string attackerName, bool attackerIsDetective, out string bossFeedbackLog)
+	{
+		bossFeedbackLog = string.Empty;
+		if (target == null)
+		{
+			return 0;
+		}
+		int adjustedDamage = Mathf.Max(1, rawDamageAfterDefense);
+		if (target.vulnerabilityTurns > 0)
+		{
+			adjustedDamage = Mathf.Max(1, Mathf.RoundToInt((float)adjustedDamage * 1.3f));
+		}
+		if ((Object)(object)activeLevel2BossController != (Object)null && IsBossEnemy(target))
+		{
+			adjustedDamage = activeLevel2BossController.ProcessIncomingDamage(adjustedDamage, isDirectMelee, canBreakBossShield, attackerName, out var triggeredCounterAttack, out var counterAttackDamage, out bossFeedbackLog);
+			if (triggeredCounterAttack && counterAttackDamage > 0)
+			{
+				if (attackerIsDetective && (Object)(object)detectiveStats != (Object)null && detectiveStats.IsAlive)
+				{
+					detectiveStats.TakeDamage(counterAttackDamage, out var _);
+				}
+				else if ((Object)(object)playerStats != (Object)null)
+				{
+					playerStats.TakeDamage(counterAttackDamage);
+				}
+			}
+		}
+		target.currentHP = Mathf.Max(0, target.currentHP - adjustedDamage);
+		currentEnemy = target.data;
+		currentEnemyHP = target.currentHP;
+		if (target.currentHP <= 0 && (Object)(object)activeLevel2BossController != (Object)null && IsBossEnemy(target))
+		{
+			activeLevel2BossController.NotifyBossDefeated(this);
+		}
+		return adjustedDamage;
+	}
+
+	public void ExecuteDetectiveMeleeAttack()
+	{
+		if (state != BattleState.DETECTIVETURN || (Object)(object)detectiveStats == (Object)null || !detectiveStats.IsAlive)
+		{
+			return;
+		}
+		PlayBotonEnCombateSfx();
+		if ((Object)(object)detectiveActionMenu != (Object)null)
+		{
+			detectiveActionMenu.HideDetectiveTurnMenu(restoreProtagonistButtons: false);
+		}
+		EnsureValidLivingTarget();
+		CombatEnemyInstance target = activeEnemies[selectedTargetIndex];
+		ActionGifData meleeGif = new ActionGifData
+		{
+			actionLabel = $"[GIF: DETECTIVE VARGAS - Golpe Cuerpo a Cuerpo (Culatazo) contra {target.data.enemyName}]",
+			placeholderColor = new Color(0.16f, 0.28f, 0.42f, 1f),
+			gifFrames = ((corporeoGif != null) ? corporeoGif.gifFrames : null),
+			duration = 1.25f
+		};
+		PlayAtaqueAliadoPropioSfx();
+		((MonoBehaviour)this).StartCoroutine(ExecuteActionWithGifCoroutine(meleeGif, () =>
+		{
+			int effectiveDef = Mathf.Max(0, target.data.defense - target.defenseDebuff);
+			int rawDmg = Mathf.Max(1, detectiveStats.GetTotalMeleeAttack() - effectiveDef);
+			int finalDmg = ApplyDamageToEnemyWithBossMechanics(target, rawDmg, isDirectMelee: true, canBreakBossShield: false, detectiveStats.detectiveName, attackerIsDetective: true, out var bossLog);
+			string extraLog = ((!string.IsNullOrEmpty(bossLog)) ? (" | " + bossLog) : "");
+			SetBattleLog($"DETECTIVE [CUERPO A CUERPO]: Vargas asesta un culatazo tactico a {target.data.enemyName} e inflige {finalDmg} de dano fisico (sin costo){extraLog}.");
+			EnsureValidLivingTarget();
+			UpdateHealthUI();
+			CheckPostPlayerActionFlow(target);
+		}));
+	}
+
+	public void ExecuteDetectiveFirearmAttack()
+	{
+		if (state != BattleState.DETECTIVETURN || (Object)(object)detectiveStats == (Object)null || !detectiveStats.IsAlive)
+		{
+			return;
+		}
+		if (!detectiveStats.CanFireWeapon(out var reason))
+		{
+			PlayBotonEnCombateSfx();
+			SetBattleLog("DETECTIVE [ARMA DE FUEGO]: " + reason);
+			if ((Object)(object)detectiveActionMenu != (Object)null)
+			{
+				detectiveActionMenu.RefreshButtonLabels();
+			}
+			return;
+		}
+		PlayBotonEnCombateSfx();
+		detectiveStats.ConsumeWeaponShot();
+		if ((Object)(object)detectiveActionMenu != (Object)null)
+		{
+			detectiveActionMenu.HideDetectiveTurnMenu(restoreProtagonistButtons: false);
+		}
+		EnsureValidLivingTarget();
+		CombatEnemyInstance target = activeEnemies[selectedTargetIndex];
+		ActionGifData gunGif = new ActionGifData
+		{
+			actionLabel = $"[GIF: DETECTIVE VARGAS - Disparo de Revolver .38 Especial contra {target.data.enemyName}]",
+			placeholderColor = new Color(0.45f, 0.22f, 0.1f, 1f),
+			gifFrames = ((explosionGif != null && explosionGif.gifFrames != null && explosionGif.gifFrames.Length != 0) ? explosionGif.gifFrames : ((corporeoGif != null) ? corporeoGif.gifFrames : null)),
+			duration = 1.25f
+		};
+		PlayDisparoRevolverSfx();
+		((MonoBehaviour)this).StartCoroutine(ExecuteActionWithGifCoroutine(gunGif, () =>
+		{
+			bool isCrit = Random.value < 0.35f;
+			int baseGunAtk = detectiveStats.GetTotalFirearmAttack();
+			if (isCrit)
+			{
+				baseGunAtk = Mathf.RoundToInt((float)baseGunAtk * 1.5f);
+			}
+			int effectiveDef = Mathf.Max(0, (target.data.defense - target.defenseDebuff) / 2);
+			int rawDmg = Mathf.Max(1, baseGunAtk - effectiveDef);
+			int finalDmg = ApplyDamageToEnemyWithBossMechanics(target, rawDmg, isDirectMelee: false, canBreakBossShield: true, detectiveStats.detectiveName, attackerIsDetective: true, out var bossLog);
+			string critTag = (isCrit ? " ¡DISPARO CRITICO (x1.5)!" : "");
+			string extraLog = ((!string.IsNullOrEmpty(bossLog)) ? (" | " + bossLog) : "");
+			SetBattleLog($"DETECTIVE [ARMA DE FUEGO .38]:{critTag} Inflige {finalDmg} de dano balistico a {target.data.enemyName} (Balas: {detectiveStats.municionActual}/{detectiveStats.municionMaxima}){extraLog}.");
+			EnsureValidLivingTarget();
+			UpdateHealthUI();
+			CheckPostPlayerActionFlow(target);
+		}));
+	}
+
+	public void ExecuteDetectiveSkill(DetectiveActionMenu.DetectiveSkillType skillType)
+	{
+		if (state != BattleState.DETECTIVETURN || (Object)(object)detectiveStats == (Object)null || !detectiveStats.IsAlive)
+		{
+			return;
+		}
+		if (skillType == DetectiveActionMenu.DetectiveSkillType.DisparoDeSupresion && !detectiveStats.CanFireWeapon(out var reason))
+		{
+			PlayBotonEnCombateSfx();
+			SetBattleLog("DETECTIVE [DISPARO DE SUPRESIÓN]: " + reason);
+			return;
+		}
+		PlayBotonEnCombateSfx();
+		if ((Object)(object)detectiveActionMenu != (Object)null)
+		{
+			detectiveActionMenu.HideDetectiveTurnMenu(restoreProtagonistButtons: false);
+		}
+		EnsureValidLivingTarget();
+		CombatEnemyInstance target = activeEnemies[selectedTargetIndex];
+		PlayEfectoSfx();
+		ActionGifData skillGif = new ActionGifData
+		{
+			actionLabel = $"[GIF: HABILIDAD DEL DETECTIVE - {skillType} en ejecucion]",
+			placeholderColor = new Color(0.12f, 0.32f, 0.48f, 1f),
+			gifFrames = ((intelectoGif != null) ? intelectoGif.gifFrames : null),
+			duration = 1.25f
+		};
+		((MonoBehaviour)this).StartCoroutine(ExecuteActionWithGifCoroutine(skillGif, () =>
+		{
+			switch (skillType)
+			{
+			case DetectiveActionMenu.DetectiveSkillType.AnalizarPuntoDebil:
+			{
+				target.defenseDebuff += 4;
+				target.vulnerabilityTurns = Mathf.Max(target.vulnerabilityTurns, 2);
+				string shieldMsg = string.Empty;
+				if ((Object)(object)activeLevel2BossController != (Object)null && IsBossEnemy(target))
+				{
+					activeLevel2BossController.TryBreakShieldWithSkill("Analizar Punto Débil", out shieldMsg);
+				}
+				string extra = ((!string.IsNullOrEmpty(shieldMsg)) ? (" " + shieldMsg) : "");
+				SetBattleLog($"DETECTIVE [ANALIZAR PUNTO DÉBIL]: Expone la guardia de {target.data.enemyName} (-4 DEF y +30% dano recibido por 2 turnos).{extra}");
+				UpdateHealthUI();
+				AdvanceTurnQueueAndContinue();
+				break;
+			}
+			case DetectiveActionMenu.DetectiveSkillType.DisparoDeSupresion:
+			{
+				PlayDisparoRevolverSfx();
+				detectiveStats.ConsumeWeaponShot();
+				target.attackDebuff += 5;
+				target.motricidadDebuff += 4;
+				int chipDmg = ApplyDamageToEnemyWithBossMechanics(target, Mathf.Max(4, detectiveStats.Ataque_Arma / 2), isDirectMelee: false, canBreakBossShield: true, detectiveStats.detectiveName, attackerIsDetective: true, out var bossLog);
+				string extra2 = ((!string.IsNullOrEmpty(bossLog)) ? (" | " + bossLog) : "");
+				SetBattleLog($"DETECTIVE [DISPARO DE SUPRESIÓN]: Impacta por {chipDmg} dano y suprime a {target.data.enemyName} (-5 ATQ, -4 VEL){extra2}.");
+				EnsureValidLivingTarget();
+				UpdateHealthUI();
+				CheckPostPlayerActionFlow(target);
+				break;
+			}
+			case DetectiveActionMenu.DetectiveSkillType.ConcentracionTactica:
+			{
+				PlayRecargaRevolverSfx();
+				int bulletsAdded = detectiveStats.ReloadAmmo(3);
+				detectiveStats.tacticalAttackBonus = 5;
+				detectiveStats.skillDodgeBonusPercent = 15f;
+				detectiveStats.tacticalBuffTurnsRemaining = 2;
+				SetBattleLog($"DETECTIVE [CONCENTRACIÓN TÁCTICA]: Recarga +{bulletsAdded} balas (Total {detectiveStats.municionActual}/{detectiveStats.municionMaxima}) y obtiene +5 ATQ y +15% Esquiva por 2 turnos.");
+				UpdateHealthUI();
+				AdvanceTurnQueueAndContinue();
+				break;
+			}
+			}
+		}));
+	}
+
+	public void ExecuteDetectiveDodgeAction()
+	{
+		if (state != BattleState.DETECTIVETURN || (Object)(object)detectiveStats == (Object)null || !detectiveStats.IsAlive)
+		{
+			return;
+		}
+		PlayBotonEnCombateSfx();
+		if ((Object)(object)detectiveActionMenu != (Object)null)
+		{
+			detectiveActionMenu.HideDetectiveTurnMenu(restoreProtagonistButtons: false);
+		}
+		PlayEsquiveSfx();
+		ActionGifData dodgeGif = new ActionGifData
+		{
+			actionLabel = "[GIF: DETECTIVE VARGAS - Posicion defensiva y evasion tactica]",
+			placeholderColor = new Color(0.14f, 0.38f, 0.32f, 1f),
+			gifFrames = ((motricidadGif != null) ? motricidadGif.gifFrames : null),
+			duration = 1.15f
+		};
+		((MonoBehaviour)this).StartCoroutine(ExecuteActionWithGifCoroutine(dodgeGif, () =>
+		{
+			float totalDodge = detectiveStats.ActivateDodgeStance();
+			SetBattleLog($"DETECTIVE [ESQUIVAR]: Vargas adopta postura evasiva. Su Probabilidad_Esquiva sube a {totalDodge:0}% hasta su proximo turno.");
+			UpdateHealthUI();
+			AdvanceTurnQueueAndContinue();
+		}));
 	}
 
 	public void OnCorporeoButton()
@@ -948,25 +1534,46 @@ public class BattleManager : MonoBehaviour
 				int num2 = (((Object)(object)playerStats != (Object)null) ? playerStats.GetEquippedWeaponAttackBonus() : 0);
 				int num3 = playerAttackBuff;
 				int num4 = num + num3;
-				int num5 = Mathf.Max(1, num4 - target.data.defense);
-				target.currentHP = Mathf.Max(0, target.currentHP - num5);
-				currentEnemy = target.data;
-				currentEnemyHP = target.currentHP;
+				int effectiveDef = Mathf.Max(0, target.data.defense - target.defenseDebuff);
+				int rawDmg = Mathf.Max(1, num4 - effectiveDef);
+				int num5 = ApplyDamageToEnemyWithBossMechanics(target, rawDmg, isDirectMelee: true, canBreakBossShield: false, "Enrique", attackerIsDetective: false, out var bossLog);
 				string text = ((num2 > 0 && (Object)(object)equippedWeapon != (Object)null) ? $" (+{num2} por {equippedWeapon.itemName})" : "");
 				string text2 = ((num3 > 0) ? $" (+{num3} bonus por estar ANIMADO)" : "");
+				string textBoss = ((!string.IsNullOrEmpty(bossLog)) ? (" | " + bossLog) : "");
 				playerAttackBuff = 0;
 				string text3 = (((Object)(object)equippedWeapon != (Object)null) ? ("¡Golpe contundente con " + equippedWeapon.itemName + "!") : "¡Golpe contundente a puño limpio!");
-				SetBattleLog($"CORPOREO{weaponTag}: {text3} Infliges {num5} de dano fisico a {target.data.enemyName}{text}{text2}.");
+				SetBattleLog($"CORPOREO{weaponTag}: {text3} Infliges {num5} de dano fisico a {target.data.enemyName}{text}{text2}{textBoss}.");
 				EnsureValidLivingTarget();
 				UpdateHealthUI();
+				if ((Object)(object)playerStats != (Object)null && !playerStats.IsAlive)
+				{
+					EndBattle(won: false);
+					return;
+				}
 				CheckPostPlayerActionFlow(target);
 			}));
+		}
+		else if (state == BattleState.DETECTIVETURN)
+		{
+			if ((Object)(object)detectiveStats != (Object)null && detectiveStats.IsAlive)
+			{
+				PlayBotonEnCombateSfx();
+				SetActionButtonsInteractable(interactable: false);
+				if (detectiveStats.CanFireWeapon(out _))
+				{
+					ExecuteDetectiveFirearmAttack();
+				}
+				else
+				{
+					ExecuteDetectiveMeleeAttack();
+				}
+			}
 		}
 	}
 
 	public void OnIntelectoButton()
 	{
-		if (state == BattleState.PLAYERTURN)
+		if (state == BattleState.PLAYERTURN || state == BattleState.DETECTIVETURN)
 		{
 			PlayBotonEnCombateSfx();
 			HideMundoInternoPanelSilent();
@@ -993,11 +1600,12 @@ public class BattleManager : MonoBehaviour
 	{
 		PlayBotonEnCombateSfx();
 		HideIntelectoPanelSilent();
-		if (state == BattleState.PLAYERTURN && activeEnemies.Count > 0)
+		if ((state == BattleState.PLAYERTURN || state == BattleState.DETECTIVETURN) && activeEnemies.Count > 0)
 		{
 			EnsureValidLivingTarget();
 			string enemyName = activeEnemies[selectedTargetIndex].data.enemyName;
-			SetBattleLog("TU TURNO (Objetivo: " + enemyName + ") | Cola: " + GetTurnOrderSummaryText());
+			string actorLabel = (state == BattleState.DETECTIVETURN) ? "DETECTIVE VARGAS" : "ENRIQUE";
+			SetBattleLog($"TU TURNO — {actorLabel} (Objetivo: {enemyName}) | Cola: {GetTurnOrderSummaryText()}");
 		}
 	}
 
@@ -1017,11 +1625,14 @@ public class BattleManager : MonoBehaviour
 		}
 	}
 
-	public void UseConsumableInCombat(ItemData item)
+	public void UseConsumableInCombat(ItemData item, bool targetDetective = false)
 	{
-		//IL_0109: Unknown result type (might be due to invalid IL or missing references)
-		//IL_010e: Unknown result type (might be due to invalid IL or missing references)
-		if (state != BattleState.PLAYERTURN || (Object)(object)item == (Object)null || ((Object)(object)InventoryManager.Instance != (Object)null && !InventoryManager.Instance.HasItem(item)))
+		UseItemInCombat(item, targetDetective);
+	}
+
+	public void UseItemInCombat(ItemData item, bool targetDetective = false)
+	{
+		if ((state != BattleState.PLAYERTURN && state != BattleState.DETECTIVETURN) || (Object)(object)item == (Object)null || ((Object)(object)InventoryManager.Instance != (Object)null && !InventoryManager.Instance.HasItem(item)))
 		{
 			return;
 		}
@@ -1038,13 +1649,21 @@ public class BattleManager : MonoBehaviour
 		{
 			PlayCurarseSfx();
 		}
+		else if (item.confusesTarget || InventoryManager.GetCanonicalItemKey(item.itemName) == "OFENS_MOLOTOV")
+		{
+			PlayFuegoSfx();
+		}
 		else
 		{
 			PlayAtaqueAliadoPropioSfx();
 		}
 		ActionGifData gifData = new ActionGifData
 		{
-			actionLabel = isHealingItem ? ("[GIF PLACEHOLDER: Enrique usando objeto curativo: " + item.itemName + "]") : ("[GIF: Enrique arrojando artefacto ofensivo: " + item.itemName + "]"),
+			actionLabel = isHealingItem 
+				? (targetDetective 
+					? $"[GIF: INTELECTO - Atendiendo medicamente al Detective Vargas con {item.itemName}]" 
+					: $"[GIF: INTELECTO - Enrique usando objeto curativo: {item.itemName}]")
+				: $"[GIF: Arrojando artefacto ofensivo: {item.itemName}]",
 			placeholderColor = isHealingItem ? new Color(0.12f, 0.72f, 0.28f, 1f) : new Color(0.88f, 0.35f, 0.08f, 1f),
 			gifFrames = (!isHealingItem && explosionGif != null && explosionGif.gifFrames != null && explosionGif.gifFrames.Length != 0) ? explosionGif.gifFrames : ((intelectoGif != null) ? intelectoGif.gifFrames : null),
 			duration = (!isHealingItem && explosionGif != null) ? explosionGif.duration : 1.5f
@@ -1055,25 +1674,48 @@ public class BattleManager : MonoBehaviour
 			{
 				int num = (((Object)(object)playerStats != (Object)null) ? playerStats.GetIntelectoHealBonus() : 0);
 				int num2 = item.healAmount + num;
-				if ((Object)(object)playerStats != (Object)null)
+				if (targetDetective && hasDetectiveInParty && (Object)(object)detectiveStats != (Object)null)
 				{
-					playerStats.Heal(num2);
+					bool wasUnconscious = (detectiveStats.HP_Actual <= 0);
+					if (wasUnconscious)
+					{
+						detectiveStats.HP_Actual = Mathf.Clamp(num2, 1, detectiveStats.HP_Max);
+						SetBattleLog($"¡REANIMACIÓN CON INTELECTO! Atienden las heridas de Vargas con {item.itemName}. ¡El Detective recupera el conocimiento con {detectiveStats.HP_Actual} HP!");
+					}
+					else
+					{
+						int prev = detectiveStats.HP_Actual;
+						detectiveStats.Heal(num2);
+						int healed = detectiveStats.HP_Actual - prev;
+						SetBattleLog($"INTELECTO: Asistencia al Detective Vargas con {item.itemName} (+{healed} HP) [Total: {detectiveStats.HP_Actual}/{detectiveStats.HP_Max} HP].");
+					}
 				}
-				string arg = ((num > 0) ? $" (+{num} por Intelecto)" : "");
-				string arg2 = ((!string.IsNullOrWhiteSpace(item.combatUseMessage)) ? item.combatUseMessage : $"Enrique usa {item.itemName} y recupera +{num2} HP!");
-				SetBattleLog($"{arg2} (+{num2} HP{arg})");
+				else
+				{
+					if ((Object)(object)playerStats != (Object)null)
+					{
+						playerStats.Heal(num2);
+					}
+					string arg = ((num > 0) ? $" (+{num} por Intelecto)" : "");
+					string arg2 = ((!string.IsNullOrWhiteSpace(item.combatUseMessage)) ? item.combatUseMessage : $"Enrique usa {item.itemName} y recupera +{num2} HP!");
+					SetBattleLog($"{arg2} (+{num2} HP{arg})");
+				}
 				UpdateHealthUI();
 				AdvanceTurnQueueAndContinue();
 			}
 			else
 			{
 				int num3 = (((Object)(object)playerStats != (Object)null) ? playerStats.GetIntelectoDamageBonus() : 0);
-				int num4 = Mathf.Max(1, item.damageAmount + num3);
-				target.currentHP = Mathf.Max(0, target.currentHP - num4);
-				currentEnemy = target.data;
-				currentEnemyHP = target.currentHP;
+				int rawDmg = Mathf.Max(1, item.damageAmount + num3);
+				int num4 = ApplyDamageToEnemyWithBossMechanics(target, rawDmg, isDirectMelee: false, canBreakBossShield: true, "Enrique (Intelecto)", attackerIsDetective: false, out var bossLog);
+				if ((item.confusesTarget || InventoryManager.GetCanonicalItemKey(item.itemName) == "OFENS_MOLOTOV") && target.IsAlive)
+				{
+					target.isConfused = true;
+				}
+				string confSuffix = ((item.confusesTarget || InventoryManager.GetCanonicalItemKey(item.itemName) == "OFENS_MOLOTOV") && target.IsAlive) ? $" | {target.data.enemyName} queda CONFUNDIDO (1 turno)" : "";
+				string extraBoss = ((!string.IsNullOrEmpty(bossLog)) ? (" | " + bossLog) : "");
 				string battleLog = ((!string.IsNullOrWhiteSpace(item.combatUseMessage)) ? item.combatUseMessage : $"Enrique lanza {item.itemName} contra {target.data.enemyName} ({num4} dano).");
-				SetBattleLog(battleLog);
+				SetBattleLog(battleLog + confSuffix + extraBoss);
 				EnsureValidLivingTarget();
 				UpdateHealthUI();
 				CheckPostPlayerActionFlow(target);
@@ -1081,12 +1723,9 @@ public class BattleManager : MonoBehaviour
 		}));
 	}
 
-	public void CraftAndUseRecipeInCombat(CraftingRecipeData recipe)
+	public void CraftAndUseRecipeInCombat(CraftingRecipeData recipe, bool targetDetective = false)
 	{
-		//IL_016a: Unknown result type (might be due to invalid IL or missing references)
-		//IL_014f: Unknown result type (might be due to invalid IL or missing references)
-		//IL_016f: Unknown result type (might be due to invalid IL or missing references)
-		if (state != BattleState.PLAYERTURN || (Object)(object)recipe == (Object)null || ((Object)(object)InventoryManager.Instance != (Object)null && !InventoryManager.Instance.CanCraft(recipe)))
+		if ((state != BattleState.PLAYERTURN && state != BattleState.DETECTIVETURN) || (Object)(object)recipe == (Object)null || ((Object)(object)InventoryManager.Instance != (Object)null && !InventoryManager.Instance.CanCraft(recipe)))
 		{
 			return;
 		}
@@ -1112,7 +1751,11 @@ public class BattleManager : MonoBehaviour
 		}
 		ActionGifData gifData = new ActionGifData
 		{
-			actionLabel = flag ? ("[GIF: INTELECTO - Explosion de " + recipe.recipeName + "]") : ("[GIF PLACEHOLDER: Intelecto fabricando y usando " + recipe.recipeName + "]"),
+			actionLabel = flag 
+				? ("[GIF: INTELECTO - Explosion de " + recipe.recipeName + "]") 
+				: (targetDetective 
+					? $"[GIF: INTELECTO - Fabricando y usando {recipe.recipeName} para curar al Detective Vargas]" 
+					: $"[GIF: INTELECTO - Fabricando y usando {recipe.recipeName} para curar a Enrique]"),
 			placeholderColor = (flag ? new Color(0.88f, 0.32f, 0.08f, 1f) : new Color(0.08f, 0.58f, 0.78f, 1f)),
 			gifFrames = (flag && explosionGif != null && explosionGif.gifFrames != null && explosionGif.gifFrames.Length != 0) ? explosionGif.gifFrames : ((intelectoGif != null) ? intelectoGif.gifFrames : null),
 			duration = (flag && explosionGif != null) ? explosionGif.duration : 1.5f
@@ -1120,26 +1763,133 @@ public class BattleManager : MonoBehaviour
 		((MonoBehaviour)this).StartCoroutine(ExecuteActionWithGifCoroutine(gifData, () =>
 		{
 			List<string> list = new List<string>();
-			if (recipe.damageIgnoringDefense > 0)
+			List<CombatEnemyInstance> affectedTargets = new List<CombatEnemyInstance>();
+			if (recipe.isAreaOfEffect)
+			{
+				for (int i = 0; i < activeEnemies.Count; i++)
+				{
+					if (activeEnemies[i] != null && activeEnemies[i].IsAlive)
+					{
+						affectedTargets.Add(activeEnemies[i]);
+					}
+				}
+			}
+			else if (target != null && target.IsAlive)
+			{
+				affectedTargets.Add(target);
+			}
+
+			if (recipe.damageIgnoringDefense > 0 && affectedTargets.Count > 0)
 			{
 				int num = (((Object)(object)playerStats != (Object)null) ? playerStats.GetIntelectoDamageBonus() : 0);
-				int num2 = recipe.damageIgnoringDefense + num;
-				target.currentHP = Mathf.Max(0, target.currentHP - num2);
-				currentEnemy = target.data;
-				currentEnemyHP = target.currentHP;
-				list.Add($"{num2} dano por fuego ignorando defensa a {target.data.enemyName}");
+				int rawDmg = recipe.damageIgnoringDefense + num;
+				if (recipe.isAreaOfEffect && affectedTargets.Count > 1)
+				{
+					int totalHit = 0;
+					int lastDmg = rawDmg;
+					foreach (CombatEnemyInstance enemyTarget in affectedTargets)
+					{
+						lastDmg = ApplyDamageToEnemyWithBossMechanics(enemyTarget, rawDmg, isDirectMelee: false, canBreakBossShield: true, "Enrique (Crafteo Intelecto)", attackerIsDetective: false, out var bossLog);
+						totalHit++;
+						if (!string.IsNullOrEmpty(bossLog))
+						{
+							list.Add(bossLog);
+						}
+					}
+					list.Add($"{lastDmg} dano explosivo en area a {totalHit} enemigos");
+				}
+				else
+				{
+					CombatEnemyInstance singleTarget = affectedTargets[0];
+					int num2 = ApplyDamageToEnemyWithBossMechanics(singleTarget, rawDmg, isDirectMelee: false, canBreakBossShield: true, "Enrique (Crafteo Intelecto)", attackerIsDetective: false, out var bossLog);
+					list.Add($"{num2} dano ignorando defensa a {singleTarget.data.enemyName}");
+					if (!string.IsNullOrEmpty(bossLog))
+					{
+						list.Add(bossLog);
+					}
+				}
 			}
-			if (recipe.healAmount > 0 && (Object)(object)playerStats != (Object)null)
+			if (recipe.healAmount > 0)
 			{
-				int intelectoHealBonus = playerStats.GetIntelectoHealBonus();
+				int intelectoHealBonus = (((Object)(object)playerStats != (Object)null) ? playerStats.GetIntelectoHealBonus() : 0);
 				int num3 = recipe.healAmount + intelectoHealBonus;
-				playerStats.Heal(num3);
-				list.Add($"+{num3} HP para Enrique");
+				if (targetDetective && hasDetectiveInParty && (Object)(object)detectiveStats != (Object)null)
+				{
+					bool wasUnconscious = (detectiveStats.HP_Actual <= 0);
+					if (wasUnconscious)
+					{
+						detectiveStats.HP_Actual = Mathf.Clamp(num3, 1, detectiveStats.HP_Max);
+						list.Add($"¡Reanimación de Vargas con {detectiveStats.HP_Actual} HP!");
+					}
+					else
+					{
+						int prev = detectiveStats.HP_Actual;
+						detectiveStats.Heal(num3);
+						list.Add($"+{detectiveStats.HP_Actual - prev} HP para Detective Vargas");
+					}
+				}
+				else
+				{
+					if ((Object)(object)playerStats != (Object)null)
+					{
+						playerStats.Heal(num3);
+					}
+					list.Add($"+{num3} HP para Enrique");
+				}
 			}
-			if (recipe.appliesConfusion && target.IsAlive)
+			if (recipe.appliesConfusion)
 			{
-				target.isConfused = true;
-				list.Add(target.data.enemyName + " queda CONFUNDIDO (1 turno)");
+				int confusedCount = 0;
+				string lastConfusedName = "";
+				foreach (CombatEnemyInstance enemyTarget in affectedTargets)
+				{
+					if (enemyTarget != null && enemyTarget.IsAlive)
+					{
+						enemyTarget.isConfused = true;
+						confusedCount++;
+						lastConfusedName = enemyTarget.data.enemyName;
+					}
+				}
+				if (confusedCount > 1)
+				{
+					list.Add($"TODOS los enemigos ({confusedCount}) quedan CONFUNDIDOS (1 turno)");
+				}
+				else if (confusedCount == 1)
+				{
+					list.Add(lastConfusedName + " queda CONFUNDIDO (1 turno)");
+				}
+			}
+			if (recipe.enemyDefenseDebuff > 0 || recipe.enemyAttackDebuff > 0 || recipe.enemyMotricidadDebuff > 0)
+			{
+				foreach (CombatEnemyInstance enemyTarget in affectedTargets)
+				{
+					if (enemyTarget != null && enemyTarget.IsAlive)
+					{
+						enemyTarget.defenseDebuff += recipe.enemyDefenseDebuff;
+						enemyTarget.attackDebuff += recipe.enemyAttackDebuff;
+						enemyTarget.motricidadDebuff += recipe.enemyMotricidadDebuff;
+					}
+				}
+				List<string> debuffParts = new List<string>();
+				if (recipe.enemyDefenseDebuff > 0) debuffParts.Add($"-{recipe.enemyDefenseDebuff} DEF");
+				if (recipe.enemyAttackDebuff > 0) debuffParts.Add($"-{recipe.enemyAttackDebuff} ATQ");
+				if (recipe.enemyMotricidadDebuff > 0) debuffParts.Add($"-{recipe.enemyMotricidadDebuff} VEL");
+				list.Add("Enemigo(s) sufren " + string.Join(", ", debuffParts));
+			}
+			if (recipe.playerAttackBuff > 0)
+			{
+				playerAttackBuff += recipe.playerAttackBuff;
+				list.Add($"+{recipe.playerAttackBuff} ATQ al proximo golpe de Enrique");
+			}
+			if (recipe.grantsPlayerGuard)
+			{
+				isMotricidadDefending = true;
+				list.Add("Guardia Defensiva activa en esta ronda");
+			}
+			if (recipe.detectiveAmmoRestored > 0 && hasDetectiveInParty && (Object)(object)detectiveStats != (Object)null)
+			{
+				int addedAmmo = detectiveStats.ReloadAmmo(recipe.detectiveAmmoRestored);
+				list.Add($"+{addedAmmo} Balas .38 para Detective Vargas ({detectiveStats.municionActual}/{detectiveStats.municionMaxima})");
 			}
 			string text2 = ((list.Count > 0) ? string.Join(" | ", list) : "Efecto aplicado");
 			SetBattleLog("INTELECTO [" + recipe.recipeName + "]: " + text2 + ".");
@@ -1168,11 +1918,22 @@ public class BattleManager : MonoBehaviour
 				AdvanceTurnQueueAndContinue();
 			}));
 		}
+		else if (state == BattleState.DETECTIVETURN)
+		{
+			if ((Object)(object)detectiveStats != (Object)null && detectiveStats.IsAlive)
+			{
+				PlayBotonEnCombateSfx();
+				HideIntelectoPanelSilent();
+				HideMundoInternoPanelSilent();
+				SetActionButtonsInteractable(interactable: false);
+				ExecuteDetectiveDodgeAction();
+			}
+		}
 	}
 
 	public void OnMundoInternoButton()
 	{
-		if (state == BattleState.PLAYERTURN)
+		if (state == BattleState.PLAYERTURN || state == BattleState.DETECTIVETURN)
 		{
 			PlayBotonEnCombateSfx();
 			HideIntelectoPanelSilent();
@@ -1184,12 +1945,18 @@ public class BattleManager : MonoBehaviour
 			if ((Object)(object)mundoInternoUI != (Object)null)
 			{
 				mundoInternoUI.ShowAndRefresh(this);
-				SetBattleLog("MUNDO INTERNO: Elige una habilidad psicologica (Insultar, Animarse o Delirio Psiquico).");
+				SetBattleLog(state == BattleState.DETECTIVETURN
+					? "TÁCTICA DEL DETECTIVE: Elige una habilidad táctica (Analizar Punto Débil, Concentración o Supresión)."
+					: "MUNDO INTERNO: Elige una habilidad psicologica (Insultar, Animarse o Delirio Psiquico).");
 			}
 			else if ((Object)(object)mundoInternoPanel != (Object)null)
 			{
 				mundoInternoPanel.SetActive(true);
-				SetBattleLog("MUNDO INTERNO: Elige una habilidad psicologica.");
+				SetBattleLog("MUNDO INTERNO: Elige una habilidad.");
+			}
+			else if (state == BattleState.DETECTIVETURN)
+			{
+				ExecuteDetectiveSkill(DetectiveActionMenu.DetectiveSkillType.ConcentracionTactica);
 			}
 			else
 			{
@@ -1202,11 +1969,12 @@ public class BattleManager : MonoBehaviour
 	{
 		PlayBotonEnCombateSfx();
 		HideMundoInternoPanelSilent();
-		if (state == BattleState.PLAYERTURN && activeEnemies.Count > 0)
+		if ((state == BattleState.PLAYERTURN || state == BattleState.DETECTIVETURN) && activeEnemies.Count > 0)
 		{
 			EnsureValidLivingTarget();
 			string enemyName = activeEnemies[selectedTargetIndex].data.enemyName;
-			SetBattleLog("TU TURNO (Objetivo: " + enemyName + ") | Cola: " + GetTurnOrderSummaryText());
+			string actorLabel = (state == BattleState.DETECTIVETURN) ? "DETECTIVE VARGAS" : "ENRIQUE";
+			SetBattleLog($"TU TURNO — {actorLabel} (Objetivo: {enemyName}) | Cola: {GetTurnOrderSummaryText()}");
 		}
 	}
 
@@ -1316,7 +2084,7 @@ public class BattleManager : MonoBehaviour
 	{
 		state = BattleState.PLAYING_GIF;
 		SetActionButtonsInteractable(interactable: false);
-		float num = ((gifData != null && gifData.duration > 0f) ? gifData.duration : 1.5f);
+		float num = ((gifData != null && gifData.duration > 0f) ? Mathf.Clamp(gifData.duration, 0.4f, 1.5f) : 1.5f);
 		if ((Object)(object)actionGifPanel != (Object)null)
 		{
 			actionGifPanel.SetActive(true);
@@ -1416,6 +2184,10 @@ public class BattleManager : MonoBehaviour
 			yield break;
 		}
 		CombatEnemyInstance attacker = activeEnemies[enemyIndex];
+		if (attacker.vulnerabilityTurns > 0)
+		{
+			attacker.vulnerabilityTurns--;
+		}
 		yield return (object)new WaitForSeconds(0.5f);
 		if (attacker.isConfused)
 		{
@@ -1425,6 +2197,20 @@ public class BattleManager : MonoBehaviour
 			yield return (object)new WaitForSeconds(1.2f);
 			AdvanceTurnQueueAndContinue();
 			yield break;
+		}
+		bool targetDetective = false;
+		if (hasDetectiveInParty && (Object)(object)detectiveStats != (Object)null && detectiveStats.IsAlive)
+		{
+			targetDetective = ((enemyIndex % 2 == 1) ? (Random.value < 0.65f) : (Random.value < 0.42f));
+		}
+		lastEnemyTargetWasDetective = targetDetective;
+		string targetActorName = (targetDetective ? detectiveStats.detectiveName : "Enrique");
+		float bossMultiplier = 1f;
+		string bossPhaseLog = string.Empty;
+		int bossFieldDmg = 0;
+		if ((Object)(object)activeLevel2BossController != (Object)null && IsBossEnemy(attacker))
+		{
+			activeLevel2BossController.ExecuteBossTurnStateTransition(attacker.currentHP, attacker.data.maxHP, out bossMultiplier, out bossPhaseLog, out bossFieldDmg);
 		}
 		Sprite[] nextEnemyAttackFrames = GetNextEnemyAttackFrames(attacker);
 		if (nextEnemyAttackFrames != null && nextEnemyAttackFrames.Length != 0)
@@ -1440,7 +2226,8 @@ public class BattleManager : MonoBehaviour
 				enemyAttackGif.gifFrames = corporeoGif.gifFrames;
 			}
 		}
-		enemyAttackGif.actionLabel = $"[GIF: {attacker.data.enemyName.ToUpper()} (Motricidad {attacker.data.motricidad}) atacando a Enrique]";
+		string customAttackName = ((!string.IsNullOrEmpty(attacker.data.primaryAttackName)) ? attacker.data.primaryAttackName : "Ataque Callejero");
+		enemyAttackGif.actionLabel = $"[GIF: {attacker.data.enemyName.ToUpper()} ({customAttackName}) atacando a {targetActorName}]";
 		enemyAttackGif.placeholderColor = new Color(0.18f, 0.12f, 0.12f, 1f);
 		if (IsBossEnemy(attacker))
 		{
@@ -1451,16 +2238,46 @@ public class BattleManager : MonoBehaviour
 			PlayAtaqueEnemigoSfx();
 		}
 		yield return ((MonoBehaviour)this).StartCoroutine(PlayActionGifCoroutine(enemyAttackGif));
-		int num = Mathf.Max(1, attacker.data.attack - attacker.attackDebuff);
-		string text = ((attacker.attackDebuff > 0) ? $" (-{attacker.attackDebuff} por insulto)" : "");
-		if (isMotricidadDefending)
+		int baseAtk = Mathf.Max(1, attacker.data.attack - attacker.attackDebuff);
+		int num = Mathf.Max(1, Mathf.RoundToInt((float)baseAtk * bossMultiplier));
+		string text = ((attacker.attackDebuff > 0) ? $" (-{attacker.attackDebuff} ATQ reduc.)" : "");
+		if (bossFieldDmg > 0)
+		{
+			if ((Object)(object)playerStats != (Object)null && playerStats.IsAlive)
+			{
+				playerStats.TakeDamage(bossFieldDmg);
+			}
+			if (hasDetectiveInParty && (Object)(object)detectiveStats != (Object)null && detectiveStats.IsAlive)
+			{
+				detectiveStats.TakeDamage(bossFieldDmg, out var _);
+			}
+		}
+		string bossPrefix = ((!string.IsNullOrEmpty(bossPhaseLog)) ? (bossPhaseLog + " | ") : "");
+		if (targetDetective && (Object)(object)detectiveStats != (Object)null && detectiveStats.IsAlive)
+		{
+			if (detectiveStats.TryRollDodge(out var effDodgeChance))
+			{
+				PlayEsquiveSfx();
+				SetBattleLog($"{bossPrefix}¡ESQUIVA DEL DETECTIVE ({effDodgeChance:0}%)! Vargas evade por completo '{customAttackName}' de {attacker.data.enemyName} (0 dano).");
+			}
+			else
+			{
+				int detDmg = detectiveStats.TakeDamage(num, out var mitigated);
+				SetBattleLog($"{bossPrefix}TURNO DE {attacker.data.enemyName.ToUpper()}: Ejecuta '{customAttackName}' contra {detectiveStats.detectiveName} (-{detDmg} HP, mitigado -{mitigated} por Defensa){text}.");
+				if (!detectiveStats.IsAlive)
+				{
+					SetBattleLog($"{bossPrefix}¡EL DETECTIVE VARGAS HA CAÍDO INCONSCIENTE! Enrique continúa el combate en solitario.");
+				}
+			}
+		}
+		else if (isMotricidadDefending)
 		{
 			float num2 = (((Object)(object)playerStats != (Object)null) ? playerStats.GetDodgeChanceAgainst(attacker.data.motricidad) : Mathf.Clamp(0.25f + (float)(12 - attacker.data.motricidad) * 0.05f, 0.15f, 0.75f));
 			bool flag = Random.value <= num2;
 			PlayEsquiveSfx();
 			if (flag)
 			{
-				SetBattleLog("MOTRICIDAD: Enrique ESQUIVA por completo el ataque de " + attacker.data.enemyName + " (0 dano).");
+				SetBattleLog($"{bossPrefix}MOTRICIDAD: Enrique ESQUIVA por completo '{customAttackName}' de {attacker.data.enemyName} (0 dano).");
 			}
 			else
 			{
@@ -1471,7 +2288,7 @@ public class BattleManager : MonoBehaviour
 				{
 					playerStats.TakeDamage(num5);
 				}
-				SetBattleLog($"MOTRICIDAD: Guardia defensiva reduce un {num4}% el golpe de {attacker.data.enemyName} ({num5} dano{text}).");
+				SetBattleLog($"{bossPrefix}MOTRICIDAD: Guardia defensiva reduce un {num4}% el golpe de {attacker.data.enemyName} ({num5} dano{text}).");
 			}
 		}
 		else
@@ -1480,7 +2297,7 @@ public class BattleManager : MonoBehaviour
 			{
 				playerStats.TakeDamage(num);
 			}
-			SetBattleLog($"TURNO DE {attacker.data.enemyName.ToUpper()}: Ataca a Enrique e inflige {num} de dano{text}.");
+			SetBattleLog($"{bossPrefix}TURNO DE {attacker.data.enemyName.ToUpper()}: Ejecuta '{customAttackName}' contra Enrique e inflige {num} de dano{text}.");
 		}
 		UpdateHealthUI();
 		if ((Object)(object)playerStats != (Object)null && !playerStats.IsAlive)
@@ -1651,14 +2468,15 @@ public class BattleManager : MonoBehaviour
 			break;
 		case DialogueSpeakerType.Character:
 		{
-			Sprite val = (text.Contains("ENRIQUE") ? enriquePortrait : null);
+			bool isDetective = text.Contains("INVESTIGADOR") || text.Contains("DETECTIVE") || text.Contains("VARGAS");
+			Sprite val = (text.Contains("ENRIQUE") ? enriquePortrait : (isDetective ? detectiveCombatPortrait : null));
 			if ((Object)(object)combatPortraitImage != (Object)null)
 			{
 				if ((Object)(object)val != (Object)null)
 				{
 					combatPortraitImage.sprite = val;
 					((Graphic)combatPortraitImage).color = Color.white;
-					combatPortraitImage.preserveAspect = false;
+					combatPortraitImage.preserveAspect = isDetective;
 				}
 				else
 				{
@@ -1746,9 +2564,21 @@ public class BattleManager : MonoBehaviour
 	private void EndBattle(bool won)
 	{
 		SetActionButtonsInteractable(interactable: false);
+		if ((Object)(object)detectiveActionMenu != (Object)null)
+		{
+			detectiveActionMenu.HideDetectiveTurnMenu(restoreProtagonistButtons: true);
+		}
 		if (won)
 		{
 			state = BattleState.WON;
+			int totalEnemyExpReward = 0;
+			for (int i = 0; i < activeEnemies.Count; i++)
+			{
+				if (activeEnemies[i] != null && (Object)(object)activeEnemies[i].data != (Object)null)
+				{
+					totalEnemyExpReward += Mathf.Max(45, activeEnemies[i].data.EXP_Reward);
+				}
+			}
 			int xpAwarded = 0;
 			int num = 0;
 			if ((Object)(object)playerStats == (Object)null)
@@ -1757,16 +2587,38 @@ public class BattleManager : MonoBehaviour
 			}
 			if ((Object)(object)playerStats != (Object)null)
 			{
-				num = playerStats.GainExperienceFromBattle(activeEnemies.Count, isCurrentEncounterBoss, out xpAwarded);
+				num = playerStats.GainExperienceFromBattle(activeEnemies.Count, isCurrentEncounterBoss, totalEnemyExpReward, out xpAwarded);
+			}
+			lastDetectiveAutoLevelUpLog.Clear();
+			lastDetectiveExpGained = 0;
+			lastDetectiveLevelsGained = 0;
+			int detLevelsGained = 0;
+			if (hasDetectiveInParty && (Object)(object)detectiveStats != (Object)null)
+			{
+				detLevelsGained = detectiveStats.GainExperienceFromVictory(xpAwarded, out lastDetectiveExpGained, out lastDetectiveAutoLevelUpLog);
+				lastDetectiveLevelsGained = detLevelsGained;
+			}
+			if ((Object)(object)activeLevel2BossController != (Object)null && isCurrentEncounterBoss)
+			{
+				activeLevel2BossController.NotifyBossDefeated(this);
 			}
 			UpdateHealthUI();
+			string detLogSuffix = "";
+			if (detLevelsGained > 0 && lastDetectiveAutoLevelUpLog.Count > 0)
+			{
+				detLogSuffix = " | " + string.Join(" | ", lastDetectiveAutoLevelUpLog);
+			}
+			else if (hasDetectiveInParty && lastDetectiveExpGained > 0)
+			{
+				detLogSuffix = $" | Detective +{lastDetectiveExpGained} EXP";
+			}
 			if (num > 0 && (Object)(object)playerStats != (Object)null)
 			{
-				SetBattleLog($"¡VICTORIA (+{xpAwarded} EXP)! ¡ENRIQUE SUBE AL NIVEL {playerStats.level}! Preparando selección de mejora...");
+				SetBattleLog($"¡VICTORIA (+{xpAwarded} EXP)! ¡ENRIQUE SUBE AL NIVEL {playerStats.level}!{detLogSuffix}");
 			}
 			else
 			{
-				SetBattleLog($"VICTORIA (+{xpAwarded} EXP). Todos los enemigos han caido.");
+				SetBattleLog($"VICTORIA (+{xpAwarded} EXP). Todos los enemigos han caido.{detLogSuffix}");
 			}
 			if ((Object)(object)MusicManager.Instance != (Object)null)
 			{
@@ -1860,12 +2712,120 @@ public class BattleManager : MonoBehaviour
 		}
 	}
 
+	private static ItemData ResolveOrCreateCanonicalRewardItem(string itemName, string description, ItemCategory category, int healAmount)
+	{
+		if ((Object)(object)InventoryManager.Instance != (Object)null)
+		{
+			if (InventoryManager.Instance.knownRecipes != null)
+			{
+				foreach (CraftingRecipeData recipe in InventoryManager.Instance.knownRecipes)
+				{
+					if ((Object)(object)recipe == (Object)null) continue;
+					if ((Object)(object)recipe.materialA != (Object)null && InventoryManager.GetCanonicalItemKey(recipe.materialA.itemName) == InventoryManager.GetCanonicalItemKey(itemName))
+						return recipe.materialA;
+					if ((Object)(object)recipe.materialB != (Object)null && InventoryManager.GetCanonicalItemKey(recipe.materialB.itemName) == InventoryManager.GetCanonicalItemKey(itemName))
+						return recipe.materialB;
+				}
+			}
+			if (InventoryManager.Instance.items != null)
+			{
+				foreach (InventorySlot s in InventoryManager.Instance.items)
+				{
+					if (s != null && (Object)(object)s.item != (Object)null && InventoryManager.GetCanonicalItemKey(s.item.itemName) == InventoryManager.GetCanonicalItemKey(itemName))
+						return s.item;
+				}
+			}
+		}
+		string[] candidatePaths = new string[]
+		{
+			"Assets/Data/Items/Item_BotellaVacia.asset",
+			"Assets/Data/Items/Botella_Vacia.asset",
+			"Assets/Data/Items/Item_ChilePolvo.asset",
+			"Assets/Data/Items/Chile_Polvo.asset",
+			"Assets/Data/Items/Cinta_Canela.asset",
+			"Assets/Data/Items/Item_Refresco.asset",
+			"Assets/Data/Items/Refresco_Cola.asset",
+			"Assets/Data/Items/Item_Torta.asset",
+			"Assets/Data/Items/Torta_Jamon.asset"
+		};
+		foreach (string p in candidatePaths)
+		{
+			ItemData loaded = RuntimeAssetCatalog.GetItem(p);
+			if ((Object)(object)loaded != (Object)null && InventoryManager.GetCanonicalItemKey(loaded.itemName) == InventoryManager.GetCanonicalItemKey(itemName))
+			{
+				return loaded;
+			}
+		}
+		ItemData runtimeItem = ScriptableObject.CreateInstance<ItemData>();
+		runtimeItem.itemName = itemName;
+		runtimeItem.description = description;
+		runtimeItem.category = category;
+		runtimeItem.healAmount = healAmount;
+		runtimeItem.placeholderColor = (category == ItemCategory.MaterialDeCrafteo) ? new Color(0.85f, 0.55f, 0.2f, 1f) : new Color(0.25f, 0.78f, 0.42f, 1f);
+		return runtimeItem;
+	}
+
+	private List<InventorySlot> GenerateLootDropsFromDefeatedEnemies()
+	{
+		List<InventorySlot> drops = new List<InventorySlot>();
+		int enemyCount = (activeEnemies != null && activeEnemies.Count > 0) ? activeEnemies.Count : 1;
+		int rollsCount = isCurrentEncounterBoss ? 3 : Mathf.Clamp(enemyCount + 1, 2, 3);
+
+		for (int i = 0; i < rollsCount; i++)
+		{
+			int roll = Random.Range(0, 8);
+			ItemData droppedItem = null;
+			switch (roll)
+			{
+			case 0:
+				droppedItem = ResolveOrCreateCanonicalRewardItem("Polvora Callejera", "Pólvora negra extraída de cartuchos viejos. Se combina con Chatarra Afilada (Granada de Metralla) o con Gasolina (Bomba Cegadora de Humo).", ItemCategory.MaterialDeCrafteo, 0);
+				break;
+			case 1:
+				droppedItem = ResolveOrCreateCanonicalRewardItem("Chatarra Afilada", "Clavos oxidados y láminas cortantes. Se combina con Pólvora Callejera (Granada de Metralla) o con Cinta Canela (Parche Blindado).", ItemCategory.MaterialDeCrafteo, 0);
+				break;
+			case 2:
+				droppedItem = ResolveOrCreateCanonicalRewardItem("Alcohol Industrial", "Botella de alcohol etílico de 96°. Se combina con Refresco Frío para crear un Tónico de Adrenalina (+55 HP, +8 ATQ y Guardia).", ItemCategory.MaterialDeCrafteo, 0);
+				break;
+			case 3:
+				droppedItem = ResolveOrCreateCanonicalRewardItem("Botella Vacia", "Envase de vidrio grueso. Combinado con Gasolina permite crear una Bomba Molotov.", ItemCategory.MaterialDeCrafteo, 0);
+				break;
+			case 4:
+				droppedItem = ResolveOrCreateCanonicalRewardItem("Gasolina", "Combustible inflamable. Combinado con Botella Vacia crea una Bomba Molotov o con Pólvora una Bomba Cegadora.", ItemCategory.MaterialDeCrafteo, 0);
+				break;
+			case 5:
+				droppedItem = ResolveOrCreateCanonicalRewardItem("Cinta Canela", "Rollo de cinta adhesiva industrial. Combinada con Botella Vacia (Vendaje Rudo) o con Chatarra Afilada (Parche Blindado).", ItemCategory.MaterialDeCrafteo, 0);
+				break;
+			case 6:
+				droppedItem = ResolveOrCreateCanonicalRewardItem("Refresco Frio", "Refresco bien helado (+35 HP) o ingrediente para Tónico de Adrenalina.", ItemCategory.ConsumibleCuracion, 35);
+				break;
+			default:
+				droppedItem = ResolveOrCreateCanonicalRewardItem("Torta Callejera", "Torta de milanesa envuelta en papel estraza. Restaura +60 HP.", ItemCategory.ConsumibleCuracion, 60);
+				break;
+			}
+
+			if ((Object)(object)droppedItem != (Object)null)
+			{
+				InventorySlot existing = drops.Find(s => s != null && (Object)(object)s.item != (Object)null && InventoryManager.AreItemsEquivalent(s.item, droppedItem));
+				if (existing != null)
+				{
+					existing.quantity += 1;
+				}
+				else
+				{
+					drops.Add(new InventorySlot { item = droppedItem, quantity = 1 });
+				}
+			}
+		}
+
+		return drops;
+	}
+
 	private IEnumerator ShowPostCombatFlowCoroutine(int levelsGained, int xpAwarded)
 	{
 		yield return (object)new WaitForSeconds(0.85f);
 		ItemData itemData = currentRewardItem;
 		string[] array = currentRewardDialogueLines;
-		if ((Object)(object)itemData == (Object)null && !hasAwardedStarterWeapon)
+		if ((Object)(object)itemData == (Object)null && !hasAwardedStarterWeapon && (currentRewardBundle == null || currentRewardBundle.Count == 0) && !isCurrentEncounterBoss)
 		{
 			if ((Object)(object)starterRewardWeapon != (Object)null)
 			{
@@ -1876,9 +2836,14 @@ public class BattleManager : MonoBehaviour
 				itemData = InventoryManager.Instance.preparedWeaponCatalog[0];
 			}
 		}
-		if ((Object)(object)itemData != (Object)null && ((Object)(object)InventoryManager.Instance == (Object)null || !InventoryManager.Instance.IsWeaponUnlocked(itemData)))
+		bool shouldAwardSingleItem = (Object)(object)itemData != (Object)null &&
+			(itemData.category != ItemCategory.Arma || (Object)(object)InventoryManager.Instance == (Object)null || !InventoryManager.Instance.IsWeaponUnlocked(itemData));
+		if (shouldAwardSingleItem)
 		{
-			hasAwardedStarterWeapon = true;
+			if (itemData.category == ItemCategory.Arma)
+			{
+				hasAwardedStarterWeapon = true;
+			}
 			if ((Object)(object)InventoryManager.Instance != (Object)null)
 			{
 				InventoryManager.Instance.AddItem(itemData);
@@ -1893,12 +2858,23 @@ public class BattleManager : MonoBehaviour
 			}
 			if (array == null || array.Length == 0)
 			{
-				array = new string[3]
+				if (itemData.category == ItemCategory.Arma)
 				{
-					"NARRADOR: \"¡El lacayo cae al suelo inconsciente! De su cinturón se desprende una pesada " + itemData.itemName.ToUpper() + " con eslabones de acero engrasado. Enrique la recoge del asfalto.\"",
-					$"VOZ [CORPOREO]: \"¡Nuestra primera arma callejera! Con esta {itemData.itemName} (+{itemData.weaponAttackBonus} ATQ, +{itemData.weaponMotricidadBonus} Motricidad) nuestros golpes seran mas letales y rapidos.\"",
-					"VOZ [INTELECTO]: \"¡" + itemData.itemName.ToUpper() + " OBTENIDA Y EQUIPADA! Se ha colocado en tus manos. Puedes abrir el menú [INVENTARIO / TAB] en cualquier momento para ver tu equipamiento, o hacer clic en tu retrato para cambiarla.\""
-				};
+					array = new string[3]
+					{
+						"NARRADOR: \"¡El lacayo cae al suelo inconsciente! De su cinturón se desprende una pesada " + itemData.itemName.ToUpper() + " con eslabones de acero engrasado. Enrique la recoge del asfalto.\"",
+						$"VOZ [CORPOREO]: \"¡Nuestra primera arma callejera! Con esta {itemData.itemName} (+{itemData.weaponAttackBonus} ATQ, +{itemData.weaponMotricidadBonus} Motricidad) nuestros golpes seran mas letales y rapidos.\"",
+						"VOZ [INTELECTO]: \"¡" + itemData.itemName.ToUpper() + " OBTENIDA Y EQUIPADA! Se ha colocado en tus manos. Puedes abrir el menú [INVENTARIO / TAB] en cualquier momento para ver tu equipamiento, o hacer clic en tu retrato para cambiarla.\""
+					};
+				}
+				else
+				{
+					array = new string[2]
+					{
+						$"NARRADOR: \"Entre las pertenencias del enemigo derrotado encuentras: 1x {itemData.itemName.ToUpper()}.\"",
+						$"VOZ [INTELECTO]: \"Lo guardamos en el inventario ({itemData.description}).\""
+					};
+				}
 			}
 			bool rewardDialogueFinished = false;
 			StartCombatDialogue(array, () =>
@@ -1914,13 +2890,109 @@ public class BattleManager : MonoBehaviour
 				PlayerInventoryAndWeaponsUI.Instance.RefreshUI();
 			}
 		}
+
+		// Recompensa de suministros al derrotar enemigos (tanto en el Jefe Final del Nivel 1 como en todos los combates)
+		Scene activeSceneForRewards = SceneManager.GetActiveScene();
+		bool isLevel1FinalBoss = isCurrentEncounterBoss && activeSceneForRewards.IsValid() &&
+			(activeSceneForRewards.name.Contains("01_Nivel1") || (!string.IsNullOrEmpty(currentBossNextScene) && currentBossNextScene.Contains("02_Nivel2")));
+		if (isLevel1FinalBoss && (currentRewardBundle == null || currentRewardBundle.Count == 0))
+		{
+			currentRewardBundle = new List<InventorySlot>
+			{
+				new InventorySlot { item = ResolveOrCreateCanonicalRewardItem("Botella Vacia", "Envase de vidrio grueso. Combinado con Gasolina permite crear una Bomba Molotov.", ItemCategory.MaterialDeCrafteo, 0), quantity = 2 },
+				new InventorySlot { item = ResolveOrCreateCanonicalRewardItem("Gasolina", "Combustible inflamable. Combinado con una Botella Vacia crea una Bomba Molotov explosiva.", ItemCategory.MaterialDeCrafteo, 0), quantity = 2 },
+				new InventorySlot { item = ResolveOrCreateCanonicalRewardItem("Polvora Callejera", "Pólvora negra extraída de cartuchos viejos. Se combina con Chatarra Afilada (Granada de Metralla) o con Gasolina (Bomba Cegadora de Humo).", ItemCategory.MaterialDeCrafteo, 0), quantity = 1 },
+				new InventorySlot { item = ResolveOrCreateCanonicalRewardItem("Chatarra Afilada", "Clavos oxidados y láminas cortantes. Se combina con Pólvora Callejera (Granada de Metralla) o con Cinta Canela (Parche Blindado).", ItemCategory.MaterialDeCrafteo, 0), quantity = 1 },
+				new InventorySlot { item = ResolveOrCreateCanonicalRewardItem("Cinta Canela", "Rollo de cinta adhesiva industrial. Combinada con una Botella Vacia crea un Vendaje Rudo (+45 HP).", ItemCategory.MaterialDeCrafteo, 0), quantity = 1 },
+				new InventorySlot { item = ResolveOrCreateCanonicalRewardItem("Refresco Frio", "Refresco bien helado. Restaura +35 HP o sirve para destilar Tónico de Adrenalina con Alcohol Industrial.", ItemCategory.ConsumibleCuracion, 35), quantity = 1 }
+			};
+		}
+		else if (currentRewardBundle == null || currentRewardBundle.Count == 0)
+		{
+			currentRewardBundle = GenerateLootDropsFromDefeatedEnemies();
+		}
+
+		int bonusDetectiveAmmoDropped = 0;
+		if (hasDetectiveInParty && (Object)(object)detectiveStats != (Object)null && activeEnemies != null && activeEnemies.Count > 0)
+		{
+			bonusDetectiveAmmoDropped = detectiveStats.ReloadAmmo(Mathf.Clamp(activeEnemies.Count, 1, 3));
+		}
+
+		if (currentRewardBundle != null && currentRewardBundle.Count > 0)
+		{
+			List<string> grantedSummaryParts = new List<string>();
+			foreach (InventorySlot rewardSlot in currentRewardBundle)
+			{
+				if (rewardSlot == null || (Object)(object)rewardSlot.item == (Object)null || rewardSlot.quantity <= 0)
+				{
+					continue;
+				}
+				if ((Object)(object)InventoryManager.Instance != (Object)null)
+				{
+					InventoryManager.Instance.AddItem(rewardSlot.item, rewardSlot.quantity);
+				}
+				grantedSummaryParts.Add($"{rewardSlot.quantity}x {rewardSlot.item.itemName}");
+			}
+			if (bonusDetectiveAmmoDropped > 0)
+			{
+				grantedSummaryParts.Add($"+{bonusDetectiveAmmoDropped} Balas .38 Especial (Detective)");
+			}
+			if (grantedSummaryParts.Count > 0)
+			{
+				if ((Object)(object)MusicManager.Instance != (Object)null)
+				{
+					MusicManager.Instance.PlayBotonConfirmacionDialogoSfx();
+					MusicManager.Instance.PlayRecogerObjetoSfx();
+				}
+				string summaryJoined = string.Join(", ", grantedSummaryParts);
+				string[] bundleDialogue;
+				if (!shouldAwardSingleItem && array != null && array.Length > 0)
+				{
+					bundleDialogue = array;
+				}
+				else if (isLevel1FinalBoss)
+				{
+					bundleDialogue = new string[3]
+					{
+						$"NARRADOR: \"Al caer los dos matones de La Sombra, registras sus mochilas antes de que lleguen refuerzos. Obtienes suministros clave para el siguiente nivel: {summaryJoined}.\"",
+						"VOZ [INTELECTO]: \"¡Excelente hallazgo! Ahora podemos fabricar en combate BOMBAS MOLOTOV, VENDAJES RUDOS, GRANADAS DE METRALLA (Pólvora + Chatarra), BOMBAS CEGADORAS DE HUMO (Pólvora + Gasolina), TÓNICOS DE ADRENALINA (Alcohol + Refresco) y PARCHES BLINDADOS (Cinta + Chatarra).\"",
+						"ENRIQUE BOSQUES: \"Guardo todo en mi abrigo. En el callejón nos esperan más sicarios y estos materiales nos darán ventaja táctica.\""
+					};
+				}
+				else
+				{
+					string enemyCountText = (activeEnemies != null && activeEnemies.Count > 1) ? "los enemigos derrotados" : "el enemigo derrotado";
+					bundleDialogue = new string[2]
+					{
+						$"NARRADOR: \"Registras a {enemyCountText} y recoges los objetos que soltaron al caer: {summaryJoined}.\"",
+						"VOZ [INTELECTO]: \"Materiales añadidos al inventario. Recuerda abrir [INTELECTO] en combate para combinarlos en Molotovs, Granadas de Metralla, Bombas Cegadoras, Tónicos de Adrenalina, Parches Blindados o Vendajes Rudos.\""
+					};
+				}
+				bool bundleDialogueDone = false;
+				StartCombatDialogue(bundleDialogue, () =>
+				{
+					bundleDialogueDone = true;
+				});
+				while (!bundleDialogueDone)
+				{
+					yield return null;
+				}
+				if ((Object)(object)PlayerInventoryAndWeaponsUI.Instance != (Object)null)
+				{
+					PlayerInventoryAndWeaponsUI.Instance.RefreshUI();
+				}
+			}
+		}
+
 		if (levelsGained > 0 && (Object)(object)playerStats != (Object)null)
 		{
+			playerStats.RestoreFullHealth();
+			UpdateHealthUI();
 			PlaySubidaDeNivelSfx();
 			string[] lines = new string[2]
 			{
-				$"NARRADOR: \"¡VICTORIA! Has ganado +{xpAwarded} EXP. ¡ENRIQUE BOSQUES SUBE AL NIVEL {playerStats.level}!\"",
-				"ENRIQUE BOSQUES: \"Siento como las cuatro voces cobran mas fuerza en mi mente... Debo elegir cual de mis habilidades se volvera mas poderosa.\""
+				$"NARRADOR: \"¡VICTORIA! Has ganado +{xpAwarded} EXP. ¡ENRIQUE BOSQUES SUBE AL NIVEL {playerStats.level} Y RECUPERA TODA SU VIDA ({playerStats.currentHP}/{playerStats.maxHP} HP)!\"",
+				"ENRIQUE BOSQUES: \"Mis heridas se cierran y las cuatro voces cobran más fuerza en mi mente... Debo elegir cuál de mis habilidades se volverá más poderosa.\""
 			};
 			bool dialogueFinished = false;
 			StartCombatDialogue(lines, () =>
@@ -1928,6 +3000,43 @@ public class BattleManager : MonoBehaviour
 				dialogueFinished = true;
 			});
 			while (!dialogueFinished)
+			{
+				yield return null;
+			}
+			state = BattleState.WON;
+		}
+		if (hasDetectiveInParty && (Object)(object)detectiveStats != (Object)null)
+		{
+			List<string> detLines = new List<string>();
+			if (detectiveStats.IsAlive)
+			{
+				if (lastDetectiveAutoLevelUpLog != null && lastDetectiveAutoLevelUpLog.Count > 0)
+				{
+					PlaySubidaDeNivelSfx();
+					detLines.Add($"NARRADOR: \"[¡VICTORIA DEL GRUPO! El Detective Vargas gana +{lastDetectiveExpGained} EXP y SUBE AL NIVEL {detectiveStats.Nivel}]:\"");
+					foreach (string logEntry in lastDetectiveAutoLevelUpLog)
+					{
+						detLines.Add("DETECTIVE VARGAS: \"" + logEntry + "\"");
+					}
+				}
+				else
+				{
+					detLines.Add($"NARRADOR: \"¡VICTORIA DEL GRUPO! Los atacantes han sido neutralizados (+{xpAwarded} EXP repartidos).\"");
+					detLines.Add($"DETECTIVE VARGAS: \"Buen trabajo en equipo, Bosques (+{lastDetectiveExpGained} EXP). La zona está despejada; me quedan {detectiveStats.municionActual} balas en el tambor.\"");
+				}
+			}
+			else
+			{
+				detLines.Add($"NARRADOR: \"¡VICTORIA! Los atacantes cayeron (+{xpAwarded} EXP), pero el Detective Vargas quedó inconsciente. Se reanimará con 1 HP en el siguiente combate.\"");
+				detLines.Add("ENRIQUE BOSQUES: \"Tengo que cubrirlo y atender sus heridas antes de avanzar al fondo del callejón.\"");
+			}
+
+			bool detDialogueFinished = false;
+			StartCombatDialogue(detLines.ToArray(), () =>
+			{
+				detDialogueFinished = true;
+			});
+			while (!detDialogueFinished)
 			{
 				yield return null;
 			}
@@ -1944,6 +3053,22 @@ public class BattleManager : MonoBehaviour
 			while (!finishedPostCombatMenu)
 			{
 				yield return null;
+			}
+		}
+		if (hasDetectiveInParty && (Object)(object)detectiveStats != (Object)null)
+		{
+			DetectiveLevelUpAndStatsUI detUI = DetectiveLevelUpAndStatsUI.EnsureInScene();
+			if ((Object)(object)detUI != (Object)null)
+			{
+				bool finishedDetMenu = false;
+				detUI.OpenForCombatReport(detectiveStats, lastDetectiveLevelsGained, lastDetectiveExpGained, lastDetectiveAutoLevelUpLog, () =>
+				{
+					finishedDetMenu = true;
+				});
+				while (!finishedDetMenu)
+				{
+					yield return null;
+				}
 			}
 		}
 		if (isCurrentEncounterBoss && !string.IsNullOrEmpty(currentBossNextScene))
@@ -1986,6 +3111,9 @@ public class BattleManager : MonoBehaviour
 		}
 		else
 		{
+			if ((Object)(object)playerStats != (Object)null) playerStats.SaveProgressionSnapshot();
+			if ((Object)(object)detectiveStats != (Object)null) detectiveStats.SaveProgressionSnapshot();
+			if ((Object)(object)InventoryManager.Instance != (Object)null) InventoryManager.Instance.SaveSnapshot();
 			SceneManager.LoadScene(currentBossNextScene);
 		}
 	}
@@ -2004,6 +3132,7 @@ public class BattleManager : MonoBehaviour
 		{
 			PlayerStats.ResetSavedProgression();
 			InventoryManager.ResetSavedInventory();
+			DetectiveStats.ResetSavedProgression();
 			ResetStarterWeaponAwarded();
 		}
 		if ((Object)(object)MusicManager.Instance != (Object)null)
@@ -2025,6 +3154,7 @@ public class BattleManager : MonoBehaviour
 		}
 		PlayerStats.ResetSavedProgression();
 		InventoryManager.ResetSavedInventory();
+		DetectiveStats.ResetSavedProgression();
 		ResetStarterWeaponAwarded();
 		if ((Object)(object)MusicManager.Instance != (Object)null)
 		{
@@ -2074,7 +3204,7 @@ public class BattleManager : MonoBehaviour
 		}
 	}
 
-	private void SetupEnemyVisuals()
+	public void SetupEnemyVisuals()
 	{
 		//IL_007f: Unknown result type (might be due to invalid IL or missing references)
 		//IL_0094: Unknown result type (might be due to invalid IL or missing references)
@@ -2177,9 +3307,10 @@ public class BattleManager : MonoBehaviour
 		//IL_03dd: Unknown result type (might be due to invalid IL or missing references)
 		//IL_03e7: Unknown result type (might be due to invalid IL or missing references)
 		//IL_0313: Unknown result type (might be due to invalid IL or missing references)
+		LoadPortraitsIfMissing();
 		if ((Object)(object)playerCombatPortraitImage != (Object)null)
 		{
-			if ((Object)(object)enriquePortrait != (Object)null && (Object)(object)playerCombatPortraitImage.sprite == (Object)null)
+			if ((Object)(object)enriquePortrait != (Object)null && ((Object)(object)playerCombatPortraitImage.sprite == (Object)null || state != BattleState.DETECTIVETURN))
 			{
 				playerCombatPortraitImage.sprite = enriquePortrait;
 				((Graphic)playerCombatPortraitImage).color = Color.white;
@@ -2198,7 +3329,7 @@ public class BattleManager : MonoBehaviour
 			((UnityEventBase)combatPortraitClickButton.onClick).RemoveAllListeners();
 			((UnityEvent)combatPortraitClickButton.onClick).AddListener((UnityAction)(() =>
 			{
-				if (state == BattleState.PLAYERTURN)
+				if (state == BattleState.PLAYERTURN || state == BattleState.DETECTIVETURN)
 				{
 					PlayBotonEnCombateSfx();
 					PlayerInventoryAndWeaponsUI playerInventoryAndWeaponsUI = PlayerInventoryAndWeaponsUI.EnsureInScene();
@@ -2277,17 +3408,43 @@ public class BattleManager : MonoBehaviour
 				}
 			}
 		}
-		if (!((Object)(object)battlePanel != (Object)null) || !((Object)(object)combatInventoryButtonRoot == (Object)null))
+		if (!((Object)(object)battlePanel != (Object)null))
 		{
 			return;
 		}
-		Transform val5 = battlePanel.transform.Find("Combat_InventoryAndWeaponsButton");
-		if ((Object)(object)val5 != (Object)null)
+		if ((Object)(object)combatInventoryButtonRoot == (Object)null)
 		{
-			combatInventoryButtonRoot = ((Component)val5).gameObject;
-			combatInventoryButton = combatInventoryButtonRoot.GetComponent<Button>();
-			combatInventoryButtonLabel = combatInventoryButtonRoot.GetComponentInChildren<TextMeshProUGUI>();
-			combatInventoryButtonBorder = combatInventoryButtonRoot.GetComponent<Image>();
+			Transform val5 = battlePanel.transform.Find("Combat_InventoryAndWeaponsButton");
+			if ((Object)(object)val5 != (Object)null)
+			{
+				combatInventoryButtonRoot = ((Component)val5).gameObject;
+				combatInventoryButton = combatInventoryButtonRoot.GetComponent<Button>();
+				combatInventoryButtonLabel = combatInventoryButtonRoot.GetComponentInChildren<TextMeshProUGUI>();
+				combatInventoryButtonBorder = combatInventoryButtonRoot.GetComponent<Image>();
+			}
+		}
+		if ((Object)(object)combatInventoryButtonRoot != (Object)null)
+		{
+			if ((Object)(object)combatInventoryButton == (Object)null)
+			{
+				combatInventoryButton = combatInventoryButtonRoot.GetComponent<Button>();
+			}
+			if ((Object)(object)combatInventoryButton != (Object)null)
+			{
+				((UnityEventBase)combatInventoryButton.onClick).RemoveAllListeners();
+				((UnityEvent)combatInventoryButton.onClick).AddListener((UnityAction)(() =>
+				{
+					if (state == BattleState.PLAYERTURN || state == BattleState.DETECTIVETURN)
+					{
+						PlayBotonEnCombateSfx();
+						PlayerInventoryAndWeaponsUI playerInventoryAndWeaponsUI = PlayerInventoryAndWeaponsUI.EnsureInScene();
+						if ((Object)(object)playerInventoryAndWeaponsUI != (Object)null)
+						{
+							playerInventoryAndWeaponsUI.OpenInventoryMenu();
+						}
+					}
+				}));
+			}
 			return;
 		}
 		combatInventoryButtonRoot = new GameObject("Combat_InventoryAndWeaponsButton", new Type[2]
@@ -2321,7 +3478,7 @@ public class BattleManager : MonoBehaviour
 		((UnityEventBase)combatInventoryButton.onClick).RemoveAllListeners();
 		((UnityEvent)combatInventoryButton.onClick).AddListener((UnityAction)(() =>
 		{
-			if (state == BattleState.PLAYERTURN)
+			if (state == BattleState.PLAYERTURN || state == BattleState.DETECTIVETURN)
 			{
 				PlayBotonEnCombateSfx();
 				PlayerInventoryAndWeaponsUI playerInventoryAndWeaponsUI = PlayerInventoryAndWeaponsUI.EnsureInScene();
@@ -2352,6 +3509,7 @@ public class BattleManager : MonoBehaviour
 		((Graphic)combatInventoryButtonLabel).color = selectedTargetBorderColor;
 		((TMP_Text)combatInventoryButtonLabel).text = "INVENTARIO";
 		((TMP_Text)combatInventoryButtonLabel).textWrappingMode = (TextWrappingModes)1;
+		combatInventoryButtonRoot.SetActive(false);
 	}
 
 	private bool WasToggleInventoryKeyPressed()
@@ -2394,72 +3552,249 @@ public class BattleManager : MonoBehaviour
 		int num = (((Object)(object)playerStats != (Object)null) ? playerStats.GetEquippedWeaponAttackBonus() : 0);
 		int num2 = (((Object)(object)playerStats != (Object)null) ? playerStats.GetTotalPhysicalAttack() : 12);
 		int num3 = (((Object)(object)playerStats != (Object)null) ? playerStats.corporeo : 12);
-		if ((Object)(object)playerStats != (Object)null)
+
+		bool showDetective = (state == BattleState.DETECTIVETURN) || 
+		                     (state == BattleState.ENEMYTURN && lastEnemyTargetWasDetective && (Object)(object)detectiveStats != (Object)null && detectiveStats.IsAlive);
+
+		if (showDetective && (Object)(object)detectiveStats != (Object)null)
 		{
+			// Retrato del Detective Vargas
+			if ((Object)(object)playerCombatPortraitImage != (Object)null)
+			{
+				EnsureDetectiveCombatPortraitResolved();
+				playerCombatPortraitImage.sprite = (((Object)(object)detectiveCombatPortrait != (Object)null) ? detectiveCombatPortrait : enriquePortrait);
+				((Graphic)playerCombatPortraitImage).color = Color.white;
+			}
+
+			// Barra de Vida del Detective Vargas
 			if ((Object)(object)playerHealthBarUI != (Object)null)
 			{
 				playerHealthBarUI.healthyColor = new Color(0.22f, 0.85f, 0.38f, 1f);
 				playerHealthBarUI.percentageColor = new Color(0.22f, 0.85f, 0.38f, 1f);
-				playerHealthBarUI.UpdateHealth(playerStats.currentHP, playerStats.maxHP, isMotricidadDefending, playerAttackBuff);
+				playerHealthBarUI.SetHealthInstant(detectiveStats.HP_Actual, detectiveStats.HP_Max, detectiveStats.isDodgingUntilNextTurn, detectiveStats.tacticalAttackBonus, "HÉCTOR VARGAS");
 			}
-			else if ((Object)(object)playerHPText != (Object)null)
+			if ((Object)(object)playerHPText != (Object)null)
 			{
 				PlayerHealthBarUI.EnsureCleanPixelFont((TMP_Text)playerHPText);
-				((TMP_Text)playerHPText).text = $"ENRIQUE <color=#9FA6B2>(NV. {playerStats.level})</color>   HP: <color=#FFFFFF>{playerStats.currentHP}</color> / {playerStats.maxHP}";
-			}
-			if ((Object)(object)playerHPSlider != (Object)null)
-			{
-				playerHPSlider.maxValue = playerStats.maxHP;
-				playerHPSlider.value = playerStats.currentHP;
-				if ((Object)(object)playerHPSlider.fillRect != (Object)null)
+				if (detectiveStats.HP_Actual <= 0)
 				{
-					Image component = ((Component)playerHPSlider.fillRect).GetComponent<Image>();
-					if ((Object)(object)component != (Object)null)
-					{
-						((Graphic)component).color = new Color(0.22f, 0.85f, 0.38f, 1f);
-					}
-				}
-			}
-		}
-		if ((Object)(object)corporeoButton != (Object)null)
-		{
-			TextMeshProUGUI componentInChildren = ((Component)corporeoButton).GetComponentInChildren<TextMeshProUGUI>();
-			if ((Object)(object)componentInChildren != (Object)null)
-			{
-				if ((Object)(object)itemData != (Object)null)
-				{
-					((TMP_Text)componentInChildren).text = $"CORPÓREO [{itemData.itemName.ToUpper()}]\n<size=15>Atacar ({num3}+{num} = {num2} ATQ)</size>";
+					((TMP_Text)playerHPText).text = $"HÉCTOR VARGAS <color=#FF5555>[CAÍDO / 0 HP]</color> | BALAS: {detectiveStats.municionActual}/{detectiveStats.municionMaxima}";
 				}
 				else
 				{
-					((TMP_Text)componentInChildren).text = $"CORPÓREO\n<size=15>Atacar (Puños: {num2} ATQ)</size>";
+					((TMP_Text)playerHPText).text = $"HÉCTOR VARGAS <color=#9FA6B2>(NV. {detectiveStats.Nivel})</color>   HP: <color=#FFFFFF>{detectiveStats.HP_Actual}</color> / {detectiveStats.HP_Max} | BALAS: {detectiveStats.municionActual}/{detectiveStats.municionMaxima}";
 				}
 			}
-		}
-		if ((Object)(object)combatWeaponBadgeText != (Object)null)
-		{
-			if ((Object)(object)itemData != (Object)null)
+			if ((Object)(object)playerHPSlider != (Object)null)
 			{
-				((TMP_Text)combatWeaponBadgeText).text = $"<b>{itemData.itemName.ToUpper()}</b>\n<size=12><color=#66FF88>+{itemData.weaponAttackBonus} ATQ</color> <color=#FFD84D>[CAMBIAR]</color></size>";
+				playerHPSlider.maxValue = detectiveStats.HP_Max;
+				playerHPSlider.value = detectiveStats.HP_Actual;
+				if ((Object)(object)playerHPSlider.fillRect != (Object)null)
+				{
+					Image comp = ((Component)playerHPSlider.fillRect).GetComponent<Image>();
+					if ((Object)(object)comp != (Object)null)
+					{
+						((Graphic)comp).color = new Color(0.22f, 0.85f, 0.38f, 1f);
+					}
+				}
 			}
-			else
+
+			// Badge de Arma del Detective
+			if ((Object)(object)combatWeaponBadgeText != (Object)null)
 			{
-				((TMP_Text)combatWeaponBadgeText).text = "<b>PUÑOS DESNUDOS</b>\n<size=12><color=#B0B6C2>12 ATQ</color> <color=#66CCFF>[EQUIPAR]</color></size>";
+				((TMP_Text)combatWeaponBadgeText).text = $"<b>REVÓLVER .38</b>\n<size=12><color=#FFD84D>BALAS: {detectiveStats.balasActuales}/{detectiveStats.balasMaximas}</color> <color=#90CAF9>[INVESTIGADOR]</color></size>";
 			}
-		}
-		if ((Object)(object)combatWeaponBadgeIcon != (Object)null)
-		{
-			if ((Object)(object)itemData != (Object)null && (Object)(object)itemData.icon != (Object)null)
-			{
-				((Component)combatWeaponBadgeIcon).gameObject.SetActive(true);
-				combatWeaponBadgeIcon.sprite = itemData.icon;
-				((Graphic)combatWeaponBadgeIcon).color = Color.white;
-			}
-			else
+			if ((Object)(object)combatWeaponBadgeIcon != (Object)null)
 			{
 				((Component)combatWeaponBadgeIcon).gameObject.SetActive(false);
 			}
+			if ((Object)(object)combatInventoryButtonRoot != (Object)null)
+			{
+				combatInventoryButtonRoot.SetActive(false);
+			}
+
+			// 4 Botones de Acción Unificados (Mismo diseño Noir y submenús para ambos protagonistas)
+			// Botón 1: Corpóreo / Disparo .38
+			if ((Object)(object)corporeoButton != (Object)null)
+			{
+				TextMeshProUGUI label = ((Component)corporeoButton).GetComponentInChildren<TextMeshProUGUI>();
+				if ((Object)(object)label != (Object)null)
+				{
+					if (detectiveStats.CanFireWeapon(out _))
+					{
+						((TMP_Text)label).text = $"CORPÓREO [REVÓLVER .38]\n<size=20>Disparo ({detectiveStats.balasActuales}/{detectiveStats.balasMaximas} Balas)</size>";
+					}
+					else
+					{
+						int meleeAtk = detectiveStats.GetTotalMeleeAttack();
+						((TMP_Text)label).text = $"CORPÓREO [CULATAZO]\n<size=20>Atacar ({meleeAtk} ATQ)</size>";
+					}
+				}
+				Image btnImg = ((Component)corporeoButton).GetComponent<Image>();
+				if ((Object)(object)btnImg != (Object)null) ((Graphic)btnImg).color = new Color(0.78f, 0.22f, 0.22f, 1f);
+			}
+
+			// Botón 2: Intelecto (Objetos / Crear)
+			if ((Object)(object)intelectoButton != (Object)null)
+			{
+				TextMeshProUGUI label = ((Component)intelectoButton).GetComponentInChildren<TextMeshProUGUI>();
+				if ((Object)(object)label != (Object)null)
+				{
+					((TMP_Text)label).text = "INTELECTO\n<size=20>Objetos / Crear</size>";
+				}
+				Image btnImg = ((Component)intelectoButton).GetComponent<Image>();
+				if ((Object)(object)btnImg != (Object)null) ((Graphic)btnImg).color = new Color(0.22f, 0.52f, 0.85f, 1f);
+			}
+
+			// Botón 3: Motricidad (Guardia / Esquive)
+			if ((Object)(object)motricidadButton != (Object)null)
+			{
+				TextMeshProUGUI label = ((Component)motricidadButton).GetComponentInChildren<TextMeshProUGUI>();
+				if ((Object)(object)label != (Object)null)
+				{
+					((TMP_Text)label).text = "MOTRICIDAD\n<size=20>Guardia / Esquive</size>";
+				}
+				Image btnImg = ((Component)motricidadButton).GetComponent<Image>();
+				if ((Object)(object)btnImg != (Object)null) ((Graphic)btnImg).color = new Color(0.85f, 0.65f, 0.18f, 1f);
+			}
+
+			// Botón 4: Mundo Interno (Tácticas / Personalidades)
+			if ((Object)(object)mundoInternoButton != (Object)null)
+			{
+				TextMeshProUGUI label = ((Component)mundoInternoButton).GetComponentInChildren<TextMeshProUGUI>();
+				if ((Object)(object)label != (Object)null)
+				{
+					((TMP_Text)label).text = "MUNDO INTERNO\n<size=20>Tácticas / Mente</size>";
+				}
+				Image btnImg = ((Component)mundoInternoButton).GetComponent<Image>();
+				if ((Object)(object)btnImg != (Object)null) ((Graphic)btnImg).color = new Color(0.58f, 0.26f, 0.78f, 1f);
+			}
 		}
+		else
+		{
+			// Retrato de ENRIQUE
+			if ((Object)(object)playerCombatPortraitImage != (Object)null)
+			{
+				playerCombatPortraitImage.sprite = enriquePortrait;
+				((Graphic)playerCombatPortraitImage).color = Color.white;
+			}
+
+			// Barra de Vida de Enrique
+			if ((Object)(object)playerStats != (Object)null)
+			{
+				if ((Object)(object)playerHealthBarUI != (Object)null)
+				{
+					playerHealthBarUI.healthyColor = new Color(0.22f, 0.85f, 0.38f, 1f);
+					playerHealthBarUI.percentageColor = new Color(0.22f, 0.85f, 0.38f, 1f);
+					playerHealthBarUI.SetHealthInstant(playerStats.currentHP, playerStats.maxHP, isMotricidadDefending, playerAttackBuff, "ENRIQUE");
+				}
+				if ((Object)(object)playerHPText != (Object)null)
+				{
+					PlayerHealthBarUI.EnsureCleanPixelFont((TMP_Text)playerHPText);
+					((TMP_Text)playerHPText).text = $"ENRIQUE <color=#9FA6B2>(NV. {playerStats.level})</color>   HP: <color=#FFFFFF>{playerStats.currentHP}</color> / {playerStats.maxHP}";
+				}
+				if ((Object)(object)playerHPSlider != (Object)null)
+				{
+					playerHPSlider.maxValue = playerStats.maxHP;
+					playerHPSlider.value = playerStats.currentHP;
+					if ((Object)(object)playerHPSlider.fillRect != (Object)null)
+					{
+						Image component = ((Component)playerHPSlider.fillRect).GetComponent<Image>();
+						if ((Object)(object)component != (Object)null)
+						{
+							((Graphic)component).color = new Color(0.22f, 0.85f, 0.38f, 1f);
+						}
+					}
+				}
+			}
+
+			// Badge de Arma de Enrique
+			if ((Object)(object)combatWeaponBadgeText != (Object)null)
+			{
+				if ((Object)(object)itemData != (Object)null)
+				{
+					((TMP_Text)combatWeaponBadgeText).text = $"<b>{itemData.itemName.ToUpper()}</b>\n<size=12><color=#66FF88>+{itemData.weaponAttackBonus} ATQ</color> <color=#FFD84D>[CAMBIAR]</color></size>";
+				}
+				else
+				{
+					((TMP_Text)combatWeaponBadgeText).text = "<b>PUÑOS DESNUDOS</b>\n<size=12><color=#B0B6C2>12 ATQ</color> <color=#66CCFF>[EQUIPAR]</color></size>";
+				}
+			}
+			if ((Object)(object)combatWeaponBadgeIcon != (Object)null)
+			{
+				if ((Object)(object)itemData != (Object)null && (Object)(object)itemData.icon != (Object)null)
+				{
+					((Component)combatWeaponBadgeIcon).gameObject.SetActive(true);
+					combatWeaponBadgeIcon.sprite = itemData.icon;
+					((Graphic)combatWeaponBadgeIcon).color = Color.white;
+				}
+				else
+				{
+					((Component)combatWeaponBadgeIcon).gameObject.SetActive(false);
+				}
+			}
+			if ((Object)(object)combatInventoryButtonRoot != (Object)null)
+			{
+				combatInventoryButtonRoot.SetActive(false);
+			}
+
+			// 4 Botones de Acción para Enrique (Voces)
+			// Botón 1: Corpóreo
+			if ((Object)(object)corporeoButton != (Object)null)
+			{
+				TextMeshProUGUI componentInChildren = ((Component)corporeoButton).GetComponentInChildren<TextMeshProUGUI>();
+				if ((Object)(object)componentInChildren != (Object)null)
+				{
+					if ((Object)(object)itemData != (Object)null)
+					{
+						((TMP_Text)componentInChildren).text = $"CORPÓREO [{itemData.itemName.ToUpper()}]\n<size=20>Atacar ({num3}+{num} = {num2} ATQ)</size>";
+					}
+					else
+					{
+						((TMP_Text)componentInChildren).text = $"CORPÓREO\n<size=20>Atacar (Puños: {num2} ATQ)</size>";
+					}
+				}
+				Image btnImg = ((Component)corporeoButton).GetComponent<Image>();
+				if ((Object)(object)btnImg != (Object)null) ((Graphic)btnImg).color = new Color(0.78f, 0.22f, 0.22f, 1f);
+			}
+
+			// Botón 2: Intelecto
+			if ((Object)(object)intelectoButton != (Object)null)
+			{
+				TextMeshProUGUI label = ((Component)intelectoButton).GetComponentInChildren<TextMeshProUGUI>();
+				if ((Object)(object)label != (Object)null)
+				{
+					((TMP_Text)label).text = "INTELECTO\n<size=20>Objetos / Crear</size>";
+				}
+				Image btnImg = ((Component)intelectoButton).GetComponent<Image>();
+				if ((Object)(object)btnImg != (Object)null) ((Graphic)btnImg).color = new Color(0.22f, 0.52f, 0.85f, 1f);
+			}
+
+			// Botón 3: Motricidad
+			if ((Object)(object)motricidadButton != (Object)null)
+			{
+				TextMeshProUGUI label = ((Component)motricidadButton).GetComponentInChildren<TextMeshProUGUI>();
+				if ((Object)(object)label != (Object)null)
+				{
+					((TMP_Text)label).text = "MOTRICIDAD\n<size=20>Guardia / Esquive</size>";
+				}
+				Image btnImg = ((Component)motricidadButton).GetComponent<Image>();
+				if ((Object)(object)btnImg != (Object)null) ((Graphic)btnImg).color = new Color(0.85f, 0.65f, 0.18f, 1f);
+			}
+
+			// Botón 4: Mundo Interno
+			if ((Object)(object)mundoInternoButton != (Object)null)
+			{
+				TextMeshProUGUI label = ((Component)mundoInternoButton).GetComponentInChildren<TextMeshProUGUI>();
+				if ((Object)(object)label != (Object)null)
+				{
+					((TMP_Text)label).text = "MUNDO INTERNO\n<size=20>Personalidades</size>";
+				}
+				Image btnImg = ((Component)mundoInternoButton).GetComponent<Image>();
+				if ((Object)(object)btnImg != (Object)null) ((Graphic)btnImg).color = new Color(0.58f, 0.26f, 0.78f, 1f);
+			}
+		}
+
 		if ((Object)(object)combatPortraitFrameBorder != (Object)null)
 		{
 			((Graphic)combatPortraitFrameBorder).color = (((Object)(object)itemData != (Object)null) ? selectedTargetBorderColor : normalEnemyBorderColor);
@@ -2471,6 +3806,14 @@ public class BattleManager : MonoBehaviour
 		if ((Object)(object)combatInventoryButtonBorder != (Object)null)
 		{
 			((Graphic)combatInventoryButtonBorder).color = (Color)(((Object)(object)itemData != (Object)null) ? selectedTargetBorderColor : new Color(0.32f, 0.62f, 0.78f, 1f));
+		}
+		if ((Object)(object)detectiveActionMenu != (Object)null)
+		{
+			if ((Object)(object)detectiveActionMenu.menuRootPanel != (Object)null)
+			{
+				detectiveActionMenu.menuRootPanel.SetActive(false);
+			}
+			detectiveActionMenu.RefreshAllySlotUI(showSlot: hasDetectiveInParty);
 		}
 		if (enemySlots == null)
 		{
@@ -2523,7 +3866,10 @@ public class BattleManager : MonoBehaviour
 				{
 					string text = (combatEnemyInstance.isConfused ? " [CONFUNDIDO]" : "");
 					string text2 = ((combatEnemyInstance.attackDebuff > 0) ? $" [-{combatEnemyInstance.attackDebuff} ATQ]" : "");
-					((TMP_Text)enemyUISlot.enemyHPText).text = $"HP: {combatEnemyInstance.currentHP} / {combatEnemyInstance.data.maxHP}{text}{text2}";
+					string text3 = ((combatEnemyInstance.defenseDebuff > 0) ? $" [-{combatEnemyInstance.defenseDebuff} DEF]" : "");
+					string text4 = ((combatEnemyInstance.vulnerabilityTurns > 0) ? " [VULNERABLE +30%]" : "");
+					string bossPhaseTag = (((Object)(object)activeLevel2BossController != (Object)null && IsBossEnemy(combatEnemyInstance)) ? activeLevel2BossController.GetPhaseStatusBadge() : "");
+					((TMP_Text)enemyUISlot.enemyHPText).text = $"HP: {combatEnemyInstance.currentHP} / {combatEnemyInstance.data.maxHP}{text}{text2}{text3}{text4}{bossPhaseTag}";
 					((Graphic)enemyUISlot.enemyHPText).color = new Color(0.85f, 0.35f, 0.35f, 1f);
 				}
 			}
@@ -2683,12 +4029,10 @@ public class BattleManager : MonoBehaviour
 			((TMP_Text)val6).fontSize = 24f;
 			((TMP_Text)val6).fontStyle = (FontStyles)0;
 			((Graphic)val6).color = val;
-			#if UNITY_EDITOR
 			if ((Object)(object)((TMP_Text)val6).font == (Object)null)
 			{
-				((TMP_Text)val6).font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Fonts/Pixelzone_TMP.asset");
+				((TMP_Text)val6).font = RuntimeAssetCatalog.GetTMPFont("Assets/Fonts/Pixelzone_TMP.asset");
 			}
-			#endif
 			if ((Object)(object)val4 != (Object)null && (Object)(object)((TMP_Text)val6).font == (Object)null)
 			{
 				((TMP_Text)val6).font = ((TMP_Text)val4).font;
@@ -2740,6 +4084,7 @@ public class BattleManager : MonoBehaviour
 			((Graphic)component7).raycastTarget = false;
 		}
 		Transform val12 = val10.Find("DamageFill");
+		bool isNewDamageFill = false;
 		if ((Object)(object)val12 == (Object)null)
 		{
 			GameObject val13 = new GameObject("DamageFill", new Type[2]
@@ -2749,12 +4094,16 @@ public class BattleManager : MonoBehaviour
 			});
 			val13.transform.SetParent(val10, false);
 			val12 = val13.transform;
+			isNewDamageFill = true;
 		}
 		RectTransform component8 = ((Component)val12).GetComponent<RectTransform>();
-		component8.anchorMin = Vector2.zero;
-		component8.anchorMax = Vector2.one;
-		component8.offsetMin = Vector2.zero;
-		component8.offsetMax = Vector2.zero;
+		if (isNewDamageFill)
+		{
+			component8.anchorMin = Vector2.zero;
+			component8.anchorMax = Vector2.one;
+			component8.offsetMin = Vector2.zero;
+			component8.offsetMax = Vector2.zero;
+		}
 		Image component9 = ((Component)val12).GetComponent<Image>();
 		if ((Object)(object)component9 != (Object)null)
 		{
@@ -2762,6 +4111,7 @@ public class BattleManager : MonoBehaviour
 			((Graphic)component9).raycastTarget = false;
 		}
 		Transform val14 = val10.Find("MainFill");
+		bool isNewMainFill = false;
 		if ((Object)(object)val14 == (Object)null)
 		{
 			GameObject val15 = new GameObject("MainFill", new Type[2]
@@ -2771,12 +4121,16 @@ public class BattleManager : MonoBehaviour
 			});
 			val15.transform.SetParent(val10, false);
 			val14 = val15.transform;
+			isNewMainFill = true;
 		}
 		RectTransform component10 = ((Component)val14).GetComponent<RectTransform>();
-		component10.anchorMin = Vector2.zero;
-		component10.anchorMax = Vector2.one;
-		component10.offsetMin = Vector2.zero;
-		component10.offsetMax = Vector2.zero;
+		if (isNewMainFill)
+		{
+			component10.anchorMin = Vector2.zero;
+			component10.anchorMax = Vector2.one;
+			component10.offsetMin = Vector2.zero;
+			component10.offsetMax = Vector2.zero;
+		}
 		Image component11 = ((Component)val14).GetComponent<Image>();
 		if ((Object)(object)component11 != (Object)null)
 		{
@@ -2984,7 +4338,7 @@ public class BattleManager : MonoBehaviour
 		}
 	}
 
-	private void SetBattleLog(string message)
+	public void SetBattleLog(string message)
 	{
 		if ((Object)(object)battleLogText != (Object)null)
 		{
@@ -2992,7 +4346,7 @@ public class BattleManager : MonoBehaviour
 		}
 	}
 
-	private void SetActionButtonsInteractable(bool interactable)
+	public void SetActionButtonsInteractable(bool interactable)
 	{
 		if ((Object)(object)corporeoButton != (Object)null)
 		{
@@ -3091,14 +4445,14 @@ public class BattleManager : MonoBehaviour
 		{
 			return isCurrentEncounterBoss;
 		}
-		if (attacker.data.enemyType == EnemyType.JefeElCalacas)
+		if (attacker.data.enemyType == EnemyType.JefeElCalacas || attacker.data.enemyType == EnemyType.JefeNivel2Capataz)
 		{
 			return true;
 		}
 		if (!string.IsNullOrEmpty(attacker.data.enemyName))
 		{
 			string text = attacker.data.enemyName.ToUpperInvariant();
-			if (text.Contains("JEFE") || text.Contains("BOSS") || text.Contains("CALACAS") || text.Contains("COMANDANTE"))
+			if (text.Contains("JEFE") || text.Contains("BOSS") || text.Contains("CALACAS") || text.Contains("COMANDANTE") || text.Contains("CAPATAZ"))
 			{
 				return true;
 			}
@@ -3108,6 +4462,896 @@ public class BattleManager : MonoBehaviour
 			return true;
 		}
 		return false;
+	}
+
+	/// <summary>
+	/// Garantiza que exista un BattleManager y su interfaz de combate completa en la escena activa (ej. en el Nivel 2 o Nivel 3).
+	/// </summary>
+	public static BattleManager EnsureInScene()
+	{
+		BattleManager existing = Object.FindAnyObjectByType<BattleManager>(FindObjectsInactive.Include);
+		if ((Object)(object)existing != (Object)null && (Object)(object)existing.battlePanel != (Object)null)
+		{
+			existing.EnforceUnifiedCombatUILayout();
+			return existing;
+		}
+		return BuildRuntimeBattleSystemIfMissing(existing);
+	}
+
+	/// <summary>
+	/// Unifica todos los paneles de combate (Nivel 1, Nivel 2 y Nivel 3) para que compartan exactamente el mismo
+	/// diseño Noir, proporciones, bordes de casillas enemigas, submenús de Intelecto/Mundo Interno y tipografía.
+	/// </summary>
+	public void EnforceUnifiedCombatUILayout()
+	{
+		if ((Object)(object)battlePanel == (Object)null)
+		{
+			return;
+		}
+
+		// 1. Unificar EnemySlots (corrigiendo el bug de Nivel 2 donde borderImage apuntaba a la raíz del slot y faltaban anillos/indicadores)
+		if (enemySlots != null)
+		{
+			for (int i = 0; i < enemySlots.Length; i++)
+			{
+				EnemyUISlot slot = enemySlots[i];
+				if (slot == null || (Object)(object)slot.slotRoot == (Object)null)
+				{
+					continue;
+				}
+				Image rootImg = slot.slotRoot.GetComponent<Image>();
+				if ((Object)(object)rootImg != (Object)null)
+				{
+					((Graphic)rootImg).color = new Color(0f, 0f, 0f, 0f);
+				}
+				Transform innerTr = slot.slotRoot.transform.Find("Inner");
+				if ((Object)(object)innerTr != (Object)null)
+				{
+					Image inImg = ((Component)innerTr).GetComponent<Image>();
+					if ((Object)(object)inImg != (Object)null)
+					{
+						((Graphic)inImg).color = new Color(0f, 0f, 0f, 0f);
+					}
+				}
+				Transform nameplateBorderTr = slot.slotRoot.transform.Find("EnemyNameplateBorder");
+				if ((Object)(object)nameplateBorderTr != (Object)null)
+				{
+					Image npBorderImg = ((Component)nameplateBorderTr).GetComponent<Image>();
+					if ((Object)(object)npBorderImg != (Object)null)
+					{
+						slot.borderImage = npBorderImg;
+					}
+					RectTransform npRT = ((Component)nameplateBorderTr).GetComponent<RectTransform>();
+					if ((Object)(object)npRT != (Object)null)
+					{
+						npRT.anchorMin = new Vector2(0.06f, 0.77f);
+						npRT.anchorMax = new Vector2(0.94f, 0.89f);
+						npRT.offsetMin = Vector2.zero;
+						npRT.offsetMax = Vector2.zero;
+					}
+				}
+				else
+				{
+					GameObject npBorderGO = new GameObject("EnemyNameplateBorder", typeof(RectTransform), typeof(Image));
+					npBorderGO.transform.SetParent(slot.slotRoot.transform, false);
+					RectTransform npRT = npBorderGO.GetComponent<RectTransform>();
+					npRT.anchorMin = new Vector2(0.06f, 0.77f);
+					npRT.anchorMax = new Vector2(0.94f, 0.89f);
+					npRT.offsetMin = Vector2.zero;
+					npRT.offsetMax = Vector2.zero;
+					Image npBorderImg = npBorderGO.GetComponent<Image>();
+					((Graphic)npBorderImg).color = normalEnemyBorderColor;
+					slot.borderImage = npBorderImg;
+
+					GameObject npBg = new GameObject("EnemyNameplateBg", typeof(RectTransform), typeof(Image));
+					npBg.transform.SetParent(npBorderGO.transform, false);
+					RectTransform bgRT = npBg.GetComponent<RectTransform>();
+					bgRT.anchorMin = new Vector2(0.02f, 0.08f);
+					bgRT.anchorMax = new Vector2(0.98f, 0.92f);
+					bgRT.offsetMin = Vector2.zero;
+					bgRT.offsetMax = Vector2.zero;
+					Image bgImg = npBg.GetComponent<Image>();
+					((Graphic)bgImg).color = new Color(0.06f, 0.08f, 0.12f, 0.95f);
+
+					if ((Object)(object)slot.enemyNameText != (Object)null)
+					{
+						((Component)slot.enemyNameText).transform.SetParent(npBg.transform, false);
+						RectTransform nmRT = ((Component)slot.enemyNameText).GetComponent<RectTransform>();
+						nmRT.anchorMin = new Vector2(0.02f, 0.48f);
+						nmRT.anchorMax = new Vector2(0.98f, 0.98f);
+						nmRT.offsetMin = Vector2.zero;
+						nmRT.offsetMax = Vector2.zero;
+					}
+					if ((Object)(object)slot.enemyHPText != (Object)null)
+					{
+						((Component)slot.enemyHPText).transform.SetParent(npBg.transform, false);
+						RectTransform hpRT = ((Component)slot.enemyHPText).GetComponent<RectTransform>();
+						hpRT.anchorMin = new Vector2(0.02f, 0.04f);
+						hpRT.anchorMax = new Vector2(0.98f, 0.48f);
+						hpRT.offsetMin = Vector2.zero;
+						hpRT.offsetMax = Vector2.zero;
+					}
+					if ((Object)(object)slot.enemyPlaceholderImage != (Object)null)
+					{
+						RectTransform spriteRT = ((Component)slot.enemyPlaceholderImage).GetComponent<RectTransform>();
+						spriteRT.anchorMin = new Vector2(0.05f, 0.02f);
+						spriteRT.anchorMax = new Vector2(0.95f, 0.74f);
+						spriteRT.offsetMin = Vector2.zero;
+						spriteRT.offsetMax = Vector2.zero;
+					}
+				}
+				if ((Object)(object)slot.groundIndicatorRing == (Object)null)
+				{
+					Transform ringTr = slot.slotRoot.transform.Find("GroundIndicatorRing")
+						?? slot.slotRoot.transform.Find("GroundTargetRing");
+					if ((Object)(object)ringTr == (Object)null)
+					{
+						GameObject ringGO = new GameObject("GroundIndicatorRing", typeof(RectTransform), typeof(Image));
+						ringGO.transform.SetParent(slot.slotRoot.transform, false);
+						ringGO.transform.SetAsFirstSibling();
+						Image ringImg = ringGO.GetComponent<Image>();
+						((Graphic)ringImg).color = new Color(0f, 0f, 0f, 0.32f);
+						((Graphic)ringImg).raycastTarget = false;
+						slot.groundIndicatorRing = ringImg;
+					}
+					else
+					{
+						slot.groundIndicatorRing = ((Component)ringTr).GetComponent<Image>();
+					}
+				}
+				if ((Object)(object)slot.groundIndicatorRing != (Object)null)
+				{
+					RectTransform ringRT = ((Graphic)slot.groundIndicatorRing).rectTransform;
+					ringRT.anchorMin = new Vector2(0.15f, 0.00f);
+					ringRT.anchorMax = new Vector2(0.85f, 0.10f);
+					ringRT.offsetMin = Vector2.zero;
+					ringRT.offsetMax = Vector2.zero;
+					((Graphic)slot.groundIndicatorRing).color = new Color(0f, 0f, 0f, 0.32f);
+				}
+				if ((Object)(object)slot.targetIndicator == (Object)null)
+				{
+					Transform indTr = slot.slotRoot.transform.Find("TargetIndicator")
+						?? slot.slotRoot.transform.Find("TargetSelectionIndicator");
+					if ((Object)(object)indTr == (Object)null)
+					{
+						GameObject indGO = new GameObject("TargetSelectionIndicator", typeof(RectTransform), typeof(Image));
+						indGO.transform.SetParent(slot.slotRoot.transform, false);
+						RectTransform indRT = indGO.GetComponent<RectTransform>();
+						indRT.anchorMin = new Vector2(0.20f, 0.90f);
+						indRT.anchorMax = new Vector2(0.80f, 0.99f);
+						indRT.offsetMin = Vector2.zero;
+						indRT.offsetMax = Vector2.zero;
+						Image indImg = indGO.GetComponent<Image>();
+						((Graphic)indImg).color = new Color(0.95f, 0.75f, 0.2f, 0.95f);
+						((Graphic)indImg).raycastTarget = false;
+
+						GameObject lblGO = new GameObject("IndicatorLabel", typeof(RectTransform), typeof(TextMeshProUGUI));
+						lblGO.transform.SetParent(indGO.transform, false);
+						RectTransform lblRT = lblGO.GetComponent<RectTransform>();
+						lblRT.anchorMin = Vector2.zero;
+						lblRT.anchorMax = Vector2.one;
+						lblRT.offsetMin = Vector2.zero;
+						lblRT.offsetMax = Vector2.zero;
+						TextMeshProUGUI lblTMP = lblGO.GetComponent<TextMeshProUGUI>();
+						((TMP_Text)lblTMP).text = "▼ OBJETIVO SELECCIONADO ▼";
+						((TMP_Text)lblTMP).fontSize = 18f;
+						((TMP_Text)lblTMP).alignment = TextAlignmentOptions.Center;
+						((Graphic)lblTMP).color = new Color(0.05f, 0.05f, 0.07f, 1f);
+						((Graphic)lblTMP).raycastTarget = false;
+						PlayerHealthBarUI.EnsureCleanPixelFont((TMP_Text)lblTMP);
+						slot.targetIndicator = indGO;
+					}
+					else
+					{
+						slot.targetIndicator = ((Component)indTr).gameObject;
+					}
+				}
+				if ((Object)(object)slot.enemyNameText != (Object)null)
+				{
+					((TMP_Text)slot.enemyNameText).fontSize = 26f;
+					PlayerHealthBarUI.EnsureCleanPixelFont((TMP_Text)slot.enemyNameText);
+				}
+				if ((Object)(object)slot.enemyHPText != (Object)null)
+				{
+					((TMP_Text)slot.enemyHPText).fontSize = 24f;
+					PlayerHealthBarUI.EnsureCleanPixelFont((TMP_Text)slot.enemyHPText);
+				}
+			}
+		}
+
+		// 2. Unificar el texto del registro de combate y los 4 botones de comando
+		if ((Object)(object)battleLogText != (Object)null)
+		{
+			((TMP_Text)battleLogText).fontSize = 32f;
+			((TMP_Text)battleLogText).alignment = TextAlignmentOptions.Center;
+			PlayerHealthBarUI.EnsureCleanPixelFont((TMP_Text)battleLogText);
+		}
+		Button[] mainVoiceButtons = new Button[4] { corporeoButton, intelectoButton, motricidadButton, mundoInternoButton };
+		foreach (Button b in mainVoiceButtons)
+		{
+			if ((Object)(object)b == (Object)null) continue;
+			TextMeshProUGUI btnTmp = ((Component)b).GetComponentInChildren<TextMeshProUGUI>();
+			if ((Object)(object)btnTmp != (Object)null)
+			{
+				((TMP_Text)btnTmp).fontSize = 28f;
+				((TMP_Text)btnTmp).alignment = TextAlignmentOptions.Center;
+				PlayerHealthBarUI.EnsureCleanPixelFont((TMP_Text)btnTmp);
+			}
+		}
+
+		// 3. Unificar CombatDialoguePanel y el marco del retrato (CombatPortraitContainer) al estilo alto del Nivel 1
+		if ((Object)(object)combatDialoguePanel != (Object)null)
+		{
+			Transform portraitCont = combatDialoguePanel.transform.Find("CombatPortraitContainer");
+			if ((Object)(object)portraitCont != (Object)null)
+			{
+				RectTransform pcRT = ((Component)portraitCont).GetComponent<RectTransform>();
+				if ((Object)(object)pcRT != (Object)null)
+				{
+					pcRT.anchorMin = new Vector2(0.01f, 0.04f);
+					pcRT.anchorMax = new Vector2(0.195f, 1.55f);
+					pcRT.offsetMin = Vector2.zero;
+					pcRT.offsetMax = Vector2.zero;
+				}
+			}
+			if ((Object)(object)combatSpeakerNameText != (Object)null)
+			{
+				((TMP_Text)combatSpeakerNameText).fontSize = 40f;
+				PlayerHealthBarUI.EnsureCleanPixelFont((TMP_Text)combatSpeakerNameText);
+			}
+			if ((Object)(object)combatDialogueText != (Object)null)
+			{
+				((TMP_Text)combatDialogueText).fontSize = 34f;
+				PlayerHealthBarUI.EnsureCleanPixelFont((TMP_Text)combatDialogueText);
+			}
+		}
+
+		LoadPortraitsIfMissing();
+
+		// 4. Asegurar retratos y GIFs de ataque/explosión estandarizados como en Nivel 1 (solo secuencia Orange)
+		EnsureDetectiveCombatPortraitResolved();
+
+		bool needsAttackFrames = (corporeoGif == null || corporeoGif.gifFrames == null || corporeoGif.gifFrames.Length == 0 || corporeoGif.gifFrames.Length > 10 || corporeoGif.duration > 1.5f);
+		bool needsEnemyAttackFrames = (enemyAttackGif == null || enemyAttackGif.gifFrames == null || enemyAttackGif.gifFrames.Length == 0 || enemyAttackGif.gifFrames.Length > 10 || enemyAttackGif.duration > 1.5f);
+		if (needsAttackFrames || needsEnemyAttackFrames)
+		{
+			Sprite[] attackSprites = LoadFilteredSpriteSequence("Assets/Scripts/AnimacionAtaque.png", "AnimacionAtaque_Orange_");
+			if (attackSprites.Length > 0)
+			{
+				if (needsAttackFrames)
+				{
+					if (corporeoGif == null) corporeoGif = new ActionGifData();
+					corporeoGif.actionLabel = "[GIF: CORPOREO - Golpe fisico directo]";
+					corporeoGif.gifFrames = attackSprites;
+					corporeoGif.duration = 1.5f;
+				}
+				if (needsEnemyAttackFrames)
+				{
+					if (enemyAttackGif == null) enemyAttackGif = new ActionGifData();
+					enemyAttackGif.actionLabel = "[GIF: ENEMIGO - Lanzando ataque contra Enrique]";
+					enemyAttackGif.gifFrames = attackSprites;
+					enemyAttackGif.duration = 1.5f;
+				}
+			}
+		}
+
+		bool needsExpFrames = (explosionGif == null || explosionGif.gifFrames == null || explosionGif.gifFrames.Length == 0 || explosionGif.gifFrames.Length > 12 || explosionGif.duration > 1.5f);
+		if (needsExpFrames)
+		{
+			Sprite[] expSprites = LoadFilteredSpriteSequence("Assets/Scripts/AtaqueExplosion.png", "AtaqueExplosion_Orange_");
+			if (expSprites.Length > 0)
+			{
+				if (explosionGif == null) explosionGif = new ActionGifData();
+				explosionGif.actionLabel = "[GIF: EXPLOSION - Fuego y metralla]";
+				explosionGif.gifFrames = expSprites;
+				explosionGif.duration = 1.2f;
+			}
+		}
+
+		// Ocultar botón flotante de inventario y tarjeta flotante del aliado en combate
+		if ((Object)(object)combatInventoryButtonRoot != (Object)null)
+		{
+			combatInventoryButtonRoot.SetActive(false);
+		}
+		if ((Object)(object)detectiveActionMenu != (Object)null)
+		{
+			detectiveActionMenu.RefreshAllySlotUI(false);
+		}
+
+		// 5. Asegurar subpaneles de Intelecto y Mundo Interno si la escena fue generada en runtime (ej. Nivel 3)
+		EnsureUnifiedSubpanelsExist();
+	}
+
+	private void EnsureUnifiedSubpanelsExist()
+	{
+		if ((Object)(object)battlePanel == (Object)null)
+		{
+			return;
+		}
+
+		// Subpanel de Intelecto y Objetos (mismas anclas Noir que Nivel 1 y Nivel 2: mitad inferior)
+		if ((Object)(object)intelectoAndItemsPanel == (Object)null)
+		{
+			Transform existingInt = battlePanel.transform.Find("IntelectoAndItemsPanel");
+			if ((Object)(object)existingInt != (Object)null)
+			{
+				intelectoAndItemsPanel = ((Component)existingInt).gameObject;
+				intelectoCraftingPanel = intelectoAndItemsPanel;
+				intelectoCraftingUI = intelectoAndItemsPanel.GetComponent<CombatIntelectoUI>();
+			}
+			else
+			{
+				GameObject intPanel = new GameObject("IntelectoAndItemsPanel", typeof(RectTransform), typeof(Image), typeof(CombatIntelectoUI));
+				intPanel.transform.SetParent(battlePanel.transform, false);
+				RectTransform ipRT = intPanel.GetComponent<RectTransform>();
+				ipRT.anchorMin = new Vector2(0.04f, 0.02f);
+				ipRT.anchorMax = new Vector2(0.96f, 0.53f);
+				ipRT.offsetMin = Vector2.zero;
+				ipRT.offsetMax = Vector2.zero;
+				((Graphic)intPanel.GetComponent<Image>()).color = new Color(0.20f, 0.48f, 0.82f, 1f);
+
+				GameObject inner = new GameObject("IntelectoInnerBox", typeof(RectTransform), typeof(Image));
+				inner.transform.SetParent(intPanel.transform, false);
+				RectTransform inRT = inner.GetComponent<RectTransform>();
+				inRT.anchorMin = new Vector2(0.003f, 0.008f);
+				inRT.anchorMax = new Vector2(0.997f, 0.992f);
+				inRT.offsetMin = Vector2.zero;
+				inRT.offsetMax = Vector2.zero;
+				((Graphic)inner.GetComponent<Image>()).color = new Color(0.03f, 0.03f, 0.04f, 0.99f);
+
+				GameObject titleGO = new GameObject("IntelectoTitleText", typeof(RectTransform), typeof(TextMeshProUGUI));
+				titleGO.transform.SetParent(inner.transform, false);
+				RectTransform tRT = titleGO.GetComponent<RectTransform>();
+				tRT.anchorMin = new Vector2(0.02f, 0.86f);
+				tRT.anchorMax = new Vector2(0.98f, 0.98f);
+				tRT.offsetMin = Vector2.zero;
+				tRT.offsetMax = Vector2.zero;
+				TextMeshProUGUI tTMP = titleGO.GetComponent<TextMeshProUGUI>();
+				((TMP_Text)tTMP).text = "SECCION 1: USAR OBJETOS CURATIVOS  |  SECCION 2: CRAFTEAR CON INTELECTO";
+				((TMP_Text)tTMP).fontSize = 26f;
+				((TMP_Text)tTMP).alignment = TextAlignmentOptions.Center;
+				((Graphic)tTMP).color = new Color(0.32f, 0.66f, 0.98f, 1f);
+				PlayerHealthBarUI.EnsureCleanPixelFont((TMP_Text)tTMP);
+
+				GameObject statusGO = new GameObject("InventorySummaryText", typeof(RectTransform), typeof(TextMeshProUGUI));
+				statusGO.transform.SetParent(inner.transform, false);
+				RectTransform stRT = statusGO.GetComponent<RectTransform>();
+				stRT.anchorMin = new Vector2(0.02f, 0.74f);
+				stRT.anchorMax = new Vector2(0.98f, 0.85f);
+				stRT.offsetMin = Vector2.zero;
+				stRT.offsetMax = Vector2.zero;
+				TextMeshProUGUI stTMP = statusGO.GetComponent<TextMeshProUGUI>();
+				((TMP_Text)stTMP).fontSize = 24f;
+				((TMP_Text)stTMP).alignment = TextAlignmentOptions.Center;
+				((Graphic)stTMP).color = new Color(0.90f, 0.88f, 0.84f, 1f);
+				PlayerHealthBarUI.EnsureCleanPixelFont((TMP_Text)stTMP);
+
+				GameObject dynContainerGO = new GameObject("DynamicButtonsContainer", typeof(RectTransform));
+				dynContainerGO.transform.SetParent(inner.transform, false);
+				RectTransform dcRT = dynContainerGO.GetComponent<RectTransform>();
+				dcRT.anchorMin = new Vector2(0.02f, 0.19f);
+				dcRT.anchorMax = new Vector2(0.98f, 0.73f);
+				dcRT.offsetMin = Vector2.zero;
+				dcRT.offsetMax = Vector2.zero;
+
+				Button closeBtn = CreateRuntimeVoiceButton(inner.transform, "CancelIntelectoButton", new Vector2(0.22f, 0.025f), new Vector2(0.78f, 0.17f), new Color(0.26f, 0.26f, 0.30f, 1f), "CANCELAR / VOLVER A LAS 4 VOCES (NO GASTA TURNO)", CloseIntelectoPanel);
+
+				CombatIntelectoUI uiComp = intPanel.GetComponent<CombatIntelectoUI>();
+				uiComp.battleManager = this;
+				uiComp.panelRoot = intPanel;
+				uiComp.titleText = tTMP;
+				uiComp.inventorySummaryText = stTMP;
+				uiComp.dynamicButtonsContainer = dcRT;
+				uiComp.cancelButton = closeBtn;
+				uiComp.customFont = ((TMP_Text)tTMP).font;
+
+				intelectoAndItemsPanel = intPanel;
+				intelectoCraftingPanel = intPanel;
+				intelectoCraftingUI = uiComp;
+				intPanel.SetActive(false);
+			}
+		}
+
+		// Garantizar anclas unificadas y ausencia de LayoutGroup en Intelecto incluso si ya existía en escena
+		if ((Object)(object)intelectoAndItemsPanel != (Object)null)
+		{
+			RectTransform ipRT = intelectoAndItemsPanel.GetComponent<RectTransform>();
+			if ((Object)(object)ipRT != (Object)null)
+			{
+				ipRT.anchorMin = new Vector2(0.04f, 0.02f);
+				ipRT.anchorMax = new Vector2(0.96f, 0.53f);
+				ipRT.offsetMin = Vector2.zero;
+				ipRT.offsetMax = Vector2.zero;
+			}
+			if ((Object)(object)intelectoCraftingUI == (Object)null)
+			{
+				intelectoCraftingUI = intelectoAndItemsPanel.GetComponent<CombatIntelectoUI>();
+			}
+			if ((Object)(object)intelectoCraftingUI != (Object)null && (Object)(object)intelectoCraftingUI.dynamicButtonsContainer != (Object)null)
+			{
+				LayoutGroup strayLg = ((Component)intelectoCraftingUI.dynamicButtonsContainer).GetComponent<LayoutGroup>();
+				if ((Object)(object)strayLg != (Object)null)
+				{
+					if (Application.isPlaying) Destroy(strayLg);
+					else DestroyImmediate(strayLg);
+				}
+				RectTransform dcRT = intelectoCraftingUI.dynamicButtonsContainer;
+				dcRT.anchorMin = new Vector2(0.02f, 0.19f);
+				dcRT.anchorMax = new Vector2(0.98f, 0.73f);
+				dcRT.offsetMin = Vector2.zero;
+				dcRT.offsetMax = Vector2.zero;
+			}
+		}
+
+		// Subpanel de Mundo Interno (mismas anclas Noir que Nivel 1 y Nivel 2)
+		if ((Object)(object)mundoInternoPanel == (Object)null)
+		{
+			Transform existingMi = battlePanel.transform.Find("MundoInternoPanel");
+			if ((Object)(object)existingMi != (Object)null)
+			{
+				mundoInternoPanel = ((Component)existingMi).gameObject;
+				mundoInternoUI = mundoInternoPanel.GetComponent<CombatMundoInternoUI>();
+			}
+			else
+			{
+				GameObject miPanel = new GameObject("MundoInternoPanel", typeof(RectTransform), typeof(Image), typeof(CombatMundoInternoUI));
+				miPanel.transform.SetParent(battlePanel.transform, false);
+				RectTransform mpRT = miPanel.GetComponent<RectTransform>();
+				mpRT.anchorMin = new Vector2(0.04f, 0.02f);
+				mpRT.anchorMax = new Vector2(0.96f, 0.53f);
+				mpRT.offsetMin = Vector2.zero;
+				mpRT.offsetMax = Vector2.zero;
+				((Graphic)miPanel.GetComponent<Image>()).color = new Color(0.58f, 0.26f, 0.78f, 1f);
+
+				GameObject inner = new GameObject("MundoInternoInnerBox", typeof(RectTransform), typeof(Image));
+				inner.transform.SetParent(miPanel.transform, false);
+				RectTransform inRT = inner.GetComponent<RectTransform>();
+				inRT.anchorMin = new Vector2(0.003f, 0.008f);
+				inRT.anchorMax = new Vector2(0.997f, 0.992f);
+				inRT.offsetMin = Vector2.zero;
+				inRT.offsetMax = Vector2.zero;
+				((Graphic)inner.GetComponent<Image>()).color = new Color(0.03f, 0.03f, 0.04f, 0.99f);
+
+				GameObject titleGO = new GameObject("MundoInternoTitleText", typeof(RectTransform), typeof(TextMeshProUGUI));
+				titleGO.transform.SetParent(inner.transform, false);
+				RectTransform tRT = titleGO.GetComponent<RectTransform>();
+				tRT.anchorMin = new Vector2(0.02f, 0.86f);
+				tRT.anchorMax = new Vector2(0.98f, 0.98f);
+				tRT.offsetMin = Vector2.zero;
+				tRT.offsetMax = Vector2.zero;
+				TextMeshProUGUI tTMP = titleGO.GetComponent<TextMeshProUGUI>();
+				((TMP_Text)tTMP).text = "MUNDO INTERNO: PSICOLOGIA Y EMOCIONES DE ENRIQUE";
+				((TMP_Text)tTMP).fontSize = 26f;
+				((TMP_Text)tTMP).alignment = TextAlignmentOptions.Center;
+				((Graphic)tTMP).color = new Color(0.78f, 0.45f, 0.98f, 1f);
+				PlayerHealthBarUI.EnsureCleanPixelFont((TMP_Text)tTMP);
+
+				GameObject statusGO = new GameObject("MundoInternoDescriptionText", typeof(RectTransform), typeof(TextMeshProUGUI));
+				statusGO.transform.SetParent(inner.transform, false);
+				RectTransform stRT = statusGO.GetComponent<RectTransform>();
+				stRT.anchorMin = new Vector2(0.02f, 0.73f);
+				stRT.anchorMax = new Vector2(0.98f, 0.85f);
+				stRT.offsetMin = Vector2.zero;
+				stRT.offsetMax = Vector2.zero;
+				TextMeshProUGUI stTMP = statusGO.GetComponent<TextMeshProUGUI>();
+				((TMP_Text)stTMP).text = "Elige como influir en la psique del combate (no gasta turno si cancelas):";
+				((TMP_Text)stTMP).fontSize = 22f;
+				((TMP_Text)stTMP).alignment = TextAlignmentOptions.Center;
+				((Graphic)stTMP).color = new Color(0.90f, 0.88f, 0.84f, 1f);
+				PlayerHealthBarUI.EnsureCleanPixelFont((TMP_Text)stTMP);
+
+				CombatMundoInternoUI miComp = miPanel.GetComponent<CombatMundoInternoUI>();
+				Button insultarBtn = CreateRuntimeVoiceButton(inner.transform, "InsultarButton", new Vector2(0.05f, 0.53f), new Vector2(0.95f, 0.70f), new Color(0.85f, 0.25f, 0.45f, 1f), "[1. INSULTAR] - Provoca al enemigo reduciendo su ataque (-4 ATQ)", miComp.OnInsultarClicked);
+				Button animarseBtn = CreateRuntimeVoiceButton(inner.transform, "AnimarseButton", new Vector2(0.05f, 0.35f), new Vector2(0.95f, 0.51f), new Color(0.92f, 0.72f, 0.22f, 1f), "[2. ANIMARSE] - Enrique se auto-sugestiona (+5 ATQ para el proximo golpe Corporeo)", miComp.OnAnimarseClicked);
+				Button delirioBtn = CreateRuntimeVoiceButton(inner.transform, "DelirioButton", new Vector2(0.05f, 0.17f), new Vector2(0.95f, 0.33f), new Color(0.58f, 0.26f, 0.78f, 1f), "[3. DELIRIO PSIQUICO] - Confunde al rival haciendole perder su proximo turno", miComp.OnDelirioClicked);
+				Button closeBtn = CreateRuntimeVoiceButton(inner.transform, "CancelMundoInternoButton", new Vector2(0.22f, 0.02f), new Vector2(0.78f, 0.14f), new Color(0.26f, 0.26f, 0.30f, 1f), "CANCELAR / VOLVER A LAS 4 VOCES (NO GASTA TURNO)", miComp.OnCancelClicked);
+
+				miComp.battleManager = this;
+				miComp.panelRoot = miPanel;
+				miComp.titleText = tTMP;
+				miComp.descriptionText = stTMP;
+				miComp.insultarButton = insultarBtn;
+				miComp.animarseButton = animarseBtn;
+				miComp.delirioButton = delirioBtn;
+				miComp.cancelButton = closeBtn;
+				miComp.insultarText = ((Component)insultarBtn).GetComponentInChildren<TextMeshProUGUI>();
+				miComp.animarseText = ((Component)animarseBtn).GetComponentInChildren<TextMeshProUGUI>();
+				miComp.delirioText = ((Component)delirioBtn).GetComponentInChildren<TextMeshProUGUI>();
+
+				mundoInternoPanel = miPanel;
+				mundoInternoUI = miComp;
+				miPanel.SetActive(false);
+			}
+		}
+
+		if ((Object)(object)mundoInternoPanel != (Object)null)
+		{
+			RectTransform mpRT = mundoInternoPanel.GetComponent<RectTransform>();
+			if ((Object)(object)mpRT != (Object)null)
+			{
+				mpRT.anchorMin = new Vector2(0.04f, 0.02f);
+				mpRT.anchorMax = new Vector2(0.96f, 0.53f);
+				mpRT.offsetMin = Vector2.zero;
+				mpRT.offsetMax = Vector2.zero;
+			}
+		}
+
+		// Subpanel de Game Over unificado (idéntico al Nivel 1 y Nivel 2)
+		if ((Object)(object)gameOverPanel == (Object)null && (Object)(object)battlePanel.transform.parent != (Object)null)
+		{
+			Transform existingGo = battlePanel.transform.parent.Find("GameOverPanel");
+			if ((Object)(object)existingGo != (Object)null)
+			{
+				gameOverPanel = ((Component)existingGo).gameObject;
+			}
+			else
+			{
+				gameOverPanel = BuildUnifiedGameOverPanel(battlePanel.transform.parent);
+			}
+		}
+	}
+
+	private GameObject BuildUnifiedGameOverPanel(Transform canvasParent)
+	{
+		Color pureBlack = new Color(0.02f, 0.02f, 0.025f, 1f);
+		Color matteBlack = new Color(0.05f, 0.05f, 0.06f, 1f);
+		Color crimsonBorder = new Color(0.68f, 0.14f, 0.14f, 1f);
+		Color subtleBorder = new Color(0.26f, 0.26f, 0.30f, 1f);
+		Color boneWhite = new Color(0.90f, 0.88f, 0.84f, 1f);
+
+		GameObject goPanel = new GameObject("GameOverPanel", typeof(RectTransform), typeof(Image));
+		goPanel.transform.SetParent(canvasParent, false);
+		RectTransform goRT = goPanel.GetComponent<RectTransform>();
+		goRT.anchorMin = Vector2.zero;
+		goRT.anchorMax = Vector2.one;
+		goRT.offsetMin = Vector2.zero;
+		goRT.offsetMax = Vector2.zero;
+		((Graphic)goPanel.GetComponent<Image>()).color = pureBlack;
+
+		GameObject border = new GameObject("GameOverBorderFrame", typeof(RectTransform), typeof(Image));
+		border.transform.SetParent(goPanel.transform, false);
+		RectTransform bRT = border.GetComponent<RectTransform>();
+		bRT.anchorMin = new Vector2(0.12f, 0.12f);
+		bRT.anchorMax = new Vector2(0.88f, 0.88f);
+		bRT.offsetMin = Vector2.zero;
+		bRT.offsetMax = Vector2.zero;
+		((Graphic)border.GetComponent<Image>()).color = crimsonBorder;
+
+		GameObject innerBox = new GameObject("GameOverInnerBox", typeof(RectTransform), typeof(Image));
+		innerBox.transform.SetParent(border.transform, false);
+		RectTransform ibRT = innerBox.GetComponent<RectTransform>();
+		ibRT.anchorMin = new Vector2(0.005f, 0.008f);
+		ibRT.anchorMax = new Vector2(0.995f, 0.992f);
+		ibRT.offsetMin = Vector2.zero;
+		ibRT.offsetMax = Vector2.zero;
+		((Graphic)innerBox.GetComponent<Image>()).color = matteBlack;
+
+		TextMeshProUGUI CreateGoText(string name, Vector2 min, Vector2 max, string msg, float size, Color col)
+		{
+			GameObject tGO = new GameObject(name, typeof(RectTransform), typeof(TextMeshProUGUI));
+			tGO.transform.SetParent(innerBox.transform, false);
+			RectTransform rt = tGO.GetComponent<RectTransform>();
+			rt.anchorMin = min;
+			rt.anchorMax = max;
+			rt.offsetMin = Vector2.zero;
+			rt.offsetMax = Vector2.zero;
+			TextMeshProUGUI tmp = tGO.GetComponent<TextMeshProUGUI>();
+			tmp.text = msg;
+			tmp.fontSize = size;
+			tmp.alignment = TextAlignmentOptions.Center;
+			tmp.color = col;
+			PlayerHealthBarUI.EnsureCleanPixelFont(tmp);
+			return tmp;
+		}
+
+		CreateGoText("GameOverTitleText", new Vector2(0.06f, 0.66f), new Vector2(0.94f, 0.90f), "GAME OVER", 96f, new Color(0.85f, 0.18f, 0.18f, 1f));
+		CreateGoText("GameOverSubtitleText", new Vector2(0.06f, 0.53f), new Vector2(0.94f, 0.66f), "FIN DEL RECORRIDO EN SANTA FELIPINA", 38f, boneWhite);
+		CreateGoText("GameOverNarrativeText", new Vector2(0.08f, 0.34f), new Vector2(0.92f, 0.52f),
+			"Enrique y el Detective Vargas cayeron en la oscuridad.\nEl rastro del culpable se perdió para siempre entre las sombras.",
+			26f, new Color(0.68f, 0.68f, 0.72f, 1f));
+
+		retryBattleButton = CreateRuntimeVoiceButton(innerBox.transform, "RetryBattleButton", new Vector2(0.10f, 0.10f), new Vector2(0.47f, 0.27f), crimsonBorder, "REINTENTAR EN EL MAPA\n(ESPACIO / R)", RetryFromGameOver);
+		returnToMenuButton = CreateRuntimeVoiceButton(innerBox.transform, "ReturnToMenuButton", new Vector2(0.53f, 0.10f), new Vector2(0.90f, 0.27f), subtleBorder, "VOLVER AL MENU PRINCIPAL\n(M / ESC)", ReturnToMainMenu);
+		if (string.IsNullOrEmpty(menuSceneName))
+		{
+			menuSceneName = "00_MenuIntro";
+		}
+
+		goPanel.SetActive(false);
+		return goPanel;
+	}
+
+	private static BattleManager BuildRuntimeBattleSystemIfMissing(BattleManager targetManager = null)
+	{
+		GameObject canvasGO = GameObject.Find("CombatCanvas");
+		if ((Object)(object)canvasGO == (Object)null)
+		{
+			canvasGO = new GameObject("CombatCanvas");
+			Canvas canvas = canvasGO.AddComponent<Canvas>();
+			canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+			canvas.sortingOrder = 100;
+			CanvasScaler scaler = canvasGO.AddComponent<CanvasScaler>();
+			scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+			scaler.referenceResolution = new Vector2(1920f, 1080f);
+			scaler.matchWidthOrHeight = 0.5f;
+			canvasGO.AddComponent<GraphicRaycaster>();
+		}
+
+		if ((Object)(object)targetManager == (Object)null)
+		{
+			targetManager = canvasGO.GetComponent<BattleManager>();
+			if ((Object)(object)targetManager == (Object)null)
+			{
+				targetManager = canvasGO.AddComponent<BattleManager>();
+			}
+		}
+
+		GameObject panelGO = new GameObject("BattlePanel", typeof(RectTransform), typeof(Image));
+		panelGO.transform.SetParent(canvasGO.transform, false);
+		RectTransform panelRT = panelGO.GetComponent<RectTransform>();
+		panelRT.anchorMin = Vector2.zero;
+		panelRT.anchorMax = Vector2.one;
+		panelRT.offsetMin = Vector2.zero;
+		panelRT.offsetMax = Vector2.zero;
+		Image bgImg = panelGO.GetComponent<Image>();
+		bgImg.color = new Color(0.05f, 0.05f, 0.08f, 0.98f);
+		targetManager.battlePanel = panelGO;
+		targetManager.combatBackgroundImage = bgImg;
+
+		// Slots para 2 enemigos simultáneos
+		targetManager.enemySlots = new EnemyUISlot[2];
+		for (int i = 0; i < 2; i++)
+		{
+			EnemyUISlot slot = new EnemyUISlot();
+			GameObject slotGO = new GameObject($"EnemySlot_{i}", typeof(RectTransform), typeof(Image), typeof(Button));
+			slotGO.transform.SetParent(panelGO.transform, false);
+			RectTransform slotRT = slotGO.GetComponent<RectTransform>();
+			slotRT.anchorMin = (i == 0) ? new Vector2(0.18f, 0.44f) : new Vector2(0.55f, 0.44f);
+			slotRT.anchorMax = (i == 0) ? new Vector2(0.52f, 0.93f) : new Vector2(0.89f, 0.93f);
+			slotRT.offsetMin = Vector2.zero;
+			slotRT.offsetMax = Vector2.zero;
+			Image border = slotGO.GetComponent<Image>();
+			border.color = new Color(0.24f, 0.24f, 0.28f, 0.9f);
+
+			GameObject inner = new GameObject("Inner", typeof(RectTransform), typeof(Image));
+			inner.transform.SetParent(slotGO.transform, false);
+			RectTransform inRT = inner.GetComponent<RectTransform>();
+			inRT.anchorMin = new Vector2(0.02f, 0.02f);
+			inRT.anchorMax = new Vector2(0.98f, 0.98f);
+			inRT.offsetMin = Vector2.zero;
+			inRT.offsetMax = Vector2.zero;
+			inner.GetComponent<Image>().color = new Color(0.07f, 0.07f, 0.10f, 0.95f);
+
+			GameObject avatarGO = new GameObject("EnemySprite", typeof(RectTransform), typeof(Image));
+			avatarGO.transform.SetParent(inner.transform, false);
+			RectTransform avRT = avatarGO.GetComponent<RectTransform>();
+			avRT.anchorMin = new Vector2(0.10f, 0.18f);
+			avRT.anchorMax = new Vector2(0.90f, 0.80f);
+			avRT.offsetMin = Vector2.zero;
+			avRT.offsetMax = Vector2.zero;
+			Image avImg = avatarGO.GetComponent<Image>();
+			avImg.preserveAspect = true;
+
+			GameObject nameGO = new GameObject("EnemyName", typeof(RectTransform), typeof(TextMeshProUGUI));
+			nameGO.transform.SetParent(inner.transform, false);
+			RectTransform nmRT = nameGO.GetComponent<RectTransform>();
+			nmRT.anchorMin = new Vector2(0.04f, 0.82f);
+			nmRT.anchorMax = new Vector2(0.96f, 0.97f);
+			nmRT.offsetMin = Vector2.zero;
+			nmRT.offsetMax = Vector2.zero;
+			TextMeshProUGUI nmTMP = nameGO.GetComponent<TextMeshProUGUI>();
+			nmTMP.fontSize = 20f;
+			nmTMP.alignment = TextAlignmentOptions.Center;
+			PlayerHealthBarUI.EnsureCleanPixelFont(nmTMP);
+
+			GameObject hpGO = new GameObject("EnemyHP", typeof(RectTransform), typeof(TextMeshProUGUI));
+			hpGO.transform.SetParent(inner.transform, false);
+			RectTransform hpRT = hpGO.GetComponent<RectTransform>();
+			hpRT.anchorMin = new Vector2(0.04f, 0.03f);
+			hpRT.anchorMax = new Vector2(0.96f, 0.17f);
+			hpRT.offsetMin = Vector2.zero;
+			hpRT.offsetMax = Vector2.zero;
+			TextMeshProUGUI hpTMP = hpGO.GetComponent<TextMeshProUGUI>();
+			hpTMP.fontSize = 18f;
+			hpTMP.alignment = TextAlignmentOptions.Center;
+			PlayerHealthBarUI.EnsureCleanPixelFont(hpTMP);
+
+			Button btn = slotGO.GetComponent<Button>();
+			int capturedIdx = i;
+			btn.onClick.AddListener(() => targetManager.SelectTargetEnemy(capturedIdx));
+
+			slot.slotRoot = slotGO;
+			slot.borderImage = border;
+			slot.enemyPlaceholderImage = avImg;
+			slot.enemyNameText = nmTMP;
+			slot.enemyHPText = hpTMP;
+			slot.selectTargetButton = btn;
+			targetManager.enemySlots[i] = slot;
+		}
+
+		// Retrato de Enrique a la izquierda
+		GameObject portraitFrame = new GameObject("PlayerPortraitFrame", typeof(RectTransform), typeof(Image));
+		portraitFrame.transform.SetParent(panelGO.transform, false);
+		RectTransform pfRT = portraitFrame.GetComponent<RectTransform>();
+		pfRT.anchorMin = new Vector2(0.015f, 0.02f);
+		pfRT.anchorMax = new Vector2(0.175f, 0.43f);
+		pfRT.offsetMin = Vector2.zero;
+		pfRT.offsetMax = Vector2.zero;
+		Image pfBorder = portraitFrame.GetComponent<Image>();
+		pfBorder.color = new Color(0.28f, 0.28f, 0.32f, 1f);
+		targetManager.combatPortraitFrameBorder = pfBorder;
+
+		GameObject portraitImgGO = new GameObject("PlayerPortraitImage", typeof(RectTransform), typeof(Image));
+		portraitImgGO.transform.SetParent(portraitFrame.transform, false);
+		RectTransform piRT = portraitImgGO.GetComponent<RectTransform>();
+		piRT.anchorMin = new Vector2(0.03f, 0.03f);
+		piRT.anchorMax = new Vector2(0.97f, 0.97f);
+		piRT.offsetMin = Vector2.zero;
+		piRT.offsetMax = Vector2.zero;
+		targetManager.playerCombatPortraitImage = portraitImgGO.GetComponent<Image>();
+
+		// Franja de estado de Enrique (PlayerStatusStrip)
+		GameObject statusStrip = new GameObject("PlayerStatusStrip", typeof(RectTransform), typeof(Image));
+		statusStrip.transform.SetParent(panelGO.transform, false);
+		RectTransform ssRT = statusStrip.GetComponent<RectTransform>();
+		ssRT.anchorMin = new Vector2(0.19f, 0.198f);
+		ssRT.anchorMax = new Vector2(0.97f, 0.282f);
+		ssRT.offsetMin = Vector2.zero;
+		ssRT.offsetMax = Vector2.zero;
+		statusStrip.GetComponent<Image>().color = new Color(0.06f, 0.06f, 0.08f, 0.95f);
+
+		GameObject pHpTextGO = new GameObject("PlayerHPText", typeof(RectTransform), typeof(TextMeshProUGUI));
+		pHpTextGO.transform.SetParent(statusStrip.transform, false);
+		targetManager.playerHPText = pHpTextGO.GetComponent<TextMeshProUGUI>();
+		PlayerHealthBarUI.EnsureCleanPixelFont(targetManager.playerHPText);
+
+		// Registro de Combate (BattleLog)
+		GameObject logBox = new GameObject("BattleLogStrip", typeof(RectTransform), typeof(Image));
+		logBox.transform.SetParent(panelGO.transform, false);
+		RectTransform lbRT = logBox.GetComponent<RectTransform>();
+		lbRT.anchorMin = new Vector2(0.19f, 0.29f);
+		lbRT.anchorMax = new Vector2(0.97f, 0.42f);
+		lbRT.offsetMin = Vector2.zero;
+		lbRT.offsetMax = Vector2.zero;
+		logBox.GetComponent<Image>().color = new Color(0.04f, 0.04f, 0.06f, 0.96f);
+
+		GameObject logTextGO = new GameObject("BattleLogText", typeof(RectTransform), typeof(TextMeshProUGUI));
+		logTextGO.transform.SetParent(logBox.transform, false);
+		RectTransform ltRT = logTextGO.GetComponent<RectTransform>();
+		ltRT.anchorMin = new Vector2(0.02f, 0.08f);
+		ltRT.anchorMax = new Vector2(0.98f, 0.92f);
+		ltRT.offsetMin = Vector2.zero;
+		ltRT.offsetMax = Vector2.zero;
+		TextMeshProUGUI logTMP = logTextGO.GetComponent<TextMeshProUGUI>();
+		logTMP.fontSize = 21f;
+		logTMP.alignment = TextAlignmentOptions.Left;
+		logTMP.color = new Color(0.92f, 0.90f, 0.85f, 1f);
+		PlayerHealthBarUI.EnsureCleanPixelFont(logTMP);
+		targetManager.battleLogText = logTMP;
+
+		// Botones de las 4 Voces de Enrique
+		targetManager.corporeoButton = CreateRuntimeVoiceButton(panelGO.transform, "Btn_Corporeo", new Vector2(0.19f, 0.02f), new Vector2(0.375f, 0.185f), new Color(0.78f, 0.22f, 0.22f, 1f), "CORPÓREO\n<size=14>Atacar</size>", targetManager.OnCorporeoButton);
+		targetManager.intelectoButton = CreateRuntimeVoiceButton(panelGO.transform, "Btn_Intelecto", new Vector2(0.388f, 0.02f), new Vector2(0.573f, 0.185f), new Color(0.22f, 0.52f, 0.85f, 1f), "INTELECTO\n<size=14>Objetos / Crear</size>", targetManager.OnIntelectoButton);
+		targetManager.motricidadButton = CreateRuntimeVoiceButton(panelGO.transform, "Btn_Motricidad", new Vector2(0.586f, 0.02f), new Vector2(0.771f, 0.185f), new Color(0.85f, 0.65f, 0.18f, 1f), "MOTRICIDAD\n<size=14>Guardia / Esquive</size>", targetManager.OnMotricidadButton);
+		targetManager.mundoInternoButton = CreateRuntimeVoiceButton(panelGO.transform, "Btn_MundoInterno", new Vector2(0.784f, 0.02f), new Vector2(0.97f, 0.185f), new Color(0.58f, 0.26f, 0.78f, 1f), "MUNDO INTERNO\n<size=14>Personalidades</size>", targetManager.OnMundoInternoButton);
+
+		// Panel de GIF de Acción
+		GameObject gifPanel = new GameObject("ActionGifPanel", typeof(RectTransform), typeof(Image));
+		gifPanel.transform.SetParent(panelGO.transform, false);
+		RectTransform gpRT = gifPanel.GetComponent<RectTransform>();
+		gpRT.anchorMin = new Vector2(0.25f, 0.32f);
+		gpRT.anchorMax = new Vector2(0.75f, 0.76f);
+		gpRT.offsetMin = Vector2.zero;
+		gpRT.offsetMax = Vector2.zero;
+		gifPanel.GetComponent<Image>().color = new Color(0.04f, 0.04f, 0.06f, 0.96f);
+
+		GameObject gifImgGO = new GameObject("GifImage", typeof(RectTransform), typeof(Image));
+		gifImgGO.transform.SetParent(gifPanel.transform, false);
+		RectTransform giRT = gifImgGO.GetComponent<RectTransform>();
+		giRT.anchorMin = new Vector2(0.05f, 0.18f);
+		giRT.anchorMax = new Vector2(0.95f, 0.94f);
+		giRT.offsetMin = Vector2.zero;
+		giRT.offsetMax = Vector2.zero;
+		targetManager.actionGifImage = gifImgGO.GetComponent<Image>();
+
+		GameObject gifLblGO = new GameObject("GifLabel", typeof(RectTransform), typeof(TextMeshProUGUI));
+		gifLblGO.transform.SetParent(gifPanel.transform, false);
+		RectTransform glRT = gifLblGO.GetComponent<RectTransform>();
+		glRT.anchorMin = new Vector2(0.05f, 0.02f);
+		glRT.anchorMax = new Vector2(0.95f, 0.18f);
+		glRT.offsetMin = Vector2.zero;
+		glRT.offsetMax = Vector2.zero;
+		TextMeshProUGUI glTMP = gifLblGO.GetComponent<TextMeshProUGUI>();
+		glTMP.fontSize = 18f;
+		glTMP.alignment = TextAlignmentOptions.Center;
+		PlayerHealthBarUI.EnsureCleanPixelFont(glTMP);
+		targetManager.actionGifLabelText = glTMP;
+		targetManager.actionGifPanel = gifPanel;
+		gifPanel.SetActive(false);
+
+		// Panel de Diálogo en Combate
+		GameObject diagPanel = new GameObject("CombatDialoguePanel", typeof(RectTransform), typeof(Image));
+		diagPanel.transform.SetParent(panelGO.transform, false);
+		RectTransform dpRT = diagPanel.GetComponent<RectTransform>();
+		dpRT.anchorMin = new Vector2(0.18f, 0.02f);
+		dpRT.anchorMax = new Vector2(0.97f, 0.30f);
+		dpRT.offsetMin = Vector2.zero;
+		dpRT.offsetMax = Vector2.zero;
+		diagPanel.GetComponent<Image>().color = new Color(0.04f, 0.04f, 0.06f, 0.98f);
+		targetManager.combatDialoguePanel = diagPanel;
+
+		GameObject spkGO = new GameObject("SpeakerName", typeof(RectTransform), typeof(TextMeshProUGUI));
+		spkGO.transform.SetParent(diagPanel.transform, false);
+		RectTransform spkRT = spkGO.GetComponent<RectTransform>();
+		spkRT.anchorMin = new Vector2(0.04f, 0.72f);
+		spkRT.anchorMax = new Vector2(0.80f, 0.95f);
+		spkRT.offsetMin = Vector2.zero;
+		spkRT.offsetMax = Vector2.zero;
+		targetManager.combatSpeakerNameText = spkGO.GetComponent<TextMeshProUGUI>();
+		targetManager.combatSpeakerNameText.fontSize = 24f;
+		PlayerHealthBarUI.EnsureCleanPixelFont(targetManager.combatSpeakerNameText);
+
+		GameObject dTxtGO = new GameObject("DialogueText", typeof(RectTransform), typeof(TextMeshProUGUI));
+		dTxtGO.transform.SetParent(diagPanel.transform, false);
+		RectTransform dtRT = dTxtGO.GetComponent<RectTransform>();
+		dtRT.anchorMin = new Vector2(0.04f, 0.12f);
+		dtRT.anchorMax = new Vector2(0.80f, 0.70f);
+		dtRT.offsetMin = Vector2.zero;
+		dtRT.offsetMax = Vector2.zero;
+		targetManager.combatDialogueText = dTxtGO.GetComponent<TextMeshProUGUI>();
+		targetManager.combatDialogueText.fontSize = 22f;
+		PlayerHealthBarUI.EnsureCleanPixelFont(targetManager.combatDialogueText);
+
+		targetManager.combatNextDialogueButton = CreateRuntimeVoiceButton(diagPanel.transform, "NextDialogueBtn", new Vector2(0.82f, 0.15f), new Vector2(0.98f, 0.85f), new Color(0.92f, 0.68f, 0.22f, 1f), "CONTINUAR\n[ESPACIO]", targetManager.AdvanceCombatDialogue);
+		diagPanel.SetActive(false);
+
+		targetManager.EnsureCombatGreenHealthBar();
+		targetManager.SetupCombatPortraitAndWeaponUI();
+		targetManager.EnforceUnifiedCombatUILayout();
+		DetectiveActionMenu.EnsureInBattlePanel(targetManager);
+		panelGO.SetActive(false);
+		return targetManager;
+	}
+
+	private static Button CreateRuntimeVoiceButton(Transform parent, string name, Vector2 anchorMin, Vector2 anchorMax, Color borderColor, string label, UnityAction onClick)
+	{
+		GameObject btnGO = new GameObject(name, typeof(RectTransform), typeof(Image), typeof(Button));
+		btnGO.transform.SetParent(parent, false);
+		RectTransform rt = btnGO.GetComponent<RectTransform>();
+		rt.anchorMin = anchorMin;
+		rt.anchorMax = anchorMax;
+		rt.offsetMin = Vector2.zero;
+		rt.offsetMax = Vector2.zero;
+		btnGO.GetComponent<Image>().color = borderColor;
+
+		GameObject fill = new GameObject("Fill", typeof(RectTransform), typeof(Image));
+		fill.transform.SetParent(btnGO.transform, false);
+		RectTransform fRT = fill.GetComponent<RectTransform>();
+		fRT.anchorMin = new Vector2(0.02f, 0.06f);
+		fRT.anchorMax = new Vector2(0.98f, 0.94f);
+		fRT.offsetMin = Vector2.zero;
+		fRT.offsetMax = Vector2.zero;
+		Image fImg = fill.GetComponent<Image>();
+		fImg.color = new Color(0.06f, 0.07f, 0.10f, 0.98f);
+
+		Button btn = btnGO.GetComponent<Button>();
+		btn.targetGraphic = fImg;
+		btn.onClick.AddListener(onClick);
+
+		GameObject txtGO = new GameObject("Text", typeof(RectTransform), typeof(TextMeshProUGUI));
+		txtGO.transform.SetParent(fill.transform, false);
+		RectTransform tRT = txtGO.GetComponent<RectTransform>();
+		tRT.anchorMin = Vector2.zero;
+		tRT.anchorMax = Vector2.one;
+		tRT.offsetMin = Vector2.zero;
+		tRT.offsetMax = Vector2.zero;
+		TextMeshProUGUI tmp = txtGO.GetComponent<TextMeshProUGUI>();
+		tmp.text = label;
+		tmp.fontSize = 18f;
+		tmp.alignment = TextAlignmentOptions.Center;
+		tmp.color = Color.white;
+		PlayerHealthBarUI.EnsureCleanPixelFont(tmp);
+		return btn;
 	}
 
 	public void PlayAtaqueAliadoPropioSfx()
@@ -3213,6 +5457,57 @@ public class BattleManager : MonoBehaviour
 		else if ((Object)(object)sfxEsquive != (Object)null && (Object)(object)Camera.main != (Object)null)
 		{
 			AudioSource.PlayClipAtPoint(sfxEsquive, ((Component)Camera.main).transform.position, 0.85f);
+		}
+	}
+
+	private static Sprite[] LoadFilteredSpriteSequence(string sheetPath, string namePrefix)
+	{
+		Sprite[] allSprites = RuntimeAssetCatalog.GetSprites(sheetPath);
+		List<Sprite> filtered = new List<Sprite>();
+		if (allSprites != null)
+		{
+			for (int i = 0; i < allSprites.Length; i++)
+			{
+				Sprite sp = allSprites[i];
+				if ((Object)(object)sp != (Object)null && sp.name.StartsWith(namePrefix, StringComparison.Ordinal))
+				{
+					filtered.Add(sp);
+				}
+			}
+		}
+		filtered.Sort((a, b) => string.Compare(a.name, b.name, StringComparison.Ordinal));
+		return filtered.ToArray();
+	}
+
+	public void PlayDisparoRevolverSfx()
+	{
+		if (sfxDisparoRevolver38 == null)
+		{
+			sfxDisparoRevolver38 = RuntimeAssetCatalog.GetAudioClip("Assets/Sound/EfectodeSonido_DisparoRevolver38/Disparo_Revolver38.wav");
+		}
+		if (sfxDisparoRevolver38 != null && Camera.main != null)
+		{
+			AudioSource.PlayClipAtPoint(sfxDisparoRevolver38, Camera.main.transform.position, 0.95f);
+		}
+		else
+		{
+			PlayAtaqueAliadoPropioSfx();
+		}
+	}
+
+	public void PlayRecargaRevolverSfx()
+	{
+		if (sfxRecargaRevolver == null)
+		{
+			sfxRecargaRevolver = RuntimeAssetCatalog.GetAudioClip("Assets/Sound/EfectodeSonido_RecargaRevolver/Recarga_Revolver.wav");
+		}
+		if (sfxRecargaRevolver != null && Camera.main != null)
+		{
+			AudioSource.PlayClipAtPoint(sfxRecargaRevolver, Camera.main.transform.position, 0.95f);
+		}
+		else
+		{
+			PlayEfectoSfx();
 		}
 	}
 

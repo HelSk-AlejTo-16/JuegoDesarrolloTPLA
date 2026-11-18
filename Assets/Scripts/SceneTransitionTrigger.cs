@@ -53,9 +53,6 @@ public class SceneTransitionTrigger : MonoBehaviour
 
         if (CanInteract())
         {
-            if (promptUI != null && !promptUI.activeSelf)
-                promptUI.SetActive(true);
-
             if (WasInteractKeyPressed())
             {
                 TryExecuteTransition();
@@ -85,10 +82,6 @@ public class SceneTransitionTrigger : MonoBehaviour
             if (triggerOnEnter && CanInteract())
             {
                 TryExecuteTransition();
-            }
-            else if (promptUI != null && CanInteract())
-            {
-                promptUI.SetActive(true);
             }
         }
     }
@@ -142,6 +135,7 @@ public class SceneTransitionTrigger : MonoBehaviour
         PlayerStats stats = FindAnyObjectByType<PlayerStats>();
         if (stats != null) stats.SaveProgressionSnapshot();
         if (InventoryManager.Instance != null) InventoryManager.Instance.SaveSnapshot();
+        if (DetectiveStats.Instance != null) DetectiveStats.Instance.SaveProgressionSnapshot();
 
         BossVictoryTransitionUI transitionUI = BossVictoryTransitionUI.EnsureInScene();
         if (transitionUI != null)

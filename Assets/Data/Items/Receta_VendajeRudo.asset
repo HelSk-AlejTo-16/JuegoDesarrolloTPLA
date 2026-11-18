@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Receta_VendajeRudo
   m_EditorClassIdentifier: Assembly-CSharp::CraftingRecipeData
   recipeName: Vendaje Rudo
-  intelectoComment: 'VOZ [INTELECTO]: "Compresa fria improvisada con vidrio helado y gas carbonico. Cierra las heridas al instante (+50 HP)."'
+  intelectoComment: 'VOZ [INTELECTO]: "Compresa y vendaje improvisado con vidrio templado y cinta canela resistente. Cierra las heridas al instante (+50 HP)."'
   materialA: {fileID: 11400000, guid: 651fd6e8662204f4dadef7cd8618d1a0, type: 2}
-  materialB: {fileID: 11400000, guid: 9a3290488ea5cae45a162d32b419f656, type: 2}
+  materialB: {fileID: 11400000, guid: 435d867ffffd0f14283cc3147b4c2fb5, type: 2}
   damageIgnoringDefense: 0
   healAmount: 50
   appliesConfusion: 0

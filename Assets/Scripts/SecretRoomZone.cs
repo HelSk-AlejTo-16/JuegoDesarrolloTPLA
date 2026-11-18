@@ -80,11 +80,6 @@ public class SecretRoomZone : MonoBehaviour
 
         if (CanInteractWithDoor())
         {
-            if (promptUI != null && !promptUI.activeSelf)
-            {
-                promptUI.SetActive(true);
-            }
-
             if (WasInteractKeyPressedThisFrame())
             {
                 OpenSecretDoor();
@@ -114,11 +109,6 @@ public class SecretRoomZone : MonoBehaviour
         {
             isPlayerNearDoor = true;
             playerInTrigger = player;
-
-            if (promptUI != null && CanInteractWithDoor())
-            {
-                promptUI.SetActive(true);
-            }
         }
     }
 

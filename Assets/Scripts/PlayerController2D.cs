@@ -65,12 +65,10 @@ public class PlayerController2D : MonoBehaviour
 
     public void LoadFootstepClipIfMissing()
     {
-#if UNITY_EDITOR
         if (footstepSfx == null)
         {
-            footstepSfx = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>(MusicManager.PathSfxPasos);
+            footstepSfx = RuntimeAssetCatalog.GetAudioClip(MusicManager.PathSfxPasos);
         }
-#endif
     }
 
     private void Awake()
@@ -94,6 +92,32 @@ public class PlayerController2D : MonoBehaviour
         if (spriteRenderer == null) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
         ResetVisualTransform();
+        HideAllWorldSpaceObjectLabels();
+    }
+
+    /// <summary>
+    /// Oculta cualquier texto o letrero flotante (TextMeshPro 3D y Canvas WorldSpace) sobre objetos o personajes del mapa.
+    /// </summary>
+    public static void HideAllWorldSpaceObjectLabels()
+    {
+        TMPro.TextMeshPro[] worldTexts = FindObjectsByType<TMPro.TextMeshPro>(FindObjectsInactive.Include);
+        foreach (var wt in worldTexts)
+        {
+            if (wt != null)
+            {
+                wt.text = string.Empty;
+                wt.gameObject.SetActive(false);
+            }
+        }
+
+        Canvas[] allCanvases = FindObjectsByType<Canvas>(FindObjectsInactive.Include);
+        foreach (var c in allCanvases)
+        {
+            if (c != null && c.renderMode == RenderMode.WorldSpace)
+            {
+                c.gameObject.SetActive(false);
+            }
+        }
     }
 
     private void Update()

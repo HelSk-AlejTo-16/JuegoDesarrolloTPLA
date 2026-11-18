@@ -27,6 +27,89 @@ public class ExplorationDialogueManager : MonoBehaviour
         private set => _instance = value;
     }
 
+    public static ExplorationDialogueManager EnsureInScene()
+    {
+        if (_instance != null && _instance.explorationDialoguePanel != null)
+        {
+            return _instance;
+        }
+
+        ExplorationDialogueManager existing = FindAnyObjectByType<ExplorationDialogueManager>(FindObjectsInactive.Include);
+        if (existing != null && existing.explorationDialoguePanel != null)
+        {
+            _instance = existing;
+            return existing;
+        }
+
+        GameObject canvasGO = (existing != null) ? existing.gameObject : new GameObject("ExplorationDialogueCanvas");
+        Canvas canvas = canvasGO.GetComponent<Canvas>();
+        if (canvas == null) canvas = canvasGO.AddComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.sortingOrder = 50;
+
+        CanvasScaler scaler = canvasGO.GetComponent<CanvasScaler>();
+        if (scaler == null) scaler = canvasGO.AddComponent<CanvasScaler>();
+        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        scaler.referenceResolution = new Vector2(1920, 1080);
+        scaler.matchWidthOrHeight = 0.5f;
+
+        if (canvasGO.GetComponent<GraphicRaycaster>() == null)
+            canvasGO.AddComponent<GraphicRaycaster>();
+
+        ExplorationDialogueManager manager = (existing != null) ? existing : canvasGO.AddComponent<ExplorationDialogueManager>();
+        _instance = manager;
+
+        if (manager.explorationDialoguePanel == null)
+        {
+            GameObject panelGO = new GameObject("ExplorationDialoguePanel", typeof(RectTransform), typeof(Image));
+            panelGO.transform.SetParent(canvasGO.transform, false);
+            RectTransform panelRT = panelGO.GetComponent<RectTransform>();
+            panelRT.anchorMin = new Vector2(0.08f, 0.04f);
+            panelRT.anchorMax = new Vector2(0.92f, 0.30f);
+            panelRT.offsetMin = Vector2.zero;
+            panelRT.offsetMax = Vector2.zero;
+
+            Image panelImg = panelGO.GetComponent<Image>();
+            panelImg.color = new Color(0.04f, 0.04f, 0.06f, 0.96f);
+
+            GameObject textGO = new GameObject("SpeakerAndText", typeof(RectTransform), typeof(TextMeshProUGUI));
+            textGO.transform.SetParent(panelGO.transform, false);
+            RectTransform textRT = textGO.GetComponent<RectTransform>();
+            textRT.anchorMin = new Vector2(0.205f, 0.20f);
+            textRT.anchorMax = new Vector2(0.95f, 0.70f);
+            textRT.offsetMin = Vector2.zero;
+            textRT.offsetMax = Vector2.zero;
+            TextMeshProUGUI tmp = textGO.GetComponent<TextMeshProUGUI>();
+            tmp.fontSize = 26f;
+            tmp.color = new Color(0.92f, 0.90f, 0.86f, 1f);
+            PlayerHealthBarUI.EnsureCleanPixelFont(tmp);
+
+            GameObject contGO = new GameObject("ContinueIndicator", typeof(RectTransform), typeof(TextMeshProUGUI));
+            contGO.transform.SetParent(panelGO.transform, false);
+            RectTransform contRT = contGO.GetComponent<RectTransform>();
+            contRT.anchorMin = new Vector2(0.205f, 0.05f);
+            contRT.anchorMax = new Vector2(0.96f, 0.19f);
+            contRT.offsetMin = Vector2.zero;
+            contRT.offsetMax = Vector2.zero;
+            TextMeshProUGUI contTMP = contGO.GetComponent<TextMeshProUGUI>();
+            contTMP.fontSize = 20f;
+            contTMP.alignment = TextAlignmentOptions.BottomRight;
+            contTMP.color = new Color(0.92f, 0.68f, 0.22f, 0.9f);
+            contTMP.text = "[ ESPACIO / E / CLIC PARA CONTINUAR ]";
+            PlayerHealthBarUI.EnsureCleanPixelFont(contTMP);
+
+            manager.explorationDialoguePanel = panelGO;
+            manager.speakerAndText = tmp;
+            manager.continueIndicatorText = contTMP;
+            manager.playerController = FindAnyObjectByType<PlayerController2D>();
+
+            Capitulo2IntroNarrative.UpgradeDialoguePanelToNoirStyle(manager);
+            panelGO.SetActive(false);
+        }
+
+        return manager;
+    }
+
     [Header("1. Referencias Principales de UI")]
     [Tooltip("Panel raíz del diálogo de exploración dentro del Canvas.")]
     public GameObject explorationDialoguePanel;
@@ -80,12 +163,18 @@ public class ExplorationDialogueManager : MonoBehaviour
 
     public void LoadSfxClipsIfMissing()
     {
-#if UNITY_EDITOR
         if (dialogueConfirmSfx == null)
         {
-            dialogueConfirmSfx = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>(MusicManager.PathSfxBotonConfirmacionDialogo);
+            dialogueConfirmSfx = RuntimeAssetCatalog.GetAudioClip(MusicManager.PathSfxBotonConfirmacionDialogo);
         }
-#endif
+        if (investigadorPortrait == null || investigadorPortrait.name.Contains("Cardo") || investigadorPortrait.name == "1")
+        {
+            Sprite detPortrait = RuntimeAssetCatalog.GetSprite("Assets/Portraits/Detective.png");
+            if (detPortrait != null)
+            {
+                investigadorPortrait = detPortrait;
+            }
+        }
     }
 
     private void Awake()

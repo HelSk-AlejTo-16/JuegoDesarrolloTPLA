@@ -17,6 +17,6 @@ MonoBehaviour:
   description: Botecito con gasolina y un trapo empapado. Ingrediente inflamable para armar una Molotov con Intelecto.
   placeholderColor: {r: 0.92, g: 0.38, b: 0.12, a: 1}
   icon: {fileID: -2142726812009774420, guid: 457c2ee17531fdd438a4408b2df779ed, type: 3}
-  category: 0
+  category: 1
   effectValue: 14
   healsPlayer: 0

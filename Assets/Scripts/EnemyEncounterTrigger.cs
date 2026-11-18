@@ -4,6 +4,7 @@ using UnityEngine;
 /// <summary>
 /// Sistema 4: Trigger en el mapa para iniciar el combate al acercarse a uno o varios lacayos/jefes.
 /// Soporta tanto 1 enemigo individual como múltiples enemigos en la misma pantalla de batalla.
+/// En el Nivel 2 soporta grupos dobles garantizados (forceDoubleEncounterGroup) y enlace con Level2BossController.
 /// </summary>
 [RequireComponent(typeof(BoxCollider2D))]
 public class EnemyEncounterTrigger : MonoBehaviour
@@ -14,6 +15,12 @@ public class EnemyEncounterTrigger : MonoBehaviour
 
     [Tooltip("Compatibilidad individual si 'enemies' está vacío.")]
     public EnemyData enemyData;
+
+    [Tooltip("Si está activo (ej. Nivel 2), garantiza que el encuentro instancie siempre un grupo de 2 enemigos simultáneos.")]
+    public bool forceDoubleEncounterGroup = false;
+
+    [Tooltip("Controlador opcional de mecánicas únicas del Jefe del Nivel 2.")]
+    public Level2BossController level2BossController;
 
     [Tooltip("Objetos del mapa (ej. los 2 lacayos) que se desactivarán al ganar el combate.")]
     public GameObject[] mapObjectsToDisableOnWin;
@@ -50,9 +57,12 @@ public class EnemyEncounterTrigger : MonoBehaviour
         "[ CAPÍTULO 2: LA GUARIDA DE LA MAFIA ]"
     };
 
-    [Header("Recompensa al Ganar el Combate (Arma u Objeto)")]
-    [Tooltip("Arma u objeto que se entrega automaticamente a Enrique al vencer este combate (ej. Cadena de Bicicleta).")]
+    [Header("Recompensa al Ganar el Combate (Arma u Objetos)")]
+    [Tooltip("Arma u objeto principal que se entrega automaticamente a Enrique al vencer este combate (ej. Cadena de Bicicleta).")]
     public ItemData rewardItemOnWin;
+
+    [Tooltip("Lista de objetos o materiales adicionales que se entregan al ganar (ej. Botellas Vacias, Gasolina, Cinta Canela al final del Nivel 1).")]
+    public List<InventorySlot> rewardItemsOnWin = new List<InventorySlot>();
 
     [TextArea(2, 4)]
     [Tooltip("Lineas de dialogo que explican la recompensa obtenida al vencer al enemigo.")]
@@ -94,6 +104,10 @@ public class EnemyEncounterTrigger : MonoBehaviour
             {
                 battleManager = FindAnyObjectByType<BattleManager>();
             }
+            if (battleManager == null)
+            {
+                battleManager = BattleManager.EnsureInScene();
+            }
 
             List<EnemyData> encounterList = new List<EnemyData>();
             if (enemies != null && enemies.Length > 0)
@@ -108,6 +122,11 @@ public class EnemyEncounterTrigger : MonoBehaviour
                 encounterList.Add(enemyData);
             }
 
+            if (forceDoubleEncounterGroup && !isBossEncounter && encounterList.Count == 1 && encounterList[0] != null)
+            {
+                encounterList.Add(encounterList[0]);
+            }
+
             if (battleManager == null || encounterList.Count == 0)
             {
                 Debug.LogWarning($"[EnemyEncounterTrigger] Falta asignar BattleManager o EnemyData en '{gameObject.name}'.");
@@ -115,6 +134,12 @@ public class EnemyEncounterTrigger : MonoBehaviour
             }
 
             hasTriggered = true;
+
+            if (level2BossController == null)
+            {
+                level2BossController = GetComponent<Level2BossController>();
+            }
+            battleManager.activeLevel2BossController = level2BossController;
 
             // 1. Bloquear el movimiento de Enrique en el mapa
             player.SetCanMove(false);
@@ -138,7 +163,8 @@ public class EnemyEncounterTrigger : MonoBehaviour
                 nextSceneName,
                 victoryNarrativeLines,
                 rewardItemOnWin,
-                rewardDialogueLines
+                rewardDialogueLines,
+                rewardItemsOnWin
             );
         }
     }

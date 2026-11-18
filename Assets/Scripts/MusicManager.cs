@@ -264,48 +264,48 @@ public class MusicManager : MonoBehaviour
 
     public void LoadClipsIfMissing()
     {
-#if UNITY_EDITOR
         if (menuMusic == null)
-            menuMusic = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Music/ChillMenu_Loopable.wav");
+            menuMusic = RuntimeAssetCatalog.GetAudioClip("Assets/Music/ChillMenu_Loopable.wav");
         if (explorationMusic == null)
-            explorationMusic = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Music/CrashingOut_Loopable.wav");
+            explorationMusic = RuntimeAssetCatalog.GetAudioClip("Assets/Music/CrashingOut_Loopable.wav");
         if (battleMusic == null)
-            battleMusic = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Music/CriticalTheme_Loopable.wav");
+            battleMusic = RuntimeAssetCatalog.GetAudioClip("Assets/Music/CriticalTheme_Loopable.wav");
 
         if (sfxAtaqueAliadoPropio == null)
-            sfxAtaqueAliadoPropio = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>(PathSfxAtaqueAliadoPropio);
+            sfxAtaqueAliadoPropio = RuntimeAssetCatalog.GetAudioClip(PathSfxAtaqueAliadoPropio);
         if (sfxAtaqueEnemigo == null)
-            sfxAtaqueEnemigo = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>(PathSfxAtaqueEnemigo);
+            sfxAtaqueEnemigo = RuntimeAssetCatalog.GetAudioClip(PathSfxAtaqueEnemigo);
+#if UNITY_EDITOR
         if (sfxAtaqueJefe == null)
             sfxAtaqueJefe = LoadFirstAudioClipInFolderEditor(FolderSfxAtaqueJefe);
+#endif
         if (sfxBotonEnCombate == null)
-            sfxBotonEnCombate = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>(PathSfxBotonEnCombate);
+            sfxBotonEnCombate = RuntimeAssetCatalog.GetAudioClip(PathSfxBotonEnCombate);
         if (sfxBotonConfirmacionDialogo == null)
-            sfxBotonConfirmacionDialogo = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>(PathSfxBotonConfirmacionDialogo);
+            sfxBotonConfirmacionDialogo = RuntimeAssetCatalog.GetAudioClip(PathSfxBotonConfirmacionDialogo);
         if (sfxCurarse == null)
-            sfxCurarse = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>(PathSfxCurarse);
+            sfxCurarse = RuntimeAssetCatalog.GetAudioClip(PathSfxCurarse);
         if (sfxEfecto == null)
-            sfxEfecto = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>(PathSfxEfecto);
+            sfxEfecto = RuntimeAssetCatalog.GetAudioClip(PathSfxEfecto);
         if (sfxEsquive == null)
-            sfxEsquive = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>(PathSfxEsquive);
+            sfxEsquive = RuntimeAssetCatalog.GetAudioClip(PathSfxEsquive);
         if (sfxFuego == null)
-            sfxFuego = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>(PathSfxFuego);
+            sfxFuego = RuntimeAssetCatalog.GetAudioClip(PathSfxFuego);
 
         if (victoryMenuMusic == null)
-            victoryMenuMusic = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>(PathMusicVictoryMenu);
+            victoryMenuMusic = RuntimeAssetCatalog.GetAudioClip(PathMusicVictoryMenu);
         if (gameOverMusic == null)
-            gameOverMusic = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>(PathMusicGameOver);
+            gameOverMusic = RuntimeAssetCatalog.GetAudioClip(PathMusicGameOver);
         if (sfxDanoFinalMuerte == null)
-            sfxDanoFinalMuerte = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>(PathSfxDanoFinalMuerte);
+            sfxDanoFinalMuerte = RuntimeAssetCatalog.GetAudioClip(PathSfxDanoFinalMuerte);
         if (sfxEncuentro == null)
-            sfxEncuentro = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>(PathSfxEncuentro);
+            sfxEncuentro = RuntimeAssetCatalog.GetAudioClip(PathSfxEncuentro);
         if (sfxPasos == null)
-            sfxPasos = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>(PathSfxPasos);
+            sfxPasos = RuntimeAssetCatalog.GetAudioClip(PathSfxPasos);
         if (sfxSubidaDeNivel == null)
-            sfxSubidaDeNivel = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>(PathSfxSubidaDeNivel);
+            sfxSubidaDeNivel = RuntimeAssetCatalog.GetAudioClip(PathSfxSubidaDeNivel);
         if (sfxMuerteEnemigo == null)
-            sfxMuerteEnemigo = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>(PathSfxMuerteEnemigo);
-#endif
+            sfxMuerteEnemigo = RuntimeAssetCatalog.GetAudioClip(PathSfxMuerteEnemigo);
 
         // Copiar referencias faltantes desde el prefab en Resources/MusicManager si una instancia de escena no las tenía serializadas
         GameObject resPrefab = Resources.Load<GameObject>("MusicManager");
@@ -456,6 +456,11 @@ public class MusicManager : MonoBehaviour
     {
         LoadClipsIfMissing();
         PlaySFX(overrideClip != null ? overrideClip : sfxEfecto, 1.0f, 1.0f);
+    }
+
+    public void PlayRecogerObjetoSfx(AudioClip overrideClip = null)
+    {
+        PlayEfectoSfx(overrideClip);
     }
 
     public void PlayEsquiveSfx(AudioClip overrideClip = null)

@@ -4,7 +4,10 @@ public enum EnemyType
 {
     LacayoRapidoDebil,
     LacayoLentoFuerte,
-    JefeElCalacas
+    JefeElCalacas,
+    SicarioCuchilleroNivel2,
+    SicarioVerdugoNivel2,
+    JefeNivel2Capataz
 }
 
 /// <summary>
@@ -24,6 +27,16 @@ public class EnemyData : ScriptableObject
 
     [Tooltip("Define su velocidad en el orden de turno contra la Motricidad de Enrique.")]
     public int motricidad = 10;
+
+    [Header("Recompensa de Experiencia y Ataques")]
+    [Tooltip("Cantidad de EXP otorgada al derrotar a este enemigo (0 usa el valor base del nivel).")]
+    public int EXP_Reward = 45;
+
+    [Tooltip("Nombre del ataque principal del enemigo mostrado en el registro de combate.")]
+    public string primaryAttackName = "Golpe Callejero";
+
+    [Tooltip("Nombre del ataque especial/secundario del enemigo.")]
+    public string secondaryAttackName = "Embate Brutal";
 
     [Header("Representación Visual y Animaciones")]
     [Tooltip("Color sólido para representarlo si no hay sprite.")]

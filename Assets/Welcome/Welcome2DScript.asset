@@ -11,4 +11,4 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 82a8d20c41f345e382312ee1050e7ce2, type: 3}
   m_Name: Welcome2DScript
-  m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.Welcome2DScript
+  m_EditorClassIdentifier: Unity.2D.Welcome::Unity.U2D.Welcome.Welcome2DScript

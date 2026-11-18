@@ -163,6 +163,8 @@ public class PlayerLevelUpAndStatsUI : MonoBehaviour
             BuildCompleteUI();
         }
 
+        SetupButtonListeners();
+
         if (playerStats != null)
         {
             playerStats.OnStatsChanged -= RefreshUI;
@@ -172,8 +174,38 @@ public class PlayerLevelUpAndStatsUI : MonoBehaviour
         RefreshUI();
     }
 
+    /// <summary>
+    /// Re-vincula los listeners de botones estáticos en InitializeIfNeeded() para que sigan funcionando
+    /// incluso cuando el Canvas y modalPanelRoot ya vienen serializados en la escena.
+    /// </summary>
+    private void SetupButtonListeners()
+    {
+        if (closeOrContinueButton != null)
+        {
+            closeOrContinueButton.onClick.RemoveAllListeners();
+            closeOrContinueButton.onClick.AddListener(OnCloseOrContinueClicked);
+        }
+
+        if (skillCards == null) return;
+
+        for (int i = 0; i < skillCards.Length; i++)
+        {
+            SkillCardUI card = skillCards[i];
+            if (card == null || card.upgradeButton == null) continue;
+
+            SkillVoiceType capturedVoice = card.voiceType;
+            card.upgradeButton.onClick.RemoveAllListeners();
+            card.upgradeButton.onClick.AddListener(() => OnUpgradeSkillClicked(capturedVoice));
+        }
+    }
+
     private void FetchPortraitsAndFontIfMissing()
     {
+        if (customFont == null)
+        {
+            customFont = PlayerHealthBarUI.GetCleanPixelFont();
+        }
+
         if (battleManager != null)
         {
             if (corporeoPortrait == null) corporeoPortrait = battleManager.corporeoPortrait;
@@ -189,13 +221,6 @@ public class PlayerLevelUpAndStatsUI : MonoBehaviour
             if (intelectoPortrait == null) intelectoPortrait = exp.intelectoPortrait;
             if (motricidadPortrait == null) motricidadPortrait = exp.motricidadPortrait;
             if (mundoInternoPortrait == null) mundoInternoPortrait = exp.mundoInternoPortrait;
-            if (customFont == null && exp.speakerAndText != null) customFont = exp.speakerAndText.font;
-        }
-
-        if (customFont == null)
-        {
-            TextMeshProUGUI anyTmp = FindAnyObjectByType<TextMeshProUGUI>(FindObjectsInactive.Include);
-            if (anyTmp != null) customFont = anyTmp.font;
         }
     }
 
@@ -323,15 +348,23 @@ public class PlayerLevelUpAndStatsUI : MonoBehaviour
         if (feedbackBannerText != null && playerStats != null)
         {
             int pts = playerStats.availableSkillPoints;
+            DetectiveStats detStats = DetectiveStats.EnsureInScene();
+            string partyTag = "";
+            if (detStats != null && detStats.hasDetectiveInParty)
+            {
+                partyTag = detStats.IsAlive 
+                    ? $" | <color=#90CAF9>DET. VARGAS:</color> Nivel {detStats.Nivel} ({detStats.HP_Actual}/{detStats.HP_Max} HP, {detStats.municionActual}/{detStats.municionMaxima} Balas)"
+                    : $" | <color=#FF7070>DET. VARGAS:</color> Caído (Revivirá con 1 HP en próximo combate)";
+            }
+
             if (levelsGained > 0 || pts > 0)
             {
-                feedbackBannerText.text = $"¡COMBATE FINALIZADO (+{xpEarned} EXP)! HAS SUBIDO AL NIVEL {playerStats.level}. Elige qué habilidad subir ({pts} pto(s)):";
+                feedbackBannerText.text = $"¡VICTORIA! (+{xpEarned} EXP)";
                 feedbackBannerText.color = goldHighlightColor;
             }
             else
             {
-                int remainingXp = Mathf.Max(0, playerStats.xpToNextLevel - playerStats.currentXP);
-                feedbackBannerText.text = $"¡COMBATE FINALIZADO (+{xpEarned} EXP)! Faltan {remainingXp} EXP para alcanzar el Nivel {playerStats.level + 1} y poder subir una habilidad.";
+                feedbackBannerText.text = $"+{xpEarned} EXP";
                 feedbackBannerText.color = new Color(0.55f, 0.92f, 0.68f, 1f);
             }
         }
@@ -488,20 +521,18 @@ public class PlayerLevelUpAndStatsUI : MonoBehaviour
             {
                 if (lastCombatLevelsGained > 0 || pts > 0)
                 {
-                    headerTitleText.text = pts > 0
-                        ? $"¡COMBATE FINALIZADO! — ¡SUBISTE AL NIVEL {playerStats.level}! ELIGE QUÉ HABILIDAD SUBIR"
-                        : $"¡COMBATE FINALIZADO! — NIVEL {playerStats.level} (HABILIDAD MEJORADA)";
+                    headerTitleText.text = "¡SUBIDA DE NIVEL! — ¡VIDA RESTAURADA AL 100%!";
                     headerTitleText.color = goldHighlightColor;
                 }
                 else
                 {
-                    headerTitleText.text = $"¡COMBATE FINALIZADO! — RESUMEN DE ESTADÍSTICAS (NIVEL {playerStats.level})";
+                    headerTitleText.text = "¡VICTORIA!";
                     headerTitleText.color = new Color(0.45f, 0.95f, 0.62f, 1f);
                 }
             }
             else
             {
-                headerTitleText.text = $"ESTADÍSTICAS Y HABILIDADES DE ENRIQUE BOSQUES (NIVEL {playerStats.level})";
+                headerTitleText.text = "ESTADÍSTICAS Y HABILIDADES";
                 headerTitleText.color = new Color(0.94f, 0.92f, 0.88f, 1f);
             }
         }
@@ -509,10 +540,19 @@ public class PlayerLevelUpAndStatsUI : MonoBehaviour
         if (subHeaderSummaryText != null)
         {
             string ptsTag = pts > 0
-                ? $"<color=#FFD84D><b>PUNTOS PARA SUBIR HABILIDAD: {pts}</b></color>"
-                : "<color=#A0A6B2>PUNTOS DISPONIBLES: 0 (Sube de nivel para mejorar)</color>";
+                ? $"<color=#FFD84D>PUNTOS: {pts}</color>"
+                : "<color=#A0A6B2>0 PUNTOS</color>";
 
-            subHeaderSummaryText.text = $"SALUD: <color=#52E06B>{playerStats.currentHP} / {playerStats.maxHP} HP</color>   |   COMBATES GANADOS: {playerStats.battlesWonCount}   |   {ptsTag}";
+            DetectiveStats detStats = DetectiveStats.EnsureInScene();
+            string partyStatus = "";
+            if (detStats != null && detStats.hasDetectiveInParty)
+            {
+                partyStatus = detStats.IsAlive
+                    ? $"   |   VARGAS: <color=#52E06B>{detStats.HP_Actual}/{detStats.HP_Max} HP</color>"
+                    : $"   |   VARGAS: <color=#FF5555>0/{detStats.HP_Max} HP</color>";
+            }
+
+            subHeaderSummaryText.text = $"ENRIQUE: <color=#52E06B>{playerStats.currentHP}/{playerStats.maxHP} HP</color>   |   {ptsTag}{partyStatus}";
         }
 
         if (xpBarFillRect != null)
@@ -522,7 +562,7 @@ public class PlayerLevelUpAndStatsUI : MonoBehaviour
         }
         if (xpBarText != null)
         {
-            xpBarText.text = $"EXPERIENCIA: {playerStats.currentXP} / {playerStats.xpToNextLevel} EXP (Siguiente Nivel: {playerStats.level + 1})";
+            xpBarText.text = $"EXP: {playerStats.currentXP} / {playerStats.xpToNextLevel}";
         }
 
         // 3. Actualizar las 4 Tarjetas de Habilidades
@@ -542,8 +582,8 @@ public class PlayerLevelUpAndStatsUI : MonoBehaviour
                 bool canContinue = (pts <= 0);
                 closeOrContinueButton.interactable = canContinue;
                 closeOrContinueButtonText.text = canContinue
-                    ? "FINALIZAR COMBATE Y CONTINUAR [ESPACIO / CLIC]"
-                    : $"ELIGE QUÉ HABILIDAD SUBIR ARRIBA PARA CONTINUAR ({pts} PTO PENDIENTE)";
+                    ? "CONTINUAR [ESPACIO]"
+                    : $"ASIGNA EL PUNTO DE HABILIDAD ({pts} PENDIENTE)";
 
                 if (closeOrContinueBorderImage != null)
                 {
@@ -553,13 +593,15 @@ public class PlayerLevelUpAndStatsUI : MonoBehaviour
             else
             {
                 closeOrContinueButton.interactable = true;
-                closeOrContinueButtonText.text = "CERRAR MENÚ DE ESTADÍSTICAS [TAB / ESC]";
+                closeOrContinueButtonText.text = "CERRAR [TAB / ESC]";
                 if (closeOrContinueBorderImage != null)
                 {
                     closeOrContinueBorderImage.color = new Color(0.55f, 0.58f, 0.65f, 1f);
                 }
             }
         }
+
+        EnsureAllTextsFontAndClean();
     }
 
     private void UpdateSingleSkillCard(SkillCardUI card, bool hasSkillPoints)
@@ -583,9 +625,9 @@ public class PlayerLevelUpAndStatsUI : MonoBehaviour
                 int wAtk = playerStats.GetEquippedWeaponAttackBonus();
                 string wAtkNote = wAtk > 0 ? $" <color=#FFD84D>(+{wAtk} por {playerStats.GetEquippedWeaponName()} = {playerStats.GetTotalPhysicalAttack()} total)</color>" : "";
                 currentEffects =
-                    $"• <b>Daño Físico Directo:</b> {playerStats.corporeo} pts base{wAtkNote}\n" +
-                    $"• <b>Salud Máxima:</b> {playerStats.maxHP} HP totales\n" +
-                    $"• <b>Rol:</b> Fuerza bruta y resistencia física";
+                    $"- <b>Daño Físico Directo:</b> {playerStats.corporeo} pts base{wAtkNote}\n" +
+                    $"- <b>Salud Máxima:</b> {playerStats.maxHP} HP totales\n" +
+                    $"- <b>Rol:</b> Fuerza bruta y resistencia física";
                 nextPreview = "Al subir (+1): <color=#66FF88>+4 Daño Físico y +15 HP Máx (y cura +15 HP)</color>";
                 break;
 
@@ -598,9 +640,9 @@ public class PlayerLevelUpAndStatsUI : MonoBehaviour
                 int molotovDmg = 30 + playerStats.GetIntelectoDamageBonus();
                 int vendajeHeal = 50 + playerStats.GetIntelectoHealBonus();
                 currentEffects =
-                    $"• <b>Daño Molotov Improvisada:</b> {molotovDmg} (ignora defensa)\n" +
-                    $"• <b>Curación Vendaje Rudo:</b> +{vendajeHeal} HP\n" +
-                    $"• <b>Bono Ítems Curativos:</b> +{playerStats.GetIntelectoHealBonus()} HP extra";
+                    $"- <b>Daño Molotov Improvisada:</b> {molotovDmg} (ignora defensa)\n" +
+                    $"- <b>Curación Vendaje Rudo:</b> +{vendajeHeal} HP\n" +
+                    $"- <b>Bono Ítems Curativos:</b> +{playerStats.GetIntelectoHealBonus()} HP extra";
                 nextPreview = "Al subir (+1): <color=#66FF88>+4 Intelecto (+12 daño Molotov y +12 curación)</color>";
                 break;
 
@@ -613,9 +655,9 @@ public class PlayerLevelUpAndStatsUI : MonoBehaviour
                 int wMot = playerStats.GetEquippedWeaponMotricidadBonus();
                 string wMotNote = wMot != 0 ? $" <color=#FFD84D>({(wMot > 0 ? "+" : "")}{wMot} arma = {playerStats.GetEffectiveMotricidad()})</color>" : "";
                 currentEffects =
-                    $"• <b>Velocidad de Turno:</b> {playerStats.motricidad}{wMotNote} (actúa antes en la ronda)\n" +
-                    $"• <b>Probabilidad de Esquive:</b> {playerStats.GetDisplayDodgePercentage()}% base\n" +
-                    $"• <b>Reducción en Guardia:</b> -{playerStats.GetDisplayGuardReductionPercentage()}% daño recibido";
+                    $"- <b>Velocidad de Turno:</b> {playerStats.motricidad}{wMotNote} (actúa antes en la ronda)\n" +
+                    $"- <b>Probabilidad de Esquive:</b> {playerStats.GetDisplayDodgePercentage()}% base\n" +
+                    $"- <b>Reducción en Guardia:</b> -{playerStats.GetDisplayGuardReductionPercentage()}% daño recibido";
                 nextPreview = "Al subir (+1): <color=#66FF88>+4 Velocidad, +24% Esquive y +5% Guardia</color>";
                 break;
 
@@ -628,9 +670,9 @@ public class PlayerLevelUpAndStatsUI : MonoBehaviour
                 int psyDmg = playerStats.GetDelirioPsychicDamage();
                 string delirioDesc = psyDmg > 0 ? $"Confunde 1 turno + {psyDmg} daño psíquico" : "Confunde al enemigo (pierde 1 turno)";
                 currentEffects =
-                    $"• <b>Insultar:</b> Reduce -{playerStats.GetInsultarDebuffAmount()} ATQ al enemigo\n" +
-                    $"• <b>Animarse:</b> Otorga +{playerStats.GetAnimarseBuffAmount()} ATQ a tu próximo golpe\n" +
-                    $"• <b>Delirio Psíquico:</b> {delirioDesc}";
+                    $"- <b>Insultar:</b> Reduce -{playerStats.GetInsultarDebuffAmount()} ATQ al enemigo\n" +
+                    $"- <b>Animarse:</b> Otorga +{playerStats.GetAnimarseBuffAmount()} ATQ a tu próximo golpe\n" +
+                    $"- <b>Delirio Psíquico:</b> {delirioDesc}";
                 nextPreview = "Al subir (+1): <color=#66FF88>-3 ATQ en Insultar, +4 ATQ en Animarse y +8 daño en Delirio</color>";
                 break;
         }
@@ -663,24 +705,32 @@ public class PlayerLevelUpAndStatsUI : MonoBehaviour
 
         if (card.titleAndStatText != null)
         {
+            card.titleAndStatText.font = customFont;
             card.titleAndStatText.text = $"{voiceTitle}: <color=#FFFFFF>{statVal}</color>";
             card.titleAndStatText.color = themeColor;
+            PlayerHealthBarUI.EnsureCleanPixelFont(card.titleAndStatText);
         }
 
         if (card.rankBadgeText != null)
         {
+            card.rankBadgeText.font = customFont;
             card.rankBadgeText.text = rank > 0 ? $"MEJORAS: +{rank}" : "NIVEL BASE";
             card.rankBadgeText.color = rank > 0 ? goldHighlightColor : new Color(0.65f, 0.68f, 0.72f, 1f);
+            PlayerHealthBarUI.EnsureCleanPixelFont(card.rankBadgeText);
         }
 
         if (card.currentEffectsText != null)
         {
+            card.currentEffectsText.font = customFont;
             card.currentEffectsText.text = currentEffects;
+            PlayerHealthBarUI.EnsureCleanPixelFont(card.currentEffectsText);
         }
 
         if (card.nextUpgradePreviewText != null)
         {
+            card.nextUpgradePreviewText.font = customFont;
             card.nextUpgradePreviewText.text = nextPreview;
+            PlayerHealthBarUI.EnsureCleanPixelFont(card.nextUpgradePreviewText);
         }
 
         if (card.upgradeButton != null)
@@ -695,10 +745,12 @@ public class PlayerLevelUpAndStatsUI : MonoBehaviour
 
         if (card.upgradeButtonLabel != null)
         {
+            card.upgradeButtonLabel.font = customFont;
             card.upgradeButtonLabel.text = hasSkillPoints
                 ? $"▲ SUBIR {voiceTitle} (+1 PTO)"
                 : "DISPONIBLE AL SUBIR DE NIVEL";
             card.upgradeButtonLabel.color = hasSkillPoints ? goldHighlightColor : new Color(0.50f, 0.52f, 0.56f, 1f);
+            PlayerHealthBarUI.EnsureCleanPixelFont(card.upgradeButtonLabel);
         }
     }
 
@@ -800,7 +852,6 @@ public class PlayerLevelUpAndStatsUI : MonoBehaviour
         GameObject closeInner = CreatePanel("InnerBlack", closeBorder.transform, new Vector2(0.006f, 0.08f), new Vector2(0.994f, 0.92f), new Color(0.07f, 0.08f, 0.10f, 1f));
         closeOrContinueButton = closeBorder.AddComponent<Button>();
         closeOrContinueButton.targetGraphic = closeInner.GetComponent<Image>();
-        closeOrContinueButton.onClick.AddListener(OnCloseOrContinueClicked);
 
         closeOrContinueButtonText = CreateText("CloseButtonText", closeInner.transform, "CERRAR MENÚ [TAB / ESC]", 24, TextAlignmentOptions.Center, Color.white);
         closeOrContinueButtonText.fontStyle = FontStyles.Bold;
@@ -851,9 +902,6 @@ public class PlayerLevelUpAndStatsUI : MonoBehaviour
         card.upgradeButton = upgBorder.AddComponent<Button>();
         card.upgradeButton.targetGraphic = upgInner.GetComponent<Image>();
 
-        SkillVoiceType capturedVoice = voice;
-        card.upgradeButton.onClick.AddListener(() => OnUpgradeSkillClicked(capturedVoice));
-
         card.upgradeButtonLabel = CreateText("UpgradeLabel", upgInner.transform, "▲ SUBIR HABILIDAD (+1 PTO)", 20, TextAlignmentOptions.Center, goldHighlightColor);
         card.upgradeButtonLabel.fontStyle = FontStyles.Bold;
         SetAnchors(card.upgradeButtonLabel.rectTransform, Vector2.zero, Vector2.one);
@@ -877,17 +925,40 @@ public class PlayerLevelUpAndStatsUI : MonoBehaviour
         GameObject go = new GameObject(name, typeof(RectTransform), typeof(TextMeshProUGUI));
         go.transform.SetParent(parent, false);
         TextMeshProUGUI tmp = go.GetComponent<TextMeshProUGUI>();
-        if (customFont != null)
+        if (customFont == null)
         {
-            tmp.font = customFont;
+            customFont = PlayerHealthBarUI.GetCleanPixelFont();
         }
+        tmp.font = customFont;
         tmp.text = content;
         tmp.fontSize = fontSize;
         tmp.alignment = alignment;
         tmp.color = color;
+        tmp.fontStyle = FontStyles.Normal;
+        tmp.fontWeight = FontWeight.Regular;
         tmp.textWrappingMode = TextWrappingModes.Normal;
         tmp.overflowMode = TextOverflowModes.Overflow;
+        PlayerHealthBarUI.EnsureCleanPixelFont(tmp);
         return tmp;
+    }
+
+    public void EnsureAllTextsFontAndClean()
+    {
+        if (customFont == null) customFont = PlayerHealthBarUI.GetCleanPixelFont();
+        TextMeshProUGUI[] tmps = GetComponentsInChildren<TextMeshProUGUI>(true);
+        if (tmps != null)
+        {
+            for (int i = 0; i < tmps.Length; i++)
+            {
+                if (tmps[i] != null)
+                {
+                    tmps[i].font = customFont;
+                    tmps[i].fontStyle = FontStyles.Normal;
+                    tmps[i].fontWeight = FontWeight.Regular;
+                    PlayerHealthBarUI.EnsureCleanPixelFont(tmps[i]);
+                }
+            }
+        }
     }
 
     private static void SetAnchors(RectTransform rt, Vector2 min, Vector2 max)

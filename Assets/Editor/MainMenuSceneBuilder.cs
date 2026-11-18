@@ -149,7 +149,8 @@ public static class MainMenuSceneBuilder
         string[] gameplayScenes = new string[]
         {
             "Assets/Scenes/01_Nivel1_SantaFelipina.unity",
-            "Assets/Scenes/02_Nivel2_Guarida.unity"
+            "Assets/Scenes/02_Nivel2_Guarida.unity",
+            "Assets/Scenes/Nivel_3.unity"
         };
 
         string originalScenePath = SceneManager.GetActiveScene().path;

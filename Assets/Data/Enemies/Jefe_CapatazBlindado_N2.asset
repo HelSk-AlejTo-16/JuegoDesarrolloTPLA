@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cae795ed11ec39345bcc9a2589328c52, type: 3}
+  m_Name: Jefe_CapatazBlindado_N2
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  enemyName: El Capataz Punk
+  enemyType: 5
+  maxHP: 185
+  attack: 22
+  defense: 8
+  motricidad: 12
+  EXP_Reward: 260
+  primaryAttackName: Gancho Callejero Punk
+  secondaryAttackName: "R\xE1faga de Nudillos"
+  placeholderColor: {r: 0.95, g: 0.35, b: 0.2, a: 1}
+  enemySprite: {fileID: 21300000, guid: bfd7388d029e463a9aff19c1a69363e4, type: 3}
+  animatorController: {fileID: 9100000, guid: ed1df1b15c727b14a8ccf5666d68df6c, type: 2}
+  idleFrames:
+  - {fileID: 21300000, guid: bfd7388d029e463a9aff19c1a69363e4, type: 3}
+  - {fileID: 21300000, guid: 2281094f37754c10beaa7866a2bb8cbc, type: 3}
+  - {fileID: 21300000, guid: 3f5988e35d9c453cae301864e934694f, type: 3}
+  - {fileID: 21300000, guid: 092a49960ac0425a84f7bf1048ecc81f, type: 3}
+  idleAltFrames:
+  - {fileID: 21300000, guid: bfd7388d029e463a9aff19c1a69363e4, type: 3}
+  - {fileID: 21300000, guid: 2281094f37754c10beaa7866a2bb8cbc, type: 3}
+  - {fileID: 21300000, guid: 3f5988e35d9c453cae301864e934694f, type: 3}
+  - {fileID: 21300000, guid: 092a49960ac0425a84f7bf1048ecc81f, type: 3}
+  walkFrames:
+  - {fileID: 21300000, guid: 8e69171f2cf4429c96650fb0e75bb502, type: 3}
+  - {fileID: 21300000, guid: f09eafc21bcc448eaa071366194037f0, type: 3}
+  - {fileID: 21300000, guid: be7b0a2f9d314dad8f11440977968ccc, type: 3}
+  - {fileID: 21300000, guid: 582bf559b2a54b87b7e64842eef2f79b, type: 3}
+  runFrames:
+  - {fileID: 21300000, guid: 8e69171f2cf4429c96650fb0e75bb502, type: 3}
+  - {fileID: 21300000, guid: f09eafc21bcc448eaa071366194037f0, type: 3}
+  - {fileID: 21300000, guid: be7b0a2f9d314dad8f11440977968ccc, type: 3}
+  - {fileID: 21300000, guid: 582bf559b2a54b87b7e64842eef2f79b, type: 3}
+  attackFrames:
+  - {fileID: 21300000, guid: 7f4034fb918443619fc43b3b08e6e7a6, type: 3}
+  - {fileID: 21300000, guid: c32f25b8f55d42a2a261d54494f31f95, type: 3}
+  - {fileID: 21300000, guid: ce2d07957d714d678969dde7e0dae27b, type: 3}
+  attack2Frames:
+  - {fileID: 21300000, guid: 7f4034fb918443619fc43b3b08e6e7a6, type: 3}
+  - {fileID: 21300000, guid: c32f25b8f55d42a2a261d54494f31f95, type: 3}
+  - {fileID: 21300000, guid: ce2d07957d714d678969dde7e0dae27b, type: 3}
+  attack3Frames: []
+  specialFrames: []
+  hurtFrames:
+  - {fileID: 21300000, guid: 67fa7b9c9aa64b029f09a4ed5a1b5f37, type: 3}
+  - {fileID: 21300000, guid: 93ca181eec9d49fe99dc40bd8911870e, type: 3}
+  - {fileID: 21300000, guid: 2b47b10740694f9db9a6616b93dcc6da, type: 3}
+  - {fileID: 21300000, guid: f58955956ec74c9ba678d73a8a0fa0e8, type: 3}
+  deadFrames:
+  - {fileID: 21300000, guid: 2b47b10740694f9db9a6616b93dcc6da, type: 3}
+  - {fileID: 21300000, guid: f58955956ec74c9ba678d73a8a0fa0e8, type: 3}
+  halfHealthDialogueLines:
+  - "EL CAPATAZ PUNK: \"\xA1No me van a tumbar unos novatos! \xA1Les romper\xE9 la cara con mis propios nudillos!\""
+  - "INVESTIGADOR PRIVADO: \"\xA1Cuidado, Enrique! Cuando enfurece aumenta la velocidad de sus golpes. \xA1Aprovecha cuando baje la guardia tras su combo!\""

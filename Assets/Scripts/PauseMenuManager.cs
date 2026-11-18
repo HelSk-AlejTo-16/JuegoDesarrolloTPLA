@@ -381,6 +381,11 @@ public class PauseMenuManager : MonoBehaviour
         Time.timeScale = 1f;
         PlayConfirmSfx();
 
+        PlayerStats.ResetSavedProgression();
+        InventoryManager.ResetSavedInventory();
+        DetectiveStats.ResetSavedProgression();
+        BattleManager.ResetStarterWeaponAwarded();
+
         if (MusicManager.Instance != null)
         {
             MusicManager.Instance.PlayMenuMusic(instant: true);
@@ -661,6 +666,9 @@ public class PauseMenuManager : MonoBehaviour
 
         quitGameButton = CreateNoirButton("QuitGameButton", leftCol.transform, "[ SALIR DEL JUEGO ]", MatteBlack, new Color(0.50f, 0.15f, 0.15f, 1f), 24, font);
         SetAnchors(quitGameButton.GetComponent<RectTransform>(), new Vector2(0.05f, 0.02f), new Vector2(0.95f, 0.11f));
+#if UNITY_WEBGL && !UNITY_EDITOR
+        quitGameButton.gameObject.SetActive(false);
+#endif
 
         // 6. Columna Derecha: Contenido de Pestañas (X: 0.38 a 0.97)
         GameObject rightColBorder = CreatePanel("RightContentBorder", windowInner.transform, SubtleBorder);
@@ -789,10 +797,8 @@ public class PauseMenuManager : MonoBehaviour
 
     private static TMP_FontAsset LoadPixelFont()
     {
-#if UNITY_EDITOR
-        TMP_FontAsset font = UnityEditor.AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Fonts/Pixelzone_TMP.asset");
+        TMP_FontAsset font = RuntimeAssetCatalog.GetTMPFont("Assets/Fonts/Pixelzone_TMP.asset");
         if (font != null) return font;
-#endif
         return Resources.Load<TMP_FontAsset>("Pixelzone_TMP");
     }
 
