@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -82,6 +83,7 @@ public class PlayerHealthBarUI : MonoBehaviour
     private int lastRecordedMaxHP = -1;
     private bool lastDefendingState = false;
     private int lastAttackBuff = 0;
+    private string currentCharacterName = null;
     private Coroutine drainCoroutine;
     private float currentVisualFill = 1f;
     private float damageVisualFill = 1f;
@@ -133,9 +135,27 @@ public class PlayerHealthBarUI : MonoBehaviour
 
         if (!autoSyncWithPlayerStats || playerStats == null) return;
 
+        // Si está mostrando la vida de otro miembro del grupo (ej. Detective Vargas), no sobreescribir con Enrique
+        if (!string.IsNullOrEmpty(currentCharacterName) && !currentCharacterName.StartsWith("ENRIQUE", StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
         if (playerStats.currentHP != lastRecordedHP || playerStats.maxHP != lastRecordedMaxHP)
         {
             UpdateHealth(playerStats.currentHP, playerStats.maxHP, lastDefendingState, lastAttackBuff);
+        }
+    }
+
+    private void LateUpdate()
+    {
+        // Asegura que la barra visual refleje exactamente la salud real si no hay animación activa
+        if (drainCoroutine == null && lastRecordedHP >= 0 && lastRecordedMaxHP > 0)
+        {
+            float expectedFill = Mathf.Clamp01((float)lastRecordedHP / (float)lastRecordedMaxHP);
+            currentVisualFill = expectedFill;
+            damageVisualFill = expectedFill;
+            ApplyFillToRects(expectedFill, expectedFill);
         }
     }
 
@@ -196,6 +216,15 @@ public class PlayerHealthBarUI : MonoBehaviour
         }
     }
 
+    public static TMP_FontAsset GetCleanPixelFont()
+    {
+        TMP_FontAsset font = RuntimeAssetCatalog.GetTMPFont("Assets/Fonts/Pixelzone_TMP.asset");
+        if (font != null) return font;
+        TMP_FontAsset resFont = Resources.Load<TMP_FontAsset>("Pixelzone_TMP");
+        if (resFont != null) return resFont;
+        return TMP_Settings.defaultFontAsset;
+    }
+
     public static void EnsureCleanPixelFont(TMP_Text textComp)
     {
         if (textComp == null) return;
@@ -205,9 +234,10 @@ public class PlayerHealthBarUI : MonoBehaviour
         textComp.fontWeight = FontWeight.Regular;
 
         TMP_FontAsset font = textComp.font;
-        if (font == null)
+        if (font == null || font.name.Contains("LiberationSans") || !font.name.Contains("Pixelzone"))
         {
-            font = TMP_Settings.defaultFontAsset;
+            font = GetCleanPixelFont();
+            textComp.font = font;
         }
 
         if (font != null)
@@ -265,12 +295,10 @@ public class PlayerHealthBarUI : MonoBehaviour
         }
 
         Font sourceTTF = font.sourceFontFile;
-#if UNITY_EDITOR
         if (sourceTTF == null)
         {
-            sourceTTF = AssetDatabase.LoadAssetAtPath<Font>("Assets/Fonts/Pixelzone_Font_1_10/Pixelzone.ttf");
+            sourceTTF = RuntimeAssetCatalog.GetFont("Assets/Fonts/Pixelzone_Font_1_10/Pixelzone.ttf");
         }
-#endif
 
         // Intentar reconstruir el propio asset si tiene su fuente TTF asignada
         if (sourceTTF != null)
@@ -351,8 +379,13 @@ public class PlayerHealthBarUI : MonoBehaviour
     /// Actualiza la barra de vida de forma visual, ejecutando una animación dinámica tanto cuando
     /// la vida baja (daño con rastro rojo) como cuando la vida sube (curación con destello verde).
     /// </summary>
-    public void UpdateHealth(int currentHP, int maxHP, bool isDefending = false, int attackBuff = 0)
+    public void UpdateHealth(int currentHP, int maxHP, bool isDefending = false, int attackBuff = 0, string characterName = null)
     {
+        if (characterName != null)
+        {
+            currentCharacterName = characterName;
+        }
+
         maxHP = Mathf.Max(1, maxHP);
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
 
@@ -364,7 +397,7 @@ public class PlayerHealthBarUI : MonoBehaviour
 
         if (lastRecordedHP < 0)
         {
-            SetHealthInstant(currentHP, maxHP, isDefending, attackBuff);
+            SetHealthInstant(currentHP, maxHP, isDefending, attackBuff, characterName);
             return;
         }
 
@@ -377,6 +410,7 @@ public class PlayerHealthBarUI : MonoBehaviour
             // Solo cambiaron estados (ej. Guardia o Buff de Ataque)
             UpdateTexts(currentHP, maxHP, isDefending, attackBuff);
             UpdateFillColor(currentVisualFill);
+            ApplyFillToRects(currentVisualFill, damageVisualFill);
             return;
         }
 
@@ -398,8 +432,13 @@ public class PlayerHealthBarUI : MonoBehaviour
     /// <summary>
     /// Configura la barra inmediatamente sin transición animada (ej. al inicio de la escena).
     /// </summary>
-    public void SetHealthInstant(int currentHP, int maxHP, bool isDefending = false, int attackBuff = 0)
+    public void SetHealthInstant(int currentHP, int maxHP, bool isDefending = false, int attackBuff = 0, string characterName = null)
     {
+        if (characterName != null)
+        {
+            currentCharacterName = characterName;
+        }
+
         if (drainCoroutine != null)
         {
             StopCoroutine(drainCoroutine);
@@ -668,7 +707,14 @@ public class PlayerHealthBarUI : MonoBehaviour
         if (hpText != null)
         {
             hpText.fontStyle = FontStyles.Normal;
-            hpText.text = $"ENRIQUE <color=#9FA6B2>(NV. {lvl})</color>   HP: <color=#FFFFFF>{currentHP}</color> / {maxHP}";
+            if (!string.IsNullOrEmpty(currentCharacterName) && !currentCharacterName.StartsWith("ENRIQUE", StringComparison.OrdinalIgnoreCase))
+            {
+                hpText.text = $"{currentCharacterName}   HP: <color=#FFFFFF>{currentHP}</color> / {maxHP}";
+            }
+            else
+            {
+                hpText.text = $"ENRIQUE <color=#9FA6B2>(NV. {lvl})</color>   HP: <color=#FFFFFF>{currentHP}</color> / {maxHP}";
+            }
         }
 
         if (percentageText != null)

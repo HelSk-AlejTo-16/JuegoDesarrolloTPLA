@@ -7,6 +7,21 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class PlayerStats : MonoBehaviour
 {
+    private static PlayerStats _instance;
+
+    public static PlayerStats Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindAnyObjectByType<PlayerStats>();
+            }
+            return _instance;
+        }
+        private set => _instance = value;
+    }
+
     [Header("Nivel y Experiencia de Enrique")]
     [Tooltip("Nivel actual de Enrique Bosques.")]
     public int level = 1;
@@ -105,6 +120,8 @@ public class PlayerStats : MonoBehaviour
 
     private void Awake()
     {
+        _instance = this;
+
         Scene activeScene = SceneManager.GetActiveScene();
         bool isIntroOrMenu = activeScene.IsValid() && (activeScene.name.Contains("00_MenuIntro") || activeScene.name.Contains("Intro") || activeScene.name.Contains("Menu"));
         bool isLevel1 = activeScene.IsValid() && activeScene.name.Contains("01_Nivel1");
@@ -140,17 +157,27 @@ public class PlayerStats : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (suppressSaveOnDestroy) return;
+        if (suppressSaveOnDestroy)
+        {
+            if (_instance == this) _instance = null;
+            return;
+        }
 
         Scene activeScene = SceneManager.GetActiveScene();
         if (activeScene.IsValid() && (activeScene.name.Contains("00_MenuIntro") || activeScene.name.Contains("Intro") || activeScene.name.Contains("Menu")))
         {
+            if (_instance == this) _instance = null;
             return;
         }
 
         if (IsAlive)
         {
             SaveProgressionSnapshot();
+        }
+
+        if (_instance == this)
+        {
+            _instance = null;
         }
     }
 
@@ -194,6 +221,8 @@ public class PlayerStats : MonoBehaviour
         intelectoUpgrades = snap.intelectoUpgrades;
         motricidadUpgrades = snap.motricidadUpgrades;
         mundoInternoUpgrades = snap.mundoInternoUpgrades;
+
+        OnStatsChanged?.Invoke();
     }
 
     public void TakeDamage(int damage)
@@ -229,9 +258,21 @@ public class PlayerStats : MonoBehaviour
     /// </summary>
     public int GainExperienceFromBattle(int enemyCount, bool isBoss, out int xpAwarded)
     {
+        return GainExperienceFromBattle(enemyCount, isBoss, 0, out xpAwarded);
+    }
+
+    /// <summary>
+    /// Otorga experiencia al finalizar un combate tomando en cuenta la suma de EXP_Reward de los enemigos derrotados.
+    /// </summary>
+    public int GainExperienceFromBattle(int enemyCount, bool isBoss, int explicitTotalExpReward, out int xpAwarded)
+    {
         battlesWonCount++;
 
         int baseReward = isBoss ? 150 : Mathf.Max(65, enemyCount * 55);
+        if (explicitTotalExpReward > 0)
+        {
+            baseReward = Mathf.Max(baseReward, explicitTotalExpReward);
+        }
 
         // Garantizar que el primer combate siempre suba de nivel a Enrique
         if (battlesWonCount == 1 && (currentXP + baseReward) < xpToNextLevel)
@@ -253,9 +294,8 @@ public class PlayerStats : MonoBehaviour
             // Escalar ligeramente la experiencia requerida para el siguiente nivel
             xpToNextLevel = Mathf.RoundToInt(xpToNextLevel * 1.25f);
 
-            // Recuperar un 25% de vida al subir de nivel
-            int levelUpHeal = Mathf.Max(15, Mathf.RoundToInt(maxHP * 0.25f));
-            currentHP = Mathf.Min(maxHP, currentHP + levelUpHeal);
+            // Recuperar toda la vida al subir de nivel
+            currentHP = maxHP;
         }
 
         SaveProgressionSnapshot();

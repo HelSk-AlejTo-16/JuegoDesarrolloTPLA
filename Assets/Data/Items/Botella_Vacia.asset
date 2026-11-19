@@ -18,9 +18,9 @@ MonoBehaviour:
   combatUseMessage: Enrique se toma un refresco bien frio y recupera energia!
   placeholderColor: {r: 0.3, g: 0.65, b: 0.68, a: 1}
   icon: {fileID: 6589050890162379968, guid: 3aceb82bb0f65554ba40a9456107a42f, type: 3}
-  category: 0
-  healAmount: 35
-  damageAmount: 0
+  category: 1
+  healAmount: 0
+  damageAmount: 10
   curesStatusEffects: 0
   weaponAttackBonus: 0
   weaponMotricidadBonus: 0

@@ -112,11 +112,6 @@ public class MapInteractable : MonoBehaviour
 
         if (CanInteractRightNow())
         {
-            if (promptUI != null && !promptUI.activeSelf)
-            {
-                promptUI.SetActive(true);
-            }
-
             if (WasInteractKeyPressedThisFrame())
             {
                 ExecuteInteraction();
@@ -151,11 +146,6 @@ public class MapInteractable : MonoBehaviour
             {
                 ExecuteInteraction();
                 return;
-            }
-
-            if (promptUI != null && CanInteractRightNow())
-            {
-                promptUI.SetActive(true);
             }
         }
     }

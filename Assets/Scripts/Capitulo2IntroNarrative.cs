@@ -12,9 +12,11 @@ using UnityEditor;
 /// Controla la llegada de Enrique al Capítulo 2 (El Callejón de las Sombras):
 /// - Fundido desde negro con título noir del capítulo.
 /// - Construcción armónica del mapa de callejones utilizando estrictamente la misma gramática arquitectónica de Tilemaps
-///   que `01_Nivel1_SantaFelipina.unity` (fachadas completas con bordes/cornisas, azoteas cerradas en 9-slice,
-///   adoquín limpio BY_23, cajas apiladas 2x2, contenedores 2x2, faroles 1x3, bancas 2x1 y botes/bolsas de basura en Tilemap).
-/// - Compañero Investigador Privado (CompanionFollowAI) con sprite genérico que se une a Enrique y lo sigue por el callejón.
+///   que `01_Nivel1_SantaFelipina.unity`.
+/// - Compañero Investigador Privado (CompanionFollowAI + DetectiveStats) que se une a Enrique y participa en combate.
+/// - Encuentros dobles del Nivel 2 (2 arquetipos nuevos: Sicario Cuchillero y Verdugo de Hacha).
+/// - Jefe Final del Nivel 2 (El Capataz Blindado con Level2BossController y transición a Nivel_3).
+/// - Contenedores de basura interactuables (InteractableLoot: Botes de Basura y Bolsas de Basura con LootTable).
 /// </summary>
 public class Capitulo2IntroNarrative : MonoBehaviour
 {
@@ -36,12 +38,12 @@ public class Capitulo2IntroNarrative : MonoBehaviour
         "INVESTIGADOR PRIVADO: \"Baja los puños, repartidor. Vi cómo tumbaste a los matones de la calle... Me llamo Héctor Vargas, investigador privado.\"",
         "ENRIQUE BOSQUES: \"¿Un detective en este barrio? Si vienes por el paquete, llegas tarde. Ni siquiera sé qué demonios llevo dentro.\"",
         "INVESTIGADOR PRIVADO: \"No busco tu caja, Bosques. Busco al jefe que ordenó emboscarte: 'El Calacas'. Llevo meses siguiéndole el rastro por toda la ciudad.\"",
-        "VOZ [INTELECTO]: \"Un investigador privado... Sus expedientes y su conocimiento del terreno nos ahorran caminar a ciegas por estos callejones. Escucha lo que sabe.\"",
-        "INVESTIGADOR PRIVADO: \"Este pasaje entre las azoteas y los edificios es el único acceso hacia su guarida. Cerraron el paso vehicular para que nadie entre en auto; aquí solo se pasa a pie.\"",
-        "VOZ [CORPOREO]: \"Perfecto. En un callejón estrecho no podrán rodearnos; tendrán que dar la cara de frente.\"",
-        "VOZ [MOTRICIDAD]: \"Avanza hacia el sur por el pasaje estrecho y luego dobla al este junto a los edificios altos.\"",
-        "INVESTIGADOR PRIVADO: \"Adelante hay varios de sus sicarios vigilando el callejón y otro jefe custodiando la entrada de su complejo. Me uno a ti, Enrique: yo te sigo, vamos a encontrar a El Calacas.\"",
-        "NARRADOR: \"[ EL INVESTIGADOR PRIVADO SE HA UNIDO A TI Y TE SEGUIRÁ POR EL CALLEJÓN ]\""
+        "VOZ [INTELECTO]: \"Un investigador privado... Sus expedientes, su revólver .38 y su conocimiento táctico del terreno serán vitales en estos callejones.\"",
+        "INVESTIGADOR PRIVADO: \"Este pasaje entre las azoteas y los edificios es el único acceso hacia su guarida. Cerraron el paso vehicular; aquí solo se pasa a pie y sus sicarios patrullan en parejas.\"",
+        "VOZ [CORPOREO]: \"Perfecto. Entre tu revólver y nuestros puños limpiaremos el callejón.\"",
+        "VOZ [MOTRICIDAD]: \"Revisa también los botes y bolsas de basura con [E]: los contrabandistas suelen esconder munición, vendas y materiales útiles.\"",
+        "INVESTIGADOR PRIVADO: \"Adelante hay parejas de cuchilleros y verdugos vigilando el paso, y 'El Capataz Punk' custodia el portón del complejo. Me uno a tu equipo, Enrique.\"",
+        "NARRADOR: \"[ EL DETECTIVE HÉCTOR VARGAS SE HA UNIDO AL EQUIPO DE COMBATE ]\""
     };
 
     [Tooltip("Gestor de diálogo de exploración en la escena.")]
@@ -60,8 +62,8 @@ public class Capitulo2IntroNarrative : MonoBehaviour
     }
 
     /// <summary>
-    /// Garantiza que el mapa armónico de callejones (construido 100% con los bloques de Tilemap de la Escena 1),
-    /// el Investigador Privado con sprite genérico, el InventoryManager y los cuadros de texto noir estén listos.
+    /// Garantiza que el mapa armónico de callejones, el BattleManager de combate, los enemigos dobles de Nivel 2,
+    /// el Jefe Final con Level2BossController, los contenedores InteractableLoot y el Detective estén listos.
     /// </summary>
     public void EnsureAlleyMapAndNoirDialogueReady()
     {
@@ -72,8 +74,20 @@ public class Capitulo2IntroNarrative : MonoBehaviour
             Destroy(oldWarehouse);
         }
 
+        // Desvincular al Investigador Privado antes de validar/reemplazar alleyRoot para que NUNCA sea destruido por accidente
+        if (investigatorCompanion == null)
+        {
+            investigatorCompanion = FindAnyObjectByType<CompanionFollowAI>();
+        }
+        if (investigatorCompanion != null && investigatorCompanion.transform.parent != null)
+        {
+            investigatorCompanion.transform.SetParent(null, true);
+        }
+
         GameObject alleyRoot = GameObject.Find("Callejon_Ciudad_Root");
-        if (alleyRoot != null && alleyRoot.transform.Find("Callejon_Armonico_V5") == null)
+        if (alleyRoot != null &&
+            alleyRoot.transform.Find("Callejon_Armonico_V8") == null &&
+            alleyRoot.transform.Find("Callejon_Armonico_V7") == null)
         {
             Destroy(alleyRoot);
             alleyRoot = null;
@@ -84,7 +98,7 @@ public class Capitulo2IntroNarrative : MonoBehaviour
             alleyRoot = BuildUrbanAlleyEnvironment();
         }
 
-        // 2. Posicionar a Enrique en la entrada peatonal oeste (sobre la calle que desemboca en la plazuela del callejón)
+        // 2. Posicionar a Enrique en la entrada peatonal oeste
         PlayerController2D player = FindAnyObjectByType<PlayerController2D>();
         if (player != null)
         {
@@ -120,19 +134,36 @@ public class Capitulo2IntroNarrative : MonoBehaviour
             }
         }
 
-        // 3. Asegurar que el Investigador Privado exista con su sprite genérico y CompanionFollowAI
+        // 3. Asegurar que el Investigador Privado exista con su sprite personalizado, CompanionFollowAI y DetectiveStats activo en el equipo
         if (investigatorCompanion == null)
         {
             investigatorCompanion = FindAnyObjectByType<CompanionFollowAI>();
         }
         if (investigatorCompanion == null)
         {
-            investigatorCompanion = CreateInvestigatorCompanion(alleyRoot != null ? alleyRoot.transform : null);
+            investigatorCompanion = CreateInvestigatorCompanion(null);
         }
         else
         {
+            if (investigatorCompanion.transform.parent != null)
+            {
+                investigatorCompanion.transform.SetParent(null, true);
+            }
             EnsureGenericInvestigatorAppearance(investigatorCompanion);
         }
+
+        if (investigatorCompanion != null)
+        {
+            if (player != null && Vector2.Distance(investigatorCompanion.transform.position, player.transform.position) > 3.2f)
+            {
+                investigatorCompanion.transform.position = player.transform.position + new Vector3(1.8f, 0f, 0f);
+            }
+            investigatorCompanion.ActivateCompanionFollow();
+            DetectiveStats.IsDetectiveInPartyGlobal = true;
+        }
+
+        // Ocultar cualquier texto flotante o etiqueta sobre los objetos y personajes del mapa
+        PlayerController2D.HideAllWorldSpaceObjectLabels();
 
         // 4. Asegurar que ExplorationDialogueManager tenga el diseño noir completo idéntico al Nivel 1
         if (explorationDialogueManager == null)
@@ -148,8 +179,22 @@ public class Capitulo2IntroNarrative : MonoBehaviour
             UpgradeDialoguePanelToNoirStyle(explorationDialogueManager);
         }
 
-        // 5. Asegurar InventoryManager para conservar los objetos, recetas y armas equipadas de la Escena 1
+        // 5. Asegurar InventoryManager y BattleManager para los combates del Nivel 2
         EnsureInventoryManagerContinuity();
+        BattleManager bm = BattleManager.EnsureInScene();
+
+        // Conectar BattleManager a todos los triggers de combate de la escena
+        if (bm != null)
+        {
+            EnemyEncounterTrigger[] triggers = FindObjectsByType<EnemyEncounterTrigger>(FindObjectsInactive.Include);
+            foreach (EnemyEncounterTrigger tr in triggers)
+            {
+                if (tr != null && tr.battleManager == null)
+                {
+                    tr.battleManager = bm;
+                }
+            }
+        }
     }
 
     private static void EnsureInventoryManagerContinuity()
@@ -161,12 +206,11 @@ public class Capitulo2IntroNarrative : MonoBehaviour
             inv = invGO.AddComponent<InventoryManager>();
         }
 
-#if UNITY_EDITOR
         if (inv.knownRecipes == null) inv.knownRecipes = new List<CraftingRecipeData>();
         if (inv.knownRecipes.Count == 0)
         {
-            CraftingRecipeData r1 = AssetDatabase.LoadAssetAtPath<CraftingRecipeData>("Assets/Data/Items/Receta_BombaChile.asset");
-            CraftingRecipeData r2 = AssetDatabase.LoadAssetAtPath<CraftingRecipeData>("Assets/Data/Items/Receta_VendajeRudo.asset");
+            CraftingRecipeData r1 = RuntimeAssetCatalog.GetRecipe("Assets/Data/Items/Receta_BombaChile.asset");
+            CraftingRecipeData r2 = RuntimeAssetCatalog.GetRecipe("Assets/Data/Items/Receta_VendajeRudo.asset");
             if (r1 != null) inv.knownRecipes.Add(r1);
             if (r2 != null) inv.knownRecipes.Add(r2);
         }
@@ -174,14 +218,13 @@ public class Capitulo2IntroNarrative : MonoBehaviour
         if (inv.preparedWeaponCatalog == null) inv.preparedWeaponCatalog = new List<ItemData>();
         if (inv.preparedWeaponCatalog.Count == 0)
         {
-            ItemData w1 = AssetDatabase.LoadAssetAtPath<ItemData>("Assets/Data/Items/Arma_PunosCallejeros.asset");
-            ItemData w2 = AssetDatabase.LoadAssetAtPath<ItemData>("Assets/Data/Items/Arma_TuboPlomo.asset");
-            ItemData w3 = AssetDatabase.LoadAssetAtPath<ItemData>("Assets/Data/Items/Arma_BatCallejero.asset");
+            ItemData w1 = RuntimeAssetCatalog.GetItem("Assets/Data/Items/Arma_CadenaBicicleta.asset");
+            ItemData w2 = RuntimeAssetCatalog.GetItem("Assets/Data/Items/Arma_TuboPlomo.asset");
+            ItemData w3 = RuntimeAssetCatalog.GetItem("Assets/Data/Items/Arma_BatMadera.asset");
             if (w1 != null) inv.preparedWeaponCatalog.Add(w1);
             if (w2 != null) inv.preparedWeaponCatalog.Add(w2);
             if (w3 != null) inv.preparedWeaponCatalog.Add(w3);
         }
-#endif
     }
 
     private IEnumerator IntroSequenceRoutine()
@@ -258,10 +301,10 @@ public class Capitulo2IntroNarrative : MonoBehaviour
     }
 
     // =========================================================================================
-    // CONSTRUCCIÓN ARMÓNICA Y ORDENADA DEL CALLEJÓN (MISMA ARQUITECTURA DE TILEMAP QUE ESCENA 1)
+    // CONSTRUCCIÓN ARMÓNICA Y ORDENADA DEL CALLEJÓN + ENEMIGOS NIVEL 2 + JEFE + LOOT DE BASURA
     // =========================================================================================
 
-    private const float CellWorldSize = 0.8f; // CellSize 0.16 * Escala 5 = 0.80 unidades por celda
+    private const float CellWorldSize = 0.8f;
 
     private static Sprite s_cachedWhiteSprite;
 
@@ -283,19 +326,12 @@ public class Capitulo2IntroNarrative : MonoBehaviour
 
     private static Sprite LoadProjectSprite(string assetPath)
     {
-#if UNITY_EDITOR
-        Sprite sp = AssetDatabase.LoadAssetAtPath<Sprite>(assetPath);
-        if (sp != null) return sp;
-        Object[] all = AssetDatabase.LoadAllAssetsAtPath(assetPath);
-        if (all != null)
-        {
-            foreach (var o in all)
-            {
-                if (o is Sprite s) return s;
-            }
-        }
-#endif
-        return null;
+        return RuntimeAssetCatalog.GetSprite(assetPath);
+    }
+
+    private static Sprite[] LoadAllSpritesAtPath(string assetPath)
+    {
+        return RuntimeAssetCatalog.GetSprites(assetPath);
     }
 
     private static TileBase LoadTileAssetAtPath(string fullAssetPath)
@@ -331,16 +367,11 @@ public class Capitulo2IntroNarrative : MonoBehaviour
     {
         GameObject root = new GameObject("Callejon_Ciudad_Root");
 
-        // Etiqueta de versión armónica V5
-        GameObject versionTag = new GameObject("Callejon_Armonico_V5");
+        // Etiqueta de versión armónica V8 (incluye Detective en combate, Enemigos Dobles N2 con sprites normales, Jefe N2 Enemy-Punk animado y Loot de Basura)
+        GameObject versionTag = new GameObject("Callejon_Armonico_V8");
         versionTag.transform.SetParent(root.transform, false);
 
         // 1. ESTRUCTURA DE GRIDS Y TILEMAPS IDÉNTICA A 01_Nivel1_SantaFelipina.unity
-        // En Escena 1: CellSize = (0.16, 0.16, 0), LocalScale = (5, 5, 1) -> 1 celda = 0.80m
-        // - suelo:       localPos (-0.015, -0.04, 0),  sortingOrder = 1
-        // - edificios:   localPos (-0.015, -0.044, 0), sortingOrder = 2
-        // - decoracionO: localPos (0, 0, 0),           sortingOrder = 3
-        // - decoracionN: localPos (0, -0.04, 0),       sortingOrder = 3
         Tilemap suelo = CreateGridWithTilemap("Suelo", "suelo", root.transform, new Vector3(-0.015f, -0.04f, 0f), 1);
         Tilemap edificios = CreateGridWithTilemap("Edificios", "edificios", root.transform, new Vector3(-0.015f, -0.044f, 0f), 2);
         Tilemap decoracionO = CreateGridWithTilemap("DecoracionObjetos", "decoracionO", root.transform, Vector3.zero, 3);
@@ -351,8 +382,7 @@ public class Capitulo2IntroNarrative : MonoBehaviour
 
         PopulateHarmoniousAlleyMap(suelo, edificios, decoracionO, decoracionN, collidersGroup.transform);
 
-        // 2. INTERACTUABLE DE LA GUARIDA DE EL CALACAS (Integrado en la puerta del edificio industrial al final del callejón)
-        // La puerta del almacén industrial (TP_757) está exactamente en la celda (x = 24, y = -19) -> mundo (19.6f, -14.8f)
+        // 2. INTERACTUABLE DE LA GUARIDA DE EL CALACAS
         GameObject bossGateGO = new GameObject("Porton_Guarida_ElCalacas");
         bossGateGO.transform.SetParent(root.transform, false);
         bossGateGO.transform.position = new Vector3(19.6f, -15.4f, 0f);
@@ -365,15 +395,14 @@ public class Capitulo2IntroNarrative : MonoBehaviour
         gateInteract.type = InteractableType.DialogueOnly;
         gateInteract.dialogueLines = new string[]
         {
-            "INVESTIGADOR PRIVADO: \"Esta es la entrada trasera del complejo donde se esconde El Calacas, Enrique.\"",
-            "VOZ [INTELECTO]: \"La cortina metálica y la puerta tienen marcas frescas. Aquí termina el callejón peatonal y comienza el territorio de su guardia personal.\"",
-            "VOZ [CORPOREO]: \"En cuanto salgan sus matones y el jefe del callejón, les abriremos esa puerta a golpes.\""
+            "INVESTIGADOR PRIVADO: \"Esta es la entrada blindada del complejo donde se esconde El Calacas, Enrique.\"",
+            "VOZ [INTELECTO]: \"El Capataz Punk tiene las llaves de acceso al Nivel 3. Derrotémoslo para cruzar el portón.\""
         };
 
         GameObject gatePrompt = CreateWorldPromptLabel("PromptUI_E", bossGateGO.transform, new Vector3(0f, 1.35f, 0f), "[E] ENTRADA GUARIDA DE EL CALACAS");
         gateInteract.promptUI = gatePrompt;
 
-        // 3. PUNTOS DE APARICIÓN ORDENADOS PARA FUTUROS ENEMIGOS Y JEFE
+        // 3. PUNTOS DE APARICIÓN Y GENERACIÓN DE ENCUENTROS DOBLES (NIVEL 2) + JEFE FINAL
         GameObject spawnMarkers = new GameObject("Puntos_Enemigos_Callejon");
         spawnMarkers.transform.SetParent(root.transform, false);
         CreateMarker("Spawn_Enemigo_Callejon_Norte", spawnMarkers.transform, new Vector3(-0.8f, -4.5f, 0f));
@@ -381,7 +410,583 @@ public class Capitulo2IntroNarrative : MonoBehaviour
         CreateMarker("Spawn_Enemigo_Patio_Sur", spawnMarkers.transform, new Vector3(7.5f, -17.8f, 0f));
         CreateMarker("Spawn_JefeFinal_Callejon", spawnMarkers.transform, new Vector3(17.5f, -17.2f, 0f));
 
+        SpawnLevel2EnemiesAndBoss(root.transform);
+
+        // 4. SISTEMA DE LOOT EN EL MAPA: CONTENEDORES DE BASURA INTERACTUABLES (BOTES Y BOLSAS)
+        SpawnLevel2TrashLootContainers(root.transform);
+
         return root;
+    }
+
+    // =========================================================================================
+    // CREACIÓN DE LOS 2 NUEVOS ARQUETIPOS DE ENEMIGOS DEL NIVEL 2 Y EL JEFE FINAL
+    // =========================================================================================
+
+    public static EnemyData GetOrCreateSicarioCuchilleroData()
+    {
+#if UNITY_EDITOR
+        string assetPath = "Assets/Data/Enemies/Sicario_Cuchillero_N2.asset";
+        EnemyData existing = AssetDatabase.LoadAssetAtPath<EnemyData>(assetPath);
+        if (existing != null)
+        {
+            ConfigureSicarioCuchillero(existing);
+            EditorUtility.SetDirty(existing);
+            return existing;
+        }
+
+        EnemyData created = ScriptableObject.CreateInstance<EnemyData>();
+        ConfigureSicarioCuchillero(created);
+        if (!AssetDatabase.IsValidFolder("Assets/Data/Enemies"))
+        {
+            if (!AssetDatabase.IsValidFolder("Assets/Data")) AssetDatabase.CreateFolder("Assets", "Data");
+            AssetDatabase.CreateFolder("Assets/Data", "Enemies");
+        }
+        AssetDatabase.CreateAsset(created, assetPath);
+        EditorUtility.SetDirty(created);
+        return created;
+#else
+        EnemyData runtimeData = ScriptableObject.CreateInstance<EnemyData>();
+        ConfigureSicarioCuchillero(runtimeData);
+        return runtimeData;
+#endif
+    }
+
+    private static void ConfigureSicarioCuchillero(EnemyData data)
+    {
+        data.name = "Sicario_Cuchillero_N2";
+        data.enemyName = "Sicario Cuchillero";
+        data.enemyType = EnemyType.SicarioCuchilleroNivel2;
+        data.maxHP = 72;
+        data.attack = 14;
+        data.defense = 4;
+        data.motricidad = 13;
+        data.EXP_Reward = 75;
+        data.primaryAttackName = "Tajo Rápido de Navaja";
+        data.secondaryAttackName = "Doble Puñalada Callejera";
+        data.placeholderColor = new Color(0.85f, 0.45f, 0.15f, 1f);
+
+        data.animatorController = RuntimeAssetCatalog.GetAnimatorController("Assets/Animations/Homeless_2/Homeless2_Controller.controller");
+
+        Sprite[] idle = LoadAllSpritesAtPath("Assets/Sprites/Homeless_2/Idle.png");
+        Sprite[] idleAlt = LoadAllSpritesAtPath("Assets/Sprites/Homeless_2/Idle_2.png");
+        Sprite[] walk = LoadAllSpritesAtPath("Assets/Sprites/Homeless_2/Walk.png");
+        Sprite[] run = LoadAllSpritesAtPath("Assets/Sprites/Homeless_2/Run.png");
+        Sprite[] atk1 = LoadAllSpritesAtPath("Assets/Sprites/Homeless_2/Attack_1.png");
+        Sprite[] atk2 = LoadAllSpritesAtPath("Assets/Sprites/Homeless_2/Attack_2.png");
+        Sprite[] atk3 = LoadAllSpritesAtPath("Assets/Sprites/Homeless_2/Attack_3.png");
+        Sprite[] hurt = LoadAllSpritesAtPath("Assets/Sprites/Homeless_2/Hurt.png");
+        Sprite[] dead = LoadAllSpritesAtPath("Assets/Sprites/Homeless_2/Dead.png");
+
+        if (idle != null && idle.Length > 0)
+        {
+            data.enemySprite = idle[0];
+            data.idleFrames = idle;
+        }
+        if (idleAlt != null && idleAlt.Length > 0) data.idleAltFrames = idleAlt;
+        if (walk != null && walk.Length > 0) data.walkFrames = walk;
+        if (run != null && run.Length > 0) data.runFrames = run;
+        if (atk1 != null && atk1.Length > 0) data.attackFrames = atk1;
+        if (atk2 != null && atk2.Length > 0) data.attack2Frames = atk2;
+        if (atk3 != null && atk3.Length > 0) data.attack3Frames = atk3;
+        if (hurt != null && hurt.Length > 0) data.hurtFrames = hurt;
+        if (dead != null && dead.Length > 0) data.deadFrames = dead;
+
+        if (data.enemySprite == null)
+        {
+            data.enemySprite = LoadProjectSprite("Assets/Sprites/Homeless_2/Idle.png") ?? GetWhiteSquareSprite();
+        }
+
+        data.halfHealthDialogueLines = new string[]
+        {
+            "SICARIO CUCHILLERO: \"¡Maldito repartidor! ¡De este callejón no salen vivos ni tú ni ese sabueso!\""
+        };
+    }
+
+    public static EnemyData GetOrCreateSicarioVerdugoData()
+    {
+#if UNITY_EDITOR
+        string assetPath = "Assets/Data/Enemies/Sicario_Verdugo_N2.asset";
+        EnemyData existing = AssetDatabase.LoadAssetAtPath<EnemyData>(assetPath);
+        if (existing != null)
+        {
+            ConfigureSicarioVerdugo(existing);
+            EditorUtility.SetDirty(existing);
+            return existing;
+        }
+
+        EnemyData created = ScriptableObject.CreateInstance<EnemyData>();
+        ConfigureSicarioVerdugo(created);
+        if (!AssetDatabase.IsValidFolder("Assets/Data/Enemies"))
+        {
+            if (!AssetDatabase.IsValidFolder("Assets/Data")) AssetDatabase.CreateFolder("Assets", "Data");
+            AssetDatabase.CreateFolder("Assets/Data", "Enemies");
+        }
+        AssetDatabase.CreateAsset(created, assetPath);
+        EditorUtility.SetDirty(created);
+        return created;
+#else
+        EnemyData runtimeData = ScriptableObject.CreateInstance<EnemyData>();
+        ConfigureSicarioVerdugo(runtimeData);
+        return runtimeData;
+#endif
+    }
+
+    private static void ConfigureSicarioVerdugo(EnemyData data)
+    {
+        data.name = "Sicario_Verdugo_N2";
+        data.enemyName = "Verdugo de Hacha";
+        data.enemyType = EnemyType.SicarioVerdugoNivel2;
+        data.maxHP = 95;
+        data.attack = 17;
+        data.defense = 6;
+        data.motricidad = 10;
+        data.EXP_Reward = 90;
+        data.primaryAttackName = "Hachazo Demoledor";
+        data.secondaryAttackName = "Barrido Brutal de Hacha";
+        data.placeholderColor = new Color(0.55f, 0.1f, 0.1f, 1f);
+
+        data.animatorController = RuntimeAssetCatalog.GetAnimatorController("Assets/Animations/Homeless_3/Homeless3_Controller.controller");
+
+        Sprite[] idle = LoadAllSpritesAtPath("Assets/Sprites/Homeless_3/Idle.png");
+        Sprite[] idleAlt = LoadAllSpritesAtPath("Assets/Sprites/Homeless_3/Idle_2.png");
+        Sprite[] walk = LoadAllSpritesAtPath("Assets/Sprites/Homeless_3/Walk.png");
+        Sprite[] run = LoadAllSpritesAtPath("Assets/Sprites/Homeless_3/Run.png");
+        Sprite[] atk1 = LoadAllSpritesAtPath("Assets/Sprites/Homeless_3/Attack_1.png");
+        Sprite[] atk2 = LoadAllSpritesAtPath("Assets/Sprites/Homeless_3/Attack_2.png");
+        Sprite[] hurt = LoadAllSpritesAtPath("Assets/Sprites/Homeless_3/Hurt.png");
+        Sprite[] dead = LoadAllSpritesAtPath("Assets/Sprites/Homeless_3/Dead.png");
+
+        if (idle != null && idle.Length > 0)
+        {
+            data.enemySprite = idle[0];
+            data.idleFrames = idle;
+        }
+        if (idleAlt != null && idleAlt.Length > 0) data.idleAltFrames = idleAlt;
+        if (walk != null && walk.Length > 0) data.walkFrames = walk;
+        if (run != null && run.Length > 0) data.runFrames = run;
+        if (atk1 != null && atk1.Length > 0) data.attackFrames = atk1;
+        if (atk2 != null && atk2.Length > 0) data.attack2Frames = atk2;
+        if (hurt != null && hurt.Length > 0) data.hurtFrames = hurt;
+        if (dead != null && dead.Length > 0) data.deadFrames = dead;
+
+        if (data.enemySprite == null)
+        {
+            data.enemySprite = LoadProjectSprite("Assets/Sprites/Homeless_3/Idle.png") ?? GetWhiteSquareSprite();
+        }
+
+        data.halfHealthDialogueLines = new string[]
+        {
+            "VERDUGO DE HACHA: \"¡El Capataz nos ordenó partirles los huesos antes de que lleguen al almacén!\""
+        };
+    }
+
+    public static EnemyData GetOrCreateCapatazBossData()
+    {
+#if UNITY_EDITOR
+        string assetPath = "Assets/Data/Enemies/Jefe_CapatazBlindado_N2.asset";
+        EnemyData existing = AssetDatabase.LoadAssetAtPath<EnemyData>(assetPath);
+        if (existing != null)
+        {
+            ConfigureCapatazBoss(existing);
+            EditorUtility.SetDirty(existing);
+            return existing;
+        }
+
+        EnemyData created = ScriptableObject.CreateInstance<EnemyData>();
+        ConfigureCapatazBoss(created);
+        if (!AssetDatabase.IsValidFolder("Assets/Data/Enemies"))
+        {
+            if (!AssetDatabase.IsValidFolder("Assets/Data")) AssetDatabase.CreateFolder("Assets", "Data");
+            AssetDatabase.CreateFolder("Assets/Data", "Enemies");
+        }
+        AssetDatabase.CreateAsset(created, assetPath);
+        EditorUtility.SetDirty(created);
+        return created;
+#else
+        EnemyData runtimeData = ScriptableObject.CreateInstance<EnemyData>();
+        ConfigureCapatazBoss(runtimeData);
+        return runtimeData;
+#endif
+    }
+
+    private static Sprite[] LoadEnemyPunkFrames(string subfolder, string prefix, int count)
+    {
+        List<Sprite> list = new List<Sprite>();
+        for (int i = 1; i <= count; i++)
+        {
+            string path = $"Assets/NewStuff/Streets of Fight files/Assets/Sprites/Enemy-Punk/{subfolder}/{prefix}{i}.png";
+            Sprite sp = LoadProjectSprite(path);
+            if (sp != null) list.Add(sp);
+        }
+        return list.Count > 0 ? list.ToArray() : null;
+    }
+
+    private static void ConfigureCapatazBoss(EnemyData data)
+    {
+        data.name = "Jefe_CapatazBlindado_N2";
+        data.enemyName = "El Capataz Punk";
+        data.enemyType = EnemyType.JefeNivel2Capataz;
+        data.maxHP = 185;
+        data.attack = 22;
+        data.defense = 8;
+        data.motricidad = 12;
+        data.EXP_Reward = 260;
+        data.primaryAttackName = "Gancho Callejero Punk";
+        data.secondaryAttackName = "Ráfaga de Nudillos";
+        data.placeholderColor = new Color(0.95f, 0.35f, 0.20f, 1f);
+
+        data.animatorController = RuntimeAssetCatalog.GetAnimatorController("Assets/Animations/Enemy_Punk/EnemyPunk_Controller.controller");
+
+        Sprite[] idle = LoadEnemyPunkFrames("Idle", "idle", 4);
+        Sprite[] walk = LoadEnemyPunkFrames("Walk", "walk", 4);
+        Sprite[] punch = LoadEnemyPunkFrames("Punch", "punch", 3);
+        Sprite[] hurt = LoadEnemyPunkFrames("Hurt", "hurt", 4);
+
+        if (idle != null && idle.Length > 0)
+        {
+            data.enemySprite = idle[0];
+            data.idleFrames = idle;
+            data.idleAltFrames = idle;
+        }
+        if (walk != null && walk.Length > 0)
+        {
+            data.walkFrames = walk;
+            data.runFrames = walk;
+        }
+        if (punch != null && punch.Length > 0)
+        {
+            data.attackFrames = punch;
+            data.attack2Frames = punch;
+        }
+        if (hurt != null && hurt.Length > 0)
+        {
+            data.hurtFrames = hurt;
+            data.deadFrames = new Sprite[] { hurt[2], hurt[3] };
+        }
+
+        if (data.enemySprite == null)
+        {
+            data.enemySprite = LoadProjectSprite("Assets/NewStuff/Streets of Fight files/Assets/Sprites/Enemy-Punk/Idle/idle1.png") ?? GetWhiteSquareSprite();
+        }
+
+        data.halfHealthDialogueLines = new string[]
+        {
+            "EL CAPATAZ PUNK: \"¡No me van a tumbar unos novatos! ¡Les romperé la cara con mis propios nudillos!\"",
+            "INVESTIGADOR PRIVADO: \"¡Cuidado, Enrique! Cuando enfurece aumenta la velocidad de sus golpes. ¡Aprovecha cuando baje la guardia tras su combo!\""
+        };
+    }
+
+    private static void SpawnLevel2EnemiesAndBoss(Transform rootParent)
+    {
+        GameObject enemiesRoot = new GameObject("Enemigos_Nivel2_Callejon");
+        enemiesRoot.transform.SetParent(rootParent, false);
+
+        EnemyData cuchillero = GetOrCreateSicarioCuchilleroData();
+        EnemyData verdugo = GetOrCreateSicarioVerdugoData();
+        EnemyData capatazBoss = GetOrCreateCapatazBossData();
+
+        // 1. Encuentro Doble Norte (1 Sicario Cuchillero + 1 Verdugo de Hacha)
+        CreateDoubleEnemyEncounterOnMap(
+            "Patrulla_Doble_Norte",
+            enemiesRoot.transform,
+            new Vector3(-0.8f, -4.5f, 0f),
+            cuchillero,
+            verdugo,
+            "PATRULLA DEL CALLEJÓN (x2)"
+        );
+
+        // 2. Encuentro Doble Pasaje Vertical (2 Sicarios Cuchilleros veloces)
+        CreateDoubleEnemyEncounterOnMap(
+            "Patrulla_Doble_PasajeVertical",
+            enemiesRoot.transform,
+            new Vector3(-1.2f, -11.5f, 0f),
+            cuchillero,
+            cuchillero,
+            "EMBOSCADA DE CUCHILLEROS (x2)"
+        );
+
+        // 3. Encuentro Doble Corredor Sur (1 Verdugo de Hacha + 1 Sicario Cuchillero)
+        CreateDoubleEnemyEncounterOnMap(
+            "Patrulla_Doble_PatioSur",
+            enemiesRoot.transform,
+            new Vector3(7.5f, -17.8f, 0f),
+            verdugo,
+            cuchillero,
+            "GUARDIA EXTERIOR DE LA GUARIDA (x2)"
+        );
+
+        // 4. Jefe Final del Nivel 2: El Capataz Blindado (con Level2BossController y transición a Nivel_3)
+        CreateLevel2BossEncounterOnMap(
+            "Jefe_Nivel2_CapatazBlindado",
+            enemiesRoot.transform,
+            new Vector3(17.5f, -17.2f, 0f),
+            capatazBoss
+        );
+    }
+
+    private static GameObject CreateDoubleEnemyEncounterOnMap(
+        string objectName,
+        Transform parent,
+        Vector3 position,
+        EnemyData primaryEnemy,
+        EnemyData secondaryEnemy,
+        string badgeLabel)
+    {
+        GameObject go = new GameObject(objectName);
+        go.transform.SetParent(parent, false);
+        go.transform.position = position;
+        go.transform.localScale = new Vector3(1.35f, 1.35f, 1f);
+
+        Rigidbody2D rb = go.AddComponent<Rigidbody2D>();
+        rb.bodyType = RigidbodyType2D.Dynamic;
+        rb.gravityScale = 0f;
+        rb.freezeRotation = true;
+        rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+
+        BoxCollider2D triggerCol = go.AddComponent<BoxCollider2D>();
+        triggerCol.isTrigger = true;
+        triggerCol.size = new Vector2(1.2f, 1.4f);
+
+        SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
+        sr.sprite = (primaryEnemy != null && primaryEnemy.enemySprite != null) ? primaryEnemy.enemySprite : GetWhiteSquareSprite();
+        sr.color = Color.white;
+        sr.sortingOrder = 5;
+
+        // Segundo sprite visual acompañante en el mapa para reflejar claramente que es una patrulla doble
+        GameObject partnerVisGO = new GameObject("CompanionEnemyVisual");
+        partnerVisGO.transform.SetParent(go.transform, false);
+        partnerVisGO.transform.localPosition = new Vector3(0.55f, 0.12f, 0f);
+        partnerVisGO.transform.localScale = new Vector3(0.95f, 0.95f, 1f);
+        SpriteRenderer partnerSR = partnerVisGO.AddComponent<SpriteRenderer>();
+        partnerSR.sprite = (secondaryEnemy != null && secondaryEnemy.enemySprite != null) ? secondaryEnemy.enemySprite : sr.sprite;
+        partnerSR.color = new Color(0.92f, 0.92f, 0.92f, 0.95f);
+        partnerSR.sortingOrder = 4;
+
+        EnemyFollowAI followAI = go.AddComponent<EnemyFollowAI>();
+        followAI.spriteRenderer = sr;
+        followAI.detectionRadius = 5.4f;
+        followAI.stoppingDistance = 0.85f;
+        followAI.walkSpeed = 1.9f;
+        followAI.chaseSpeed = 3.2f;
+        followAI.wanderRadius = 1.35f;
+
+        EnemyEncounterTrigger encounter = go.AddComponent<EnemyEncounterTrigger>();
+        encounter.forceDoubleEncounterGroup = true;
+        encounter.enemies = new EnemyData[] { primaryEnemy, secondaryEnemy };
+        encounter.isBossEncounter = false;
+
+        return go;
+    }
+
+    private static GameObject CreateLevel2BossEncounterOnMap(
+        string objectName,
+        Transform parent,
+        Vector3 position,
+        EnemyData bossData)
+    {
+        GameObject go = new GameObject(objectName);
+        go.transform.SetParent(parent, false);
+        go.transform.position = position;
+        go.transform.localScale = new Vector3(1.6f, 1.6f, 1f);
+
+        Rigidbody2D rb = go.AddComponent<Rigidbody2D>();
+        rb.bodyType = RigidbodyType2D.Dynamic;
+        rb.gravityScale = 0f;
+        rb.freezeRotation = true;
+        rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+
+        BoxCollider2D triggerCol = go.AddComponent<BoxCollider2D>();
+        triggerCol.isTrigger = true;
+        triggerCol.size = new Vector2(1.1f, 1.5f);
+
+        SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
+        sr.sprite = (bossData != null && bossData.enemySprite != null) ? bossData.enemySprite : GetWhiteSquareSprite();
+        sr.color = Color.white;
+        sr.sortingOrder = 5;
+
+        Animator anim = go.AddComponent<Animator>();
+        if (bossData != null && bossData.animatorController != null)
+        {
+            anim.runtimeAnimatorController = bossData.animatorController;
+        }
+
+        EnemyFollowAI followAI = go.AddComponent<EnemyFollowAI>();
+        followAI.spriteRenderer = sr;
+        followAI.animator = anim;
+        followAI.detectionRadius = 5.2f;
+        followAI.stoppingDistance = 0.95f;
+        followAI.walkSpeed = 1.6f;
+        followAI.chaseSpeed = 2.8f;
+        followAI.wanderRadius = 1.1f;
+
+        Level2BossController bossController = go.AddComponent<Level2BossController>();
+        bossController.bossDisplayName = "EL CAPATAZ PUNK";
+        bossController.nextSceneIdentifier = "Nivel_3";
+
+        EnemyEncounterTrigger encounter = go.AddComponent<EnemyEncounterTrigger>();
+        encounter.forceDoubleEncounterGroup = false;
+        encounter.enemies = new EnemyData[] { bossData };
+        encounter.isBossEncounter = true;
+        encounter.nextSceneName = "Nivel_3";
+        encounter.level2BossController = bossController;
+        encounter.victoryNarrativeLines = bossController.bossDefeatedNarrativeLines;
+
+        return go;
+    }
+
+    // =========================================================================================
+    // SISTEMA DE LOOT EN EL MAPA: BOTES DE BASURA Y BOLSAS DE BASURA (InteractableLoot)
+    // =========================================================================================
+
+    private static void SpawnLevel2TrashLootContainers(Transform rootParent)
+    {
+        GameObject lootRoot = new GameObject("Contenedores_Basura_Loot");
+        lootRoot.transform.SetParent(rootParent, false);
+
+        Sprite trashCanFull = LoadProjectSprite("Assets/Sprites/PostApocalypse_AssetPack_v1.1.2/Objects/Trash-can_1.png");
+        Sprite trashCanEmpty = LoadProjectSprite("Assets/Sprites/PostApocalypse_AssetPack_v1.1.2/Objects/Trash-can_2.png");
+        Sprite trashBagFull = LoadProjectSprite("Assets/Sprites/PostApocalypse_AssetPack_v1.1.2/Objects/Trash-bag_1.png");
+        Sprite trashBagEmpty = LoadProjectSprite("Assets/Sprites/PostApocalypse_AssetPack_v1.1.2/Objects/Trash-bag_2.png");
+
+        // Zona 1: Plazuela Superior
+        CreateTrashLootContainer(
+            "BoteBasura_PlazuelaOeste",
+            lootRoot.transform,
+            new Vector3(-10.8f, 2.5f, 0f),
+            TrashContainerType.BoteDeBasura,
+            "Bote de Basura Oxidado",
+            trashCanFull,
+            trashCanEmpty
+        );
+
+        CreateTrashLootContainer(
+            "BolsaBasura_EsquinaNorte",
+            lootRoot.transform,
+            new Vector3(-0.4f, 2.5f, 0f),
+            TrashContainerType.BolsaDeBasura,
+            "Bolsa de Basura Negra",
+            trashBagFull,
+            trashBagEmpty
+        );
+
+        // Zona 2: Pasaje Estrecho Vertical
+        CreateTrashLootContainer(
+            "BolsaBasura_PasajeAlto",
+            lootRoot.transform,
+            new Vector3(-2.5f, -6.2f, 0f),
+            TrashContainerType.BolsaDeBasura,
+            "Bolsa de Basura del Pasaje",
+            trashBagFull,
+            trashBagEmpty
+        );
+
+        CreateTrashLootContainer(
+            "BoteBasura_ContenedorVerde",
+            lootRoot.transform,
+            new Vector3(-0.3f, -14.2f, 0f),
+            TrashContainerType.BoteDeBasura,
+            "Bote de Basura del Callejón",
+            trashCanFull,
+            trashCanEmpty
+        );
+
+        // Zona 3: Corredor Sur hacia la Guarida
+        CreateTrashLootContainer(
+            "BoteBasura_CorredorSur_Oeste",
+            lootRoot.transform,
+            new Vector3(3.6f, -16.6f, 0f),
+            TrashContainerType.BoteDeBasura,
+            "Bote de Basura Callejero",
+            trashCanFull,
+            trashCanEmpty
+        );
+
+        CreateTrashLootContainer(
+            "BolsaBasura_CarpasSur",
+            lootRoot.transform,
+            new Vector3(11.2f, -18.6f, 0f),
+            TrashContainerType.BolsaDeBasura,
+            "Bolsa de Basura Abandonada",
+            trashBagFull,
+            trashBagEmpty
+        );
+
+        CreateTrashLootContainer(
+            "BoteBasura_AntesalaJefe",
+            lootRoot.transform,
+            new Vector3(15.2f, -16.6f, 0f),
+            TrashContainerType.BoteDeBasura,
+            "Bote de Basura de la Guarida",
+            trashCanFull,
+            trashCanEmpty
+        );
+    }
+
+    private static GameObject CreateTrashLootContainer(
+        string objectName,
+        Transform parent,
+        Vector3 position,
+        TrashContainerType containerType,
+        string displayName,
+        Sprite unlootedSprite,
+        Sprite lootedSprite)
+    {
+        GameObject go = new GameObject(objectName);
+        go.transform.SetParent(parent, false);
+        go.transform.position = position;
+        go.transform.localScale = new Vector3(3.2f, 3.2f, 1f);
+
+        BoxCollider2D col = go.AddComponent<BoxCollider2D>();
+        col.isTrigger = true;
+        col.size = new Vector2(0.55f, 0.55f);
+
+        SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
+        sr.sprite = unlootedSprite != null ? unlootedSprite : GetWhiteSquareSprite();
+        sr.color = Color.white;
+        sr.sortingOrder = 4;
+
+        InteractableLoot loot = go.AddComponent<InteractableLoot>();
+        loot.containerType = containerType;
+        loot.containerDisplayName = displayName;
+        loot.isLooted = false;
+        loot.showExplorationDialogueOnLoot = true;
+        loot.spriteRenderer = sr;
+        loot.unlootedSprite = unlootedSprite;
+        loot.lootedSprite = lootedSprite;
+        loot.lootTable = BuildProjectLootTable();
+
+        GameObject promptGO = CreateWorldPromptLabel("PromptUI_E", go.transform, new Vector3(0f, 0.30f, 0f), $"[E] REGISTRAR {displayName.ToUpper()}");
+        promptGO.transform.localScale = new Vector3(0.30f, 0.30f, 1f);
+        loot.promptUI = promptGO;
+        loot.promptLabel = promptGO.GetComponent<TextMeshPro>();
+
+        return go;
+    }
+
+    private static List<LootTableEntry> BuildProjectLootTable()
+    {
+        List<LootTableEntry> table = InteractableLoot.BuildDefaultAlleyLootTable();
+        ItemData refresco = RuntimeAssetCatalog.GetItem("Assets/Data/Items/Item_Refresco.asset");
+        ItemData torta = RuntimeAssetCatalog.GetItem("Assets/Data/Items/Item_Torta.asset");
+        ItemData botella = RuntimeAssetCatalog.GetItem("Assets/Data/Items/Item_BotellaVacia.asset")
+                           ?? RuntimeAssetCatalog.GetItem("Assets/Data/Items/Botella_Vacia.asset");
+        ItemData chile = RuntimeAssetCatalog.GetItem("Assets/Data/Items/Item_ChilePolvo.asset")
+                         ?? RuntimeAssetCatalog.GetItem("Assets/Data/Items/Chile_Polvo.asset");
+        ItemData cinta = RuntimeAssetCatalog.GetItem("Assets/Data/Items/Cinta_Canela.asset");
+
+        for (int i = 0; i < table.Count; i++)
+        {
+            LootTableEntry entry = table[i];
+            if (entry.rewardKind == LootRewardKind.InventoryItem)
+            {
+                if (entry.fallbackItemName.Contains("Refresco") && refresco != null) entry.itemData = refresco;
+                else if (entry.fallbackItemName.Contains("Torta") && torta != null) entry.itemData = torta;
+                else if (entry.fallbackItemName.Contains("Botella") && botella != null) entry.itemData = botella;
+                else if (entry.fallbackItemName.Contains("Chile") && chile != null) entry.itemData = chile;
+                else if (entry.fallbackItemName.Contains("Cinta") && cinta != null) entry.itemData = cinta;
+            }
+        }
+        return table;
     }
 
     private static Tilemap CreateGridWithTilemap(string gridName, string layerName, Transform parent, Vector3 layerLocalPos, int sortingOrder)
@@ -407,97 +1012,54 @@ public class Capitulo2IntroNarrative : MonoBehaviour
         return tm;
     }
 
-    /// <summary>
-    /// Construye el mapa del Nivel 2 siguiendo exactamente el mismo orden, proporción y combinación de tiles de la Escena 1:
-    /// - ZONA 1 (Plazuela de Entrada al Callejón, x = -16..3, y = -4..4):
-    ///   Tramo final de la calle pavimentada que desemboca en una plazuela peatonal (BY_23) flanqueada al norte por 3 edificios completos
-    ///   (Ladrillo Rojo, Departamentos de Concreto y Torre Gris), al sur por 2 azoteas cerradas y al este por una azotea con pilas de cajas 2x2.
-    /// - ZONA 2 (Pasaje Estrecho Vertical hacia el Sur, x = -4..1, y = -19..-5):
-    ///   Callejón angosto que baja encajonado entre azoteas completas (Techo de Teja a la izquierda y Azotea de Alquitrán con cajas apiladas a la derecha),
-    ///   con el canal pavimentado bordeado (BY_30, BY_181, BY_205/226, BY_186, BY_32), faroles callejeros y el contenedor verde 2x2 (TP_845..883).
-    /// - ZONA 3 (Callejón Profundo del Sur hacia la Guarida de El Calacas, x = -4..26, y = -25..-20):
-    ///   Al llegar al fondo del pasaje vertical, el camino dobla 90° al este pasando al pie de 3 edificios altos en medio del mapa
-    ///   (Edificio de Ladrillo con Letrero, Edificio de Concreto y el Almacén Industrial de El Calacas) y 4 azoteas cerradas al sur.
-    /// </summary>
     private static void PopulateHarmoniousAlleyMap(Tilemap suelo, Tilemap edificios, Tilemap decoracionO, Tilemap decoracionN, Transform colliders)
     {
         // =========================================================================
         // 1. ZONA 1: ENTRADA DESDE LA CALLE Y PLAZUELA SUPERIOR (x = -16..3, y = -4..4)
         // =========================================================================
-
-        // A. Tramo final de la calle asfaltada al Oeste (x = -16..-11, y = -4..4) con paso peatonal igual que Escena 1
         StampStreetEntranceWest(suelo, -16, -11);
-
-        // B. Piso peatonal limpio y uniforme (BY_23) en toda la Plazuela Superior (x = -10..3, y = -4..4)
         FillRect(suelo, -10, 3, -4, 4, BY(23));
-
-        // C. Rectángulo de desagüe/desgaste con marco 9-slice en el centro de la plazuela (x = -8..-3, y = -3..2) — idéntico a Escena 1 (x = 22..27, y = -7..2)
         StampFramedDrainagePatch(edificios, decoracionO, -8, -3, -3, 2);
 
-        // D. Edificios del Norte de la Zona 1 (y = 5..12)
-        // Edificio N1: Ladrillo Rojo con toldo y ventanas (x = -16..-8, y = 5..11) — réplica de Escena 1 (x = -11..-3, y = 5..11)
         StampBrickBuildingA(edificios, decoracionO, colliders, -16, -8, 5, true);
-        // Edificio N2: Departamentos de Concreto con ventanal central 3x4 (x = -7..-1, y = 5..10) — réplica de Escena 1 (x = -2..4, y = 5..10)
         StampConcreteBuildingB(edificios, colliders, -7, -1, 5);
-        // Edificio N3: Torre Gris Oscura con tuberías y ventilaciones (x = 0..7, y = 5..10) — réplica de Escena 1 (x = 5..12, y = 5..10)
         StampDarkTowerBuildingC(edificios, decoracionO, colliders, 0, 7, 5);
 
-        // E. Azotea Este que cierra el paso recto y obliga a doblar al Sur (x = 4..10, y = -4..4) — réplica de Escena 1 (x = 44..50, y = -4..5)
         StampRooftopDarkTar(edificios, colliders, 4, 10, -4, 4, false);
-        // Pilas de cajas 2x2 alineadas contra el borde izquierdo de la Azotea Este (x = 2..3, y = -2..3) — igual que en Escena 1 (x = 42..43, y = -2..4)
         StampCrateStack2x2(edificios, colliders, 2, 2, false);
         StampCrateStack2x2(edificios, colliders, 2, 0, false);
         StampCrateStack2x2(edificios, colliders, 2, -2, false);
 
-        // F. Azoteas que encajonan el lado Sur-Oeste de la Zona 1 (x = -16..-5, y = -11..-5)
         StampRooftopDarkTar(edificios, colliders, -16, -11, -11, -5, true);
         StampRooftopLightConcrete(edificios, colliders, -10, -5, -11, -5);
 
-        // G. Decoración ordenada de la Zona 1 (Botes, bolsas de basura, banca y farol alineados junto a las paredes)
-        // Farol callejero en la esquina del edificio N1 (x = -8, y = 4..6)
         StampStreetLamp1x3(decoracionO, -8, 4);
-        // Bolsas y bote de basura al pie del edificio de ladrillo (y = 4), igual que en Escena 1
-        decoracionO.SetTile(new Vector3Int(-14, 4, 0), GD(0)); // Bote cerrado
-        decoracionO.SetTile(new Vector3Int(-13, 4, 0), GD(3)); // Montón de bolsas
-        decoracionO.SetTile(new Vector3Int(-10, 4, 0), GD(4)); // Bolsa gris
-        // Banca de madera 2x1 frente al edificio de concreto (x = -5..-4, y = 4)
+        decoracionO.SetTile(new Vector3Int(-14, 4, 0), GD(0));
+        decoracionO.SetTile(new Vector3Int(-13, 4, 0), GD(3));
+        decoracionO.SetTile(new Vector3Int(-10, 4, 0), GD(4));
         StampBench2x1(decoracionO, colliders, -5, 4);
-        // Botes y bolsas en la esquina antes de bajar al callejón (x = 0..1, y = 4)
-        decoracionO.SetTile(new Vector3Int(0, 4, 0), GD(5));   // Bolsa negra atada
-        decoracionO.SetTile(new Vector3Int(1, 4, 0), GD(14));  // Contenedor/bote
+        decoracionO.SetTile(new Vector3Int(0, 4, 0), GD(5));
+        decoracionO.SetTile(new Vector3Int(1, 4, 0), GD(14));
 
         // =========================================================================
         // 2. ZONA 2: PASAJE ESTRECHO VERTICAL HACIA EL SUR (x = -4..1, y = -19..-5)
         // =========================================================================
-
-        // A. Piso peatonal del tramo medio vertical (x = -4..1, y = -12..-5)
         FillRect(edificios, -4, 1, -12, -5, BY(23));
-
-        // B. Canal estrecho pavimentado con guarniciones laterales (x = -4..1, y = -19..-13) — réplica exacta de Escena 1 (x = 23..28, y = -26..-19)
         StampVerticalAlleyChannel(edificios, -4, -19, -13);
 
-        // C. Azoteas y bloques que encajonan el Pasaje Vertical por el Oeste (x = -16..-5, y = -19..-12)
         StampRooftopBrownTile(edificios, colliders, -12, -5, -19, -12);
         StampRooftopBeige(edificios, colliders, -16, -13, -19, -12);
 
-        // D. Azotea y pilas de cajas que encajonan el Pasaje Vertical por el Este (x = 4..10, y = -11..-5)
         StampRooftopDarkTar(edificios, colliders, 4, 10, -11, -5, false);
-        // Pilas de cajas 2x2 alineadas contra la pared derecha del pasaje (x = 2..3, y = -11..-6) — réplica de Escena 1 (x = 28..29, y = -12..-6)
         StampCrateStack2x2(edificios, colliders, 2, -7, true);
         StampCrateStack2x2(edificios, colliders, 2, -9, true);
         StampCrateStack2x2(edificios, colliders, 2, -11, true);
 
-        // E. Decoración ordenada del Pasaje Vertical (exactamente como el callejón vertical de Escena 1)
-        // Bolsas de basura pegadas al muro izquierdo (x = -4, y = -8..-7)
         decoracionO.SetTile(new Vector3Int(-4, -7, 0), GD(3));
         decoracionO.SetTile(new Vector3Int(-4, -8, 0), GD(5));
-        // Poste eléctrico a la derecha (x = 1, y = -12..-10)
         StampElectricPole1x3(decoracionO, 1, -12);
-        // Faroles en la pared izquierda del canal estrecho (x = -4, y = -16..-14)
         StampStreetLamp1x3(decoracionO, -4, -16);
-        // Contenedor de basura verde 2x2 (TP_845/846/882/883) pegado al muro derecho (x = 0..1, y = -17..-16) — idéntico a Escena 1 (x = 27..28, y = -23..-22)
         StampDumpster2x2(decoracionO, colliders, 0, -17);
-        // Bolsas de basura pequeñas (TP_246) junto al paso (x = -3, y = -13 y x = 0, y = -13)
         if (TP(246) != null)
         {
             decoracionO.SetTile(new Vector3Int(-3, -13, 0), TP(246));
@@ -507,68 +1069,52 @@ public class Capitulo2IntroNarrative : MonoBehaviour
         // =========================================================================
         // 3. ZONA 3: CALLEJÓN PROFUNDO DEL SUR Y GUARIDA DE EL CALACAS (x = -4..27, y = -25..-20)
         // =========================================================================
-
-        // A. Piso peatonal limpio y uniforme (BY_23) a lo largo de todo el corredor inferior (x = -4..27, y = -25..-20)
         FillRect(edificios, -4, 27, -25, -20, BY(23));
-
-        // B. Rectángulo de desagüe/humedad con marco 9-slice en medio del corredor sur (x = 6..11, y = -24..-21)
         StampFramedDrainagePatch(edificios, decoracionO, 6, 11, -24, -21);
 
-        // C. GRANDES EDIFICIOS EN EL CENTRO DEL MAPA (Se alzan en y = -19..-12 justo al norte del corredor sur, dando profundidad real)
-        // Edificio C1: Edificio alto de ladrillo con puerta y letrero (x = 2..12, y = -19..-12) — réplica exacta de Escena 1 (x = 13..23, y = 5..12)
         StampShopBrickBuildingD(edificios, decoracionO, decoracionN, colliders, 2, 12, -19);
-        // Edificio C2: Departamentos de concreto con ventanal 3x4 (x = 13..19, y = -19..-14) — réplica exacta de Escena 1 (x = -2..4, y = 5..10)
         StampConcreteBuildingB(edificios, colliders, 13, 19, -19);
-        // Edificio C3: Complejo Industrial de El Calacas (x = 20..26, y = -19..-13) — réplica exacta de Escena 1 (x = 37..43, y = 6..12)
         StampIndustrialWarehouseE(edificios, decoracionO, colliders, 20, 26, -19);
 
-        // Azoteas superiores detrás de los Edificios C2 y C3 (x = 11..26, y = -13..-4) para que no quede hueco negro entre las zonas
         StampRooftopLightConcrete(edificios, colliders, 11, 18, -11, -4);
         StampRooftopDarkTar(edificios, colliders, 19, 26, -12, -4, true);
 
-        // D. Azotea Este que cierra el fondo del corredor sur (x = 28..33, y = -25..-13) con pilas de cajas 2x2 en x = 26..27
         StampRooftopDarkTar(edificios, colliders, 28, 33, -25, -13, false);
         StampCrateStack2x2(edificios, colliders, 26, -21, false);
         StampCrateStack2x2(edificios, colliders, 26, -23, false);
         StampCrateStack2x2(edificios, colliders, 26, -25, false);
 
-        // E. Fila continua de Azoteas cerradas en 9-slice al Sur del corredor (x = -12..27, y = -32..-26) — igual que el borde sur de Escena 1
         StampRooftopDarkTar(edificios, colliders, -12, -3, -32, -26, true);
         StampRooftopLightConcrete(edificios, colliders, -2, 8, -32, -26);
         StampRooftopBeige(edificios, colliders, 9, 17, -32, -26);
         StampRooftopBrownTile(edificios, colliders, 18, 27, -32, -26);
 
-        // F. Decoración ordenada del Corredor Sur (Carpas, bancas, botes y bolsas alineados como en Escena 1)
-        // Al pie de los edificios del norte del corredor (y = -20):
         StampStreetLamp1x3(decoracionO, 2, -20);
         decoracionO.SetTile(new Vector3Int(4, -20, 0), GD(4));
         decoracionO.SetTile(new Vector3Int(5, -20, 0), GD(5));
         decoracionO.SetTile(new Vector3Int(6, -20, 0), GD(14));
-        decoracionO.SetTile(new Vector3Int(14, -20, 0), TX(8)); // Caja de madera TX Props
-        decoracionO.SetTile(new Vector3Int(15, -20, 0), TX(9)); // Caja de madera TX Props
+        decoracionO.SetTile(new Vector3Int(14, -20, 0), TX(8));
+        decoracionO.SetTile(new Vector3Int(15, -20, 0), TX(9));
         if (TP(676) != null)
         {
             decoracionO.SetTile(new Vector3Int(18, -20, 0), TP(676));
             decoracionO.SetTile(new Vector3Int(19, -20, 0), TP(676));
         }
 
-        // Junto al borde sur del corredor (y = -25..-24), replicando la acera sur de Escena 1 (y = -7..-6):
-        decoracionO.SetTile(new Vector3Int(-1, -25, 0), GD(0)); // Bote de basura
-        decoracionO.SetTile(new Vector3Int(0, -25, 0), GD(3));  // Bolsas de basura
-        decoracionO.SetTile(new Vector3Int(1, -25, 0), GD(5));  // Bolsa negra
-        StampBench2x1(decoracionO, colliders, 3, -25);          // Banca 2x1
-        StampCanopy3x2(decoracionO, colliders, 12, -25, false); // Carpa verde 3x2 (TP_623..625 / TP_660..662)
-        StampCanopy3x2(decoracionO, colliders, 15, -25, true);  // Carpa azul 3x2 (TP_771..773 / TP_808..810)
+        decoracionO.SetTile(new Vector3Int(-1, -25, 0), GD(0));
+        decoracionO.SetTile(new Vector3Int(0, -25, 0), GD(3));
+        decoracionO.SetTile(new Vector3Int(1, -25, 0), GD(5));
+        StampBench2x1(decoracionO, colliders, 3, -25);
+        StampCanopy3x2(decoracionO, colliders, 12, -25, false);
+        StampCanopy3x2(decoracionO, colliders, 15, -25, true);
 
-        // Pequeña estructura de ladrillo 3x4 en la antesala de El Calacas (x = 20..22, y = -24..-21) — réplica de Escena 1 (x = 34..36, y = -2..1)
         StampSmallBrickOutbuilding3x4(decoracionO, colliders, 20, -24);
 
-        // Colisionadores de los límites exteriores (Oeste de la calle de entrada)
         AddGridBoxCollider("Limite_Oeste_Entrada", colliders, -17, -17, -5, 5);
     }
 
     // =========================================================================================
-    // ESTAMPAS ARQUITECTÓNICAS EXACTAS DE LA ESCENA 1 (SIN ELEMENTOS ALEATORIOS)
+    // ESTAMPAS ARQUITECTÓNICAS EXACTAS DE LA ESCENA 1
     // =========================================================================================
 
     private static void FillRect(Tilemap tm, int xMin, int xMax, int yMin, int yMax, TileBase tile)
@@ -600,10 +1146,6 @@ public class Capitulo2IntroNarrative : MonoBehaviour
         col.size = new Vector2(worldXMax - worldXMin, worldYMax - worldYMin);
     }
 
-    /// <summary>
-    /// Estampa el tramo final de la calle asfaltada con banquetas norte/sur y paso de cebra peatonal,
-    /// idéntico al extremo derecho de la avenida en 01_Nivel1_SantaFelipina.unity (x = 12..18, y = -4..4).
-    /// </summary>
     private static void StampStreetEntranceWest(Tilemap suelo, int xMin, int xMax)
     {
         for (int x = xMin; x <= xMax; x++)
@@ -612,12 +1154,10 @@ public class Capitulo2IntroNarrative : MonoBehaviour
             bool isCrosswalk = (x >= xMax - 3 && x <= xMax - 1);
             bool isRightEdge = (x == xMax);
 
-            // Banqueta Norte (y = 4 borde sup, y = 3 loseta, y = 2 guarnición)
             suelo.SetTile(new Vector3Int(x, 4, 0), isFirst ? BY(6) : BY(48));
             suelo.SetTile(new Vector3Int(x, 3, 0), isFirst ? BY(28) : (isRightEdge ? BY(190) : BY(188)));
             suelo.SetTile(new Vector3Int(x, 2, 0), isFirst ? BY(157) : (isRightEdge ? BY(162) : BY(161)));
 
-            // Arroyo vehicular (y = -1..1)
             if (isFirst)
             {
                 suelo.SetTile(new Vector3Int(x, 1, 0), BY(181));
@@ -643,16 +1183,12 @@ public class Capitulo2IntroNarrative : MonoBehaviour
                 suelo.SetTile(new Vector3Int(x, -1, 0), BY(210));
             }
 
-            // Banqueta Sur (y = -2 guarnición, y = -3 loseta, y = -4 borde inf)
             suelo.SetTile(new Vector3Int(x, -2, 0), isRightEdge ? BY(231) : BY(227));
             suelo.SetTile(new Vector3Int(x, -3, 0), isFirst ? BY(6) : (isRightEdge ? BY(190) : BY(188)));
             suelo.SetTile(new Vector3Int(x, -4, 0), isFirst ? BY(28) : (isRightEdge ? BY(10) : BY(9)));
         }
     }
 
-    /// <summary>
-    /// Estampa el rectángulo de desagüe/desgaste con marco 9-slice completo idéntico a Escena 1 (x = 22..27, y = -7..2).
-    /// </summary>
     private static void StampFramedDrainagePatch(Tilemap edificios, Tilemap decoracionO, int xMin, int xMax, int yMin, int yMax)
     {
         for (int x = xMin; x <= xMax; x++)
@@ -692,12 +1228,8 @@ public class Capitulo2IntroNarrative : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Estampa el canal vertical estrecho de 6 celdas de ancho idéntico al callejón sur de Escena 1 (x = 23..28, y = -26..-19).
-    /// </summary>
     private static void StampVerticalAlleyChannel(Tilemap edificios, int xLeft, int yBottom, int yTop)
     {
-        // Fila superior de entrada al canal (y = yTop): BY_23, BY_9 x4, BY_23
         edificios.SetTile(new Vector3Int(xLeft, yTop, 0), BY(23));
         edificios.SetTile(new Vector3Int(xLeft + 1, yTop, 0), BY(9));
         edificios.SetTile(new Vector3Int(xLeft + 2, yTop, 0), BY(9));
@@ -705,7 +1237,6 @@ public class Capitulo2IntroNarrative : MonoBehaviour
         edificios.SetTile(new Vector3Int(xLeft + 4, yTop, 0), BY(9));
         edificios.SetTile(new Vector3Int(xLeft + 5, yTop, 0), BY(23));
 
-        // Segunda fila (escalón de guarnición, y = yTop - 1): BY_30, BY_157, BY_161, BY_161, BY_162, BY_32
         int yStep = yTop - 1;
         edificios.SetTile(new Vector3Int(xLeft, yStep, 0), BY(30));
         edificios.SetTile(new Vector3Int(xLeft + 1, yStep, 0), BY(157));
@@ -714,7 +1245,6 @@ public class Capitulo2IntroNarrative : MonoBehaviour
         edificios.SetTile(new Vector3Int(xLeft + 4, yStep, 0), BY(162));
         edificios.SetTile(new Vector3Int(xLeft + 5, yStep, 0), BY(32));
 
-        // Cuerpo del canal (y = yBottom .. yTop - 2)
         for (int y = yTop - 2; y >= yBottom; y--)
         {
             int offset = (yTop - 2) - y;
@@ -729,9 +1259,6 @@ public class Capitulo2IntroNarrative : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Edificio A: Ladrillo rojo de 7 pisos de alto con cornisas, ventanas dobles y toldo opcional (réplica de Escena 1, x = -11..-3, y = 5..11).
-    /// </summary>
     private static void StampBrickBuildingA(Tilemap edificios, Tilemap decoracionO, Transform colliders, int xMin, int xMax, int yBase, bool withAwning)
     {
         for (int x = xMin; x <= xMax; x++)
@@ -748,7 +1275,6 @@ public class Capitulo2IntroNarrative : MonoBehaviour
             edificios.SetTile(new Vector3Int(x, yBase + 6, 0), isLeft ? TP(260) : (isRight ? TP(262) : TP(261)));
         }
 
-        // Ventanas superiores alineadas (TP_694 / TP_731) y rejilla (TP_548)
         int[] winCols = new int[] { xMin + 2, xMax - 2 };
         foreach (int wx in winCols)
         {
@@ -757,7 +1283,6 @@ public class Capitulo2IntroNarrative : MonoBehaviour
         }
         decoracionO.SetTile(new Vector3Int(xMax - 2, yBase + 3, 0), TP(548));
 
-        // Toldo comercial 2x2 (TP_911, 912 / TP_948, 949)
         if (withAwning)
         {
             decoracionO.SetTile(new Vector3Int(xMin + 3, yBase + 1, 0), TP(911));
@@ -769,9 +1294,6 @@ public class Capitulo2IntroNarrative : MonoBehaviour
         AddGridBoxCollider($"Col_EdificioLadrillo_{xMin}_{yBase}", colliders, xMin, xMax, yBase, yBase + 6);
     }
 
-    /// <summary>
-    /// Edificio B: Departamentos de concreto con ventanal central integrado 3x4 (réplica de Escena 1, x = -2..4, y = 5..10).
-    /// </summary>
     private static void StampConcreteBuildingB(Tilemap edificios, Transform colliders, int xMin, int xMax, int yBase)
     {
         int center = (xMin + xMax) / 2;
@@ -779,7 +1301,7 @@ public class Capitulo2IntroNarrative : MonoBehaviour
         {
             bool isLeft = (x == xMin);
             bool isRight = (x == xMax);
-            int bayOffset = x - (center - 1); // 0, 1, 2 para las 3 columnas centrales
+            int bayOffset = x - (center - 1);
 
             edificios.SetTile(new Vector3Int(x, yBase, 0), isLeft ? TP(452) : (isRight ? TP(453) : TP(306)));
 
@@ -804,16 +1326,13 @@ public class Capitulo2IntroNarrative : MonoBehaviour
         AddGridBoxCollider($"Col_EdificioConcreto_{xMin}_{yBase}", colliders, xMin, xMax, yBase, yBase + 5);
     }
 
-    /// <summary>
-    /// Edificio C: Torre urbana gris oscura con ventanal superior 3x2, tuberías y ventilaciones (réplica de Escena 1, x = 5..12, y = 5..10).
-    /// </summary>
     private static void StampDarkTowerBuildingC(Tilemap edificios, Tilemap decoracionO, Transform colliders, int xMin, int xMax, int yBase)
     {
         for (int x = xMin; x <= xMax; x++)
         {
             bool isLeft = (x == xMin);
             bool isRight = (x == xMax);
-            int bayIdx = x - (xMin + 1); // 0, 1, 2 en las primeras 3 columnas internas
+            int bayIdx = x - (xMin + 1);
 
             edificios.SetTile(new Vector3Int(x, yBase, 0), isLeft ? TP(448) : (isRight ? TP(449) : TP(302)));
             edificios.SetTile(new Vector3Int(x, yBase + 1, 0), isLeft ? TP(411) : (isRight ? TP(412) : TP(191)));
@@ -832,7 +1351,6 @@ public class Capitulo2IntroNarrative : MonoBehaviour
             }
         }
 
-        // Tuberías y ventilaciones en la base (igual que Escena 1 en x = 5..12, y = 3..5)
         decoracionO.SetTile(new Vector3Int(xMin + 1, yBase, 0), TP(406));
         decoracionO.SetTile(new Vector3Int(xMin + 1, yBase - 1, 0), TP(480));
         decoracionO.SetTile(new Vector3Int(xMin + 4, yBase, 0), TP(982));
@@ -844,9 +1362,6 @@ public class Capitulo2IntroNarrative : MonoBehaviour
         AddGridBoxCollider($"Col_TorreGris_{xMin}_{yBase}", colliders, xMin, xMax, yBase, yBase + 5);
     }
 
-    /// <summary>
-    /// Edificio D: Gran edificio de ladrillo de 8 pisos con puerta y marquesina de 3 filas (réplica de Escena 1, x = 13..23, y = 5..12).
-    /// </summary>
     private static void StampShopBrickBuildingD(Tilemap edificios, Tilemap decoracionO, Tilemap decoracionN, Transform colliders, int xMin, int xMax, int yBase)
     {
         for (int x = xMin; x <= xMax; x++)
@@ -855,32 +1370,25 @@ public class Capitulo2IntroNarrative : MonoBehaviour
             bool isRight = (x == xMax);
             int localX = x - xMin;
 
-            // Fila base (yBase)
             if (isLeft) edificios.SetTile(new Vector3Int(x, yBase, 0), TP(444));
             else if (isRight) edificios.SetTile(new Vector3Int(x, yBase, 0), TP(445));
             else if (localX == 6) edificios.SetTile(new Vector3Int(x, yBase, 0), TP(955));
             else edificios.SetTile(new Vector3Int(x, yBase, 0), TP(298));
 
-            // Fila 1 (yBase + 1)
             if (isLeft) edificios.SetTile(new Vector3Int(x, yBase + 1, 0), TP(407));
             else if (isRight) edificios.SetTile(new Vector3Int(x, yBase + 1, 0), TP(408));
             else if (localX == 5) edificios.SetTile(new Vector3Int(x, yBase + 1, 0), TP(917));
             else if (localX == 6) edificios.SetTile(new Vector3Int(x, yBase + 1, 0), TP(918));
             else edificios.SetTile(new Vector3Int(x, yBase + 1, 0), TP(187));
 
-            // Fila 2 (yBase + 2)
             edificios.SetTile(new Vector3Int(x, yBase + 2, 0), isLeft ? TP(407) : (isRight ? TP(408) : TP(187)));
-
-            // Fila 3 (yBase + 3: cornisa intermedia)
             edificios.SetTile(new Vector3Int(x, yBase + 3, 0), isLeft ? TP(334) : (isRight ? TP(336) : TP(335)));
 
-            // Filas 4 a 7 (yBase + 4 .. yBase + 7)
             for (int dy = 4; dy <= 7; dy++)
             {
                 edificios.SetTile(new Vector3Int(x, yBase + dy, 0), isLeft ? TP(407) : (isRight ? TP(408) : TP(187)));
             }
 
-            // Marquesina / fachada decorativa en filas yBase+1..yBase+3
             TileBase tTop = isLeft ? TP(356) : ((localX == 1) ? TP(357) : (isRight ? TP(359) : TP(358)));
             TileBase tMid = isLeft ? TP(393) : ((localX == 1) ? TP(394) : (isRight ? TP(396) : TP(395)));
             TileBase tBot = isLeft ? TP(430) : ((localX == 1) ? TP(431) : (isRight ? TP(433) : TP(432)));
@@ -889,7 +1397,6 @@ public class Capitulo2IntroNarrative : MonoBehaviour
             decoracionO.SetTile(new Vector3Int(x, yBase + 1, 0), tBot);
         }
 
-        // Ventanas del piso superior (TP_694 / TP_731)
         int[] winOffsets = new int[] { 2, 5, 8 };
         foreach (int wo in winOffsets)
         {
@@ -901,10 +1408,6 @@ public class Capitulo2IntroNarrative : MonoBehaviour
         AddGridBoxCollider($"Col_EdificioTienda_{xMin}_{yBase}", colliders, xMin, xMax, yBase, yBase + 7);
     }
 
-    /// <summary>
-    /// Edificio E: Almacén Industrial de El Calacas con cortina metálica, puerta y letrero en el techo
-    /// (réplica exacta de Escena 1, x = 37..43, y = 6..12).
-    /// </summary>
     private static void StampIndustrialWarehouseE(Tilemap edificios, Tilemap decoracionO, Transform colliders, int xMin, int xMax, int yBase)
     {
         for (int x = xMin; x <= xMax; x++)
@@ -913,7 +1416,6 @@ public class Capitulo2IntroNarrative : MonoBehaviour
             bool isRight = (x == xMax);
             int localX = x - xMin;
 
-            // Pared industrial (edificios)
             edificios.SetTile(new Vector3Int(x, yBase, 0), isLeft ? TP(999) : (isRight ? TP(1001) : TP(1000)));
             for (int dy = 1; dy <= 5; dy++)
             {
@@ -921,14 +1423,12 @@ public class Capitulo2IntroNarrative : MonoBehaviour
             }
             edificios.SetTile(new Vector3Int(x, yBase + 6, 0), isLeft ? TP(925) : (isRight ? TP(927) : TP(926)));
 
-            // Fachada inferior con cortina y puerta (decoracionO, yBase y yBase+1)
             TileBase AwningTop = isLeft ? TP(644) : (isRight ? TP(648) : TP(645));
             TileBase AwningBot = isLeft ? TP(681) : (isRight ? TP(685) : ((localX == xMax - xMin - 1) ? TP(757) : TP(682)));
             decoracionO.SetTile(new Vector3Int(x, yBase + 1, 0), AwningTop);
             decoracionO.SetTile(new Vector3Int(x, yBase, 0), AwningBot);
         }
 
-        // Letrero industrial en la parte alta (yBase + 5 y yBase + 6)
         if (xMax - xMin >= 6)
         {
             decoracionO.SetTile(new Vector3Int(xMin + 1, yBase + 5, 0), TP(492));
@@ -942,7 +1442,6 @@ public class Capitulo2IntroNarrative : MonoBehaviour
             decoracionO.SetTile(new Vector3Int(xMin + 5, yBase + 6, 0), TP(570));
         }
 
-        // Farol a la izquierda, poste a la derecha y botes TP_680 sobre la marquesina (idéntico a Escena 1)
         StampStreetLamp1x3(decoracionO, xMin, yBase + 2);
         StampElectricPole1x3(decoracionO, xMax, yBase + 2);
         decoracionO.SetTile(new Vector3Int(xMin + 2, yBase + 2, 0), TP(680));
@@ -950,10 +1449,6 @@ public class Capitulo2IntroNarrative : MonoBehaviour
 
         AddGridBoxCollider($"Col_AlmacenCalacas_{xMin}_{yBase}", colliders, xMin, xMax, yBase, yBase + 6);
     }
-
-    // =========================================================================================
-    // ESTAMPAS DE AZOTEAS EN 9-SLICE (RECTÁNGULOS COMPLETOS CON SUS 4 ESQUINAS Y BORDES)
-    // =========================================================================================
 
     private static void StampRooftopDarkTar(Tilemap edificios, Transform colliders, int xMin, int xMax, int yMin, int yMax, bool useAltFill)
     {
@@ -1018,10 +1513,6 @@ public class Capitulo2IntroNarrative : MonoBehaviour
         }
         AddGridBoxCollider($"Col_AzoteaBeige_{xMin}_{yMin}", colliders, xMin, xMax, yMin, yMax);
     }
-
-    // =========================================================================================
-    // ESTAMPAS DE OBJETOS MULTI-CELDA DE LA ESCENA 1 (CAJAS, CONTENEDORES, CARPAS, FAROLES)
-    // =========================================================================================
 
     private static void StampCrateStack2x2(Tilemap edificios, Transform colliders, int x, int yBottom, bool variantB)
     {
@@ -1095,14 +1586,13 @@ public class Capitulo2IntroNarrative : MonoBehaviour
     }
 
     // =========================================================================================
-    // COMPAÑERO INVESTIGADOR PRIVADO (CON SPRITE GENÉRICO) Y PANEL DE DIÁLOGO NOIR
+    // COMPAÑERO INVESTIGADOR PRIVADO (CON SPRITE GENÉRICO + DETECTIVESTATS) Y DIÁLOGO NOIR
     // =========================================================================================
 
     public static CompanionFollowAI CreateInvestigatorCompanion(Transform parent)
     {
         GameObject npcGO = new GameObject("Investigador_Privado");
         if (parent != null) npcGO.transform.SetParent(parent, false);
-        // Ubicado en la plazuela superior justo en la entrada hacia el callejón vertical (x = -4.2, y = -0.4)
         npcGO.transform.position = new Vector3(-4.2f, -0.4f, 0f);
         npcGO.transform.localScale = Vector3.one;
 
@@ -1130,22 +1620,14 @@ public class Capitulo2IntroNarrative : MonoBehaviour
         companion.spriteRenderer = sr;
         companion.followDistance = 1.45f;
 
+        DetectiveStats detStats = npcGO.AddComponent<DetectiveStats>();
+        detStats.companionName = "INVESTIGADOR VARGAS";
+        detStats.hasDetectiveInParty = true;
+        companion.detectiveStats = detStats;
+
         EnsureGenericInvestigatorAppearance(companion);
 
-        // Etiqueta flotante sobre el Investigador
-        GameObject tagGO = new GameObject("Badge_Investigador");
-        tagGO.transform.SetParent(npcGO.transform, false);
-        tagGO.transform.localPosition = new Vector3(0f, 1.68f, 0f);
-        TextMeshPro badgeTMP = tagGO.AddComponent<TextMeshPro>();
-        badgeTMP.text = "INVESTIGADOR PRIVADO";
-        badgeTMP.fontSize = 2.3f;
-        badgeTMP.alignment = TextAlignmentOptions.Center;
-        badgeTMP.color = new Color(0.95f, 0.78f, 0.36f, 0.95f);
-        badgeTMP.sortingOrder = 6;
-        PlayerHealthBarUI.EnsureCleanPixelFont(badgeTMP);
-
-        // Indicador interactivo [E]
-        GameObject promptGO = CreateWorldPromptLabel("PromptUI_E", npcGO.transform, new Vector3(0f, 2.02f, 0f), "[E] HABLAR CON INVESTIGADOR");
+        GameObject promptGO = CreateWorldPromptLabel("PromptUI_E", npcGO.transform, new Vector3(0f, 2.02f, 0f), "");
         companion.promptUI = promptGO;
         companion.promptText = promptGO.GetComponent<TextMeshPro>();
 
@@ -1161,26 +1643,54 @@ public class Capitulo2IntroNarrative : MonoBehaviour
             companion.spriteRenderer = companion.GetComponentInChildren<SpriteRenderer>();
         }
 
-        Sprite genericIdle1 = LoadProjectSprite("Assets/Sprites/Player - Cardo/Idle/1.png");
+        Sprite detectiveCustomSprite = LoadProjectSprite("Assets/Sprites/Detective/detective_stand_down.png");
+        Sprite detectiveSideSprite = LoadProjectSprite("Assets/Sprites/Detective/detective_stand_side.png");
+        Sprite genericIdle1 = (detectiveCustomSprite != null) ? detectiveCustomSprite : LoadProjectSprite("Assets/Sprites/Player - Cardo/Idle/1.png");
         Sprite genericFallback = LoadProjectSprite("Assets/Sprites/PlaceholderSquare.png") ?? GetWhiteSquareSprite();
         Sprite baseGeneric = (genericIdle1 != null) ? genericIdle1 : genericFallback;
+        Sprite sideIdle = (detectiveSideSprite != null) ? detectiveSideSprite : baseGeneric;
 
-        Sprite[] genericFrames = new Sprite[8];
-        for (int i = 0; i < 8; i++)
+        Sprite[] genericFrames;
+        if (detectiveCustomSprite != null)
         {
-            Sprite f = LoadProjectSprite($"Assets/Sprites/Player - Cardo/Idle/{i + 1}.png");
-            genericFrames[i] = (f != null) ? f : baseGeneric;
+            Sprite w1 = LoadProjectSprite("Assets/Sprites/Detective/detective_walk_1.png");
+            Sprite w2 = LoadProjectSprite("Assets/Sprites/Detective/detective_walk_2.png");
+            Sprite w3 = LoadProjectSprite("Assets/Sprites/Detective/detective_walk_3.png");
+            Sprite w4 = LoadProjectSprite("Assets/Sprites/Detective/detective_walk_4.png");
+
+            if (w1 != null && w2 != null && w3 != null && w4 != null)
+            {
+                genericFrames = new Sprite[] { w1, w2, w3, w4 };
+            }
+            else
+            {
+                genericFrames = new Sprite[] { sideIdle };
+            }
+        }
+        else
+        {
+            genericFrames = new Sprite[8];
+            for (int i = 0; i < 8; i++)
+            {
+                Sprite f = LoadProjectSprite($"Assets/Sprites/Player - Cardo/Idle/{i + 1}.png");
+                genericFrames[i] = (f != null) ? f : baseGeneric;
+            }
         }
 
         companion.transform.localScale = Vector3.one;
         if (companion.spriteRenderer != null)
         {
-            companion.spriteRenderer.sprite = baseGeneric;
-            companion.spriteRenderer.color = new Color(0.78f, 0.86f, 0.96f, 1f);
-            companion.spriteRenderer.flipX = true;
+            companion.spriteRenderer.sprite = companion.isFollowingPlayer ? sideIdle : baseGeneric;
+            companion.spriteRenderer.color = Color.white;
+            companion.spriteRenderer.flipX = false;
             companion.spriteRenderer.sortingOrder = 5;
 
-            if (genericIdle1 == null)
+            if (detectiveCustomSprite != null)
+            {
+                companion.spriteRenderer.transform.localScale = Vector3.one;
+                companion.spriteRenderer.transform.localPosition = new Vector3(0f, 0.65f, 0f);
+            }
+            else if (genericIdle1 == null)
             {
                 companion.spriteRenderer.transform.localScale = new Vector3(0.75f, 1.45f, 1f);
                 companion.spriteRenderer.transform.localPosition = new Vector3(0f, 0.72f, 0f);
@@ -1193,11 +1703,21 @@ public class Capitulo2IntroNarrative : MonoBehaviour
         }
 
         companion.idleDownSprite = baseGeneric;
-        companion.idleUpSprite = baseGeneric;
-        companion.idleSideSprite = baseGeneric;
+        companion.idleUpSprite = sideIdle;
+        companion.idleSideSprite = sideIdle;
         companion.walkDownFrames = genericFrames;
         companion.walkUpFrames = genericFrames;
         companion.walkSideFrames = genericFrames;
+
+        DetectiveStats stats = companion.GetComponent<DetectiveStats>();
+        if (stats == null)
+        {
+            stats = companion.gameObject.AddComponent<DetectiveStats>();
+        }
+        Sprite detPortraitSprite = LoadProjectSprite("Assets/Portraits/Detective.png");
+        stats.combatPortraitSprite = (detPortraitSprite != null) ? detPortraitSprite : baseGeneric;
+        stats.combatIdleSprite = baseGeneric;
+        companion.detectiveStats = stats;
     }
 
     public static void UpgradeDialoguePanelToNoirStyle(ExplorationDialogueManager expManager)
@@ -1236,8 +1756,8 @@ public class Capitulo2IntroNarrative : MonoBehaviour
 
         if (expManager.enriquePortrait == null)
             expManager.enriquePortrait = LoadProjectSprite("Assets/Portraits/Enrique.png");
-        if (expManager.investigadorPortrait == null)
-            expManager.investigadorPortrait = LoadProjectSprite("Assets/Sprites/Player - Cardo/Idle/1.png");
+        if (expManager.investigadorPortrait == null || expManager.investigadorPortrait.name.Contains("Cardo") || expManager.investigadorPortrait.name == "1")
+            expManager.investigadorPortrait = LoadProjectSprite("Assets/Portraits/Detective.png") ?? LoadProjectSprite("Assets/Sprites/Detective/detective_stand_down.png");
         if (expManager.corporeoPortrait == null)
             expManager.corporeoPortrait = LoadProjectSprite("Assets/Portraits/Musculatura.png");
         if (expManager.intelectoPortrait == null)
@@ -1414,14 +1934,6 @@ public class Capitulo2IntroNarrative : MonoBehaviour
         GameObject go = new GameObject(name);
         go.transform.SetParent(parent, false);
         go.transform.localPosition = localPos;
-
-        TextMeshPro tmp = go.AddComponent<TextMeshPro>();
-        tmp.text = text;
-        tmp.fontSize = 2.5f;
-        tmp.alignment = TextAlignmentOptions.Center;
-        tmp.color = new Color(0.95f, 0.78f, 0.32f, 1f);
-        tmp.sortingOrder = 7;
-        PlayerHealthBarUI.EnsureCleanPixelFont(tmp);
         go.SetActive(false);
         return go;
     }

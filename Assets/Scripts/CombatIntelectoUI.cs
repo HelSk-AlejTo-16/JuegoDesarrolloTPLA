@@ -32,10 +32,24 @@ public class CombatIntelectoUI : MonoBehaviour
 
     private void Awake()
     {
+        StripLayoutGroupFromContainer();
         if (cancelButton != null)
         {
             cancelButton.onClick.RemoveListener(OnCancelClicked);
             cancelButton.onClick.AddListener(OnCancelClicked);
+        }
+    }
+
+    private void StripLayoutGroupFromContainer()
+    {
+        if (dynamicButtonsContainer == null) return;
+        LayoutGroup lg = dynamicButtonsContainer.GetComponent<LayoutGroup>();
+        if (lg != null)
+        {
+            if (Application.isPlaying)
+                Destroy(lg);
+            else
+                DestroyImmediate(lg);
         }
     }
 
@@ -120,16 +134,22 @@ public class CombatIntelectoUI : MonoBehaviour
         if (dynamicButtonsContainer == null)
             return;
 
+        StripLayoutGroupFromContainer();
+
         List<ButtonRowDescriptor> rows = new List<ButtonRowDescriptor>();
 
         // =====================================================================
-        // SECCIÓN 1: USAR OBJETOS (Curación y Consumibles)
+        // SECCIÓN 1: USAR OBJETOS (Curación y Consumibles — Diseño Unificado en todos los niveles)
         // =====================================================================
         PlayerStats pStats = (battleManager != null && battleManager.playerStats != null)
             ? battleManager.playerStats
             : FindAnyObjectByType<PlayerStats>();
         int healBonus = (pStats != null) ? pStats.GetIntelectoHealBonus() : 0;
         int dmgBonus = (pStats != null) ? pStats.GetIntelectoDamageBonus() : 0;
+
+        bool hasDetectiveInParty = (battleManager != null && battleManager.detectiveStats != null && battleManager.detectiveStats.hasDetectiveInParty);
+        DetectiveStats dStats = hasDetectiveInParty ? battleManager.detectiveStats : null;
+        bool isDetectiveTurn = (battleManager != null && battleManager.state == BattleState.DETECTIVETURN);
 
         if (inv != null)
         {
@@ -140,8 +160,19 @@ public class CombatIntelectoUI : MonoBehaviour
                     continue;
 
                 ItemData capturedItem = slot.item;
+                bool isHealing = (capturedItem.category == ItemCategory.ConsumibleCuracion || capturedItem.healAmount > 0);
+
+                // Determinar automáticamente si el objeto curativo aplica a Vargas (en su turno, si cayó inconsciente, o si Enrique tiene 100% HP y Vargas está herido)
+                bool healDetective = false;
+                if (isHealing && hasDetectiveInParty && dStats != null)
+                {
+                    bool detUnconscious = dStats.HP_Actual <= 0;
+                    bool enriqueFullAndDetHurt = (pStats != null && pStats.currentHP >= pStats.maxHP && dStats.HP_Actual < dStats.HP_Max);
+                    healDetective = isDetectiveTurn || detUnconscious || enriqueFullAndDetHurt;
+                }
+
                 string btnLabel;
-                if (capturedItem.category == ItemCategory.ConsumibleCuracion || capturedItem.healAmount > 0)
+                if (isHealing)
                 {
                     int totalHeal = capturedItem.healAmount + healBonus;
                     btnLabel = $"Usar: {capturedItem.itemName} (x{slot.quantity}) - Cura {totalHeal} HP";
@@ -152,6 +183,7 @@ public class CombatIntelectoUI : MonoBehaviour
                     btnLabel = $"Usar: {capturedItem.itemName} (x{slot.quantity}) - Dano {totalDmg}";
                 }
 
+                bool capturedTargetDet = healDetective;
                 rows.Add(new ButtonRowDescriptor
                 {
                     label = btnLabel,
@@ -161,7 +193,7 @@ public class CombatIntelectoUI : MonoBehaviour
                     {
                         if (battleManager != null)
                         {
-                            battleManager.UseConsumableInCombat(capturedItem);
+                            battleManager.UseConsumableInCombat(capturedItem, targetDetective: capturedTargetDet);
                         }
                     }
                 });
@@ -169,11 +201,23 @@ public class CombatIntelectoUI : MonoBehaviour
         }
 
         // =====================================================================
-        // SECCIÓN 2: CRAFTEAR CON INTELECTO (Combinar Materiales)
+        // SECCIÓN 2: CRAFTEAR CON INTELECTO (Combinar Materiales — Diseño Unificado en todos los niveles)
         // =====================================================================
+        if (inv != null)
+        {
+            inv.EnsureKnownRecipesLoaded();
+        }
         if (inv != null && inv.knownRecipes != null)
         {
-            foreach (CraftingRecipeData recipe in inv.knownRecipes)
+            List<CraftingRecipeData> sortedRecipes = new List<CraftingRecipeData>(inv.knownRecipes);
+            sortedRecipes.Sort((a, b) =>
+            {
+                bool ca = a != null && inv.CanCraft(a);
+                bool cb = b != null && inv.CanCraft(b);
+                return cb.CompareTo(ca);
+            });
+
+            foreach (CraftingRecipeData recipe in sortedRecipes)
             {
                 if (recipe == null)
                     continue;
@@ -184,17 +228,18 @@ public class CombatIntelectoUI : MonoBehaviour
                 string matAName = (capturedRecipe.materialA != null) ? capturedRecipe.materialA.itemName : "Ninguno";
                 string matBName = (capturedRecipe.materialB != null) ? capturedRecipe.materialB.itemName : "Ninguno";
 
-                string effectTag = "";
-                if (capturedRecipe.damageIgnoringDefense > 0)
+                bool healDetective = false;
+                if (capturedRecipe.healAmount > 0 && hasDetectiveInParty && dStats != null)
                 {
-                    effectTag = $" [{capturedRecipe.damageIgnoringDefense + dmgBonus} Dano Fuego]";
-                }
-                else if (capturedRecipe.healAmount > 0)
-                {
-                    effectTag = $" [+{capturedRecipe.healAmount + healBonus} HP]";
+                    bool detUnconscious = dStats.HP_Actual <= 0;
+                    bool enriqueFullAndDetHurt = (pStats != null && pStats.currentHP >= pStats.maxHP && dStats.HP_Actual < dStats.HP_Max);
+                    healDetective = isDetectiveTurn || detUnconscious || enriqueFullAndDetHurt;
                 }
 
-                string btnText = $"Craftear [Intelecto]: {capturedRecipe.recipeName}{effectTag} (Requiere: {matAName} + {matBName})";
+                string effectTag = capturedRecipe.GetCompactEffectTag(healBonus, dmgBonus);
+
+                string btnText = $"Craftear: {capturedRecipe.recipeName}{effectTag} ({matAName} + {matBName})";
+                bool capturedTargetDet = healDetective;
 
                 rows.Add(new ButtonRowDescriptor
                 {
@@ -205,7 +250,7 @@ public class CombatIntelectoUI : MonoBehaviour
                     {
                         if (battleManager != null)
                         {
-                            battleManager.CraftAndUseRecipeInCombat(capturedRecipe);
+                            battleManager.CraftAndUseRecipeInCombat(capturedRecipe, targetDetective: capturedTargetDet);
                         }
                     }
                 });
@@ -223,24 +268,55 @@ public class CombatIntelectoUI : MonoBehaviour
             });
         }
 
-        int totalRows = rows.Count;
-        int maxVisibleSlots = Mathf.Max(3, totalRows);
-        float slotHeight = 1.0f / maxVisibleSlots;
-        float verticalPadding = 0.02f;
-
-        for (int i = 0; i < totalRows; i++)
+        int totalItems = rows.Count;
+        if (totalItems <= 4)
         {
-            float topY = 1.0f - (i * slotHeight) - verticalPadding;
-            float bottomY = 1.0f - ((i + 1) * slotHeight) + verticalPadding;
+            int maxVisibleSlots = Mathf.Max(3, totalItems);
+            float slotHeight = 1.0f / maxVisibleSlots;
+            float verticalPadding = 0.02f;
 
-            GameObject btnGO = CreateDynamicActionButton(
-                $"IntelectoOption_{i}",
-                dynamicButtonsContainer,
-                new Vector2(0.01f, Mathf.Clamp01(bottomY)),
-                new Vector2(0.99f, Mathf.Clamp01(topY)),
-                rows[i]
-            );
-            spawnedActionButtons.Add(btnGO);
+            for (int i = 0; i < totalItems; i++)
+            {
+                float topY = 1.0f - (i * slotHeight) - verticalPadding;
+                float bottomY = 1.0f - ((i + 1) * slotHeight) + verticalPadding;
+
+                GameObject btnGO = CreateDynamicActionButton(
+                    $"IntelectoOption_{i}",
+                    dynamicButtonsContainer,
+                    new Vector2(0.01f, Mathf.Clamp01(bottomY)),
+                    new Vector2(0.99f, Mathf.Clamp01(topY)),
+                    rows[i],
+                    24f
+                );
+                spawnedActionButtons.Add(btnGO);
+            }
+        }
+        else
+        {
+            int cols = 2;
+            int numGridRows = Mathf.CeilToInt(totalItems / (float)cols);
+            float slotHeight = 1.0f / Mathf.Max(3, numGridRows);
+            float verticalPadding = 0.02f;
+
+            for (int i = 0; i < totalItems; i++)
+            {
+                int r = i / cols;
+                int c = i % cols;
+                float topY = 1.0f - (r * slotHeight) - verticalPadding;
+                float bottomY = 1.0f - ((r + 1) * slotHeight) + verticalPadding;
+                float minX = (c == 0) ? 0.01f : 0.505f;
+                float maxX = (c == 0) ? 0.495f : 0.99f;
+
+                GameObject btnGO = CreateDynamicActionButton(
+                    $"IntelectoOption_{i}",
+                    dynamicButtonsContainer,
+                    new Vector2(minX, Mathf.Clamp01(bottomY)),
+                    new Vector2(maxX, Mathf.Clamp01(topY)),
+                    rows[i],
+                    19f
+                );
+                spawnedActionButtons.Add(btnGO);
+            }
         }
     }
 
@@ -279,7 +355,8 @@ public class CombatIntelectoUI : MonoBehaviour
         RectTransform parent,
         Vector2 anchorMin,
         Vector2 anchorMax,
-        ButtonRowDescriptor desc)
+        ButtonRowDescriptor desc,
+        float fontSize = 24f)
     {
         GameObject borderGO = new GameObject(objName, typeof(RectTransform), typeof(Image), typeof(Button));
         borderGO.transform.SetParent(parent, false);
@@ -329,24 +406,24 @@ public class CombatIntelectoUI : MonoBehaviour
         textRT.offsetMax = Vector2.zero;
 
         TextMeshProUGUI tmp = textGO.GetComponent<TextMeshProUGUI>();
-        if (customFont != null)
+        if (customFont == null)
         {
-            tmp.font = customFont;
+            customFont = PlayerHealthBarUI.GetCleanPixelFont();
         }
-        else if (inventorySummaryText != null && inventorySummaryText.font != null)
-        {
-            tmp.font = inventorySummaryText.font;
-        }
+        tmp.font = customFont;
 
         tmp.text = desc.label;
-        tmp.fontSize = 30;
+        tmp.fontSize = fontSize;
+        tmp.fontStyle = FontStyles.Normal;
+        tmp.fontWeight = FontWeight.Regular;
         tmp.enableAutoSizing = false;
-        tmp.characterSpacing = 1.5f;
-        tmp.wordSpacing = 6f;
+        tmp.characterSpacing = 1.2f;
+        tmp.wordSpacing = 4f;
         tmp.alignment = TextAlignmentOptions.Center;
         tmp.color = desc.interactable ? enabledTextColor : disabledTextColor;
         tmp.textWrappingMode = TextWrappingModes.Normal;
         tmp.overflowMode = TextOverflowModes.Overflow;
+        PlayerHealthBarUI.EnsureCleanPixelFont(tmp);
 
         return borderGO;
     }

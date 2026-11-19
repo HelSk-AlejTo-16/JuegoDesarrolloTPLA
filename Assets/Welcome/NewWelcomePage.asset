@@ -35,7 +35,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 11400000, guid: 3becb391d378c4f35bea7e2cfd89f1d5, type: 2}
-          m_TargetAssemblyTypeName: DefaultNamespace.Welcome2DScript, Assembly-CSharp
+          m_TargetAssemblyTypeName: Unity.U2D.Welcome.Welcome2DScript, Unity.2D.Welcome
           m_MethodName: Open2DLandingPage
           m_Mode: 1
           m_Arguments:

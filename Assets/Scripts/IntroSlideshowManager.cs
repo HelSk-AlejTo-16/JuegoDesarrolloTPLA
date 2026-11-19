@@ -268,12 +268,10 @@ public class IntroSlideshowManager : MonoBehaviour
 
     public void LoadSfxClipsIfMissing()
     {
-#if UNITY_EDITOR
         if (dialogueConfirmSfx == null)
         {
-            dialogueConfirmSfx = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>(MusicManager.PathSfxBotonConfirmacionDialogo);
+            dialogueConfirmSfx = RuntimeAssetCatalog.GetAudioClip(MusicManager.PathSfxBotonConfirmacionDialogo);
         }
-#endif
     }
 
     private void Awake()
@@ -406,8 +404,12 @@ public class IntroSlideshowManager : MonoBehaviour
         // 4. Botón Salir
         if (quitButton != null)
         {
+#if UNITY_WEBGL && !UNITY_EDITOR
+            quitButton.gameObject.SetActive(false);
+#else
             quitButton.onClick.RemoveListener(QuitGame);
             quitButton.onClick.AddListener(QuitGame);
+#endif
         }
 
         // 5. Controles dentro de Configuración
@@ -908,6 +910,7 @@ public class IntroSlideshowManager : MonoBehaviour
         {
             PlayerStats.ResetSavedProgression();
             InventoryManager.ResetSavedInventory();
+            DetectiveStats.ResetSavedProgression();
             BattleManager.ResetStarterWeaponAwarded();
 
             SceneManager.LoadScene(nextSceneName);

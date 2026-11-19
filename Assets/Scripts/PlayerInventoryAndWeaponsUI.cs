@@ -205,6 +205,8 @@ public class PlayerInventoryAndWeaponsUI : MonoBehaviour
         {
             BuildCompleteUI();
         }
+        NormalizeRecipesFooterLayout();
+        SetupButtonListeners();
 
         if (playerStats != null)
         {
@@ -219,6 +221,27 @@ public class PlayerInventoryAndWeaponsUI : MonoBehaviour
         }
 
         RefreshUI();
+    }
+
+    /// <summary>
+    /// Re-vincula los listeners de los botones estáticos tras construir o cargar el Canvas desde escena.
+    /// </summary>
+    private void SetupButtonListeners()
+    {
+        RebindButton(tabObjetosButton, () => SwitchSubMenu(InventorySubMenu.Objetos));
+        RebindButton(tabArmasButton, () => SwitchSubMenu(InventorySubMenu.Armas));
+        RebindButton(enriquePortraitClickButton, CycleOrEquipWeaponFromPortrait);
+        RebindButton(unequipWeaponButton, () => OnEquipWeaponClicked(null));
+        RebindButton(changeWeaponCycleButton, CycleOrEquipWeaponFromPortrait);
+        RebindButton(switchToStatsButton, SwitchToStatsMenu);
+        RebindButton(closeMenuButton, CloseInventoryMenu);
+    }
+
+    private static void RebindButton(Button button, UnityEngine.Events.UnityAction action)
+    {
+        if (button == null) return;
+        button.onClick.RemoveAllListeners();
+        button.onClick.AddListener(action);
     }
 
     private void FetchPortraitsAndFontIfMissing()
@@ -238,30 +261,18 @@ public class PlayerInventoryAndWeaponsUI : MonoBehaviour
             }
         }
 
-#if UNITY_EDITOR
         if (enriquePortrait == null)
         {
-            enriquePortrait = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Portraits/Enrique.png");
+            enriquePortrait = RuntimeAssetCatalog.GetSprite("Assets/Portraits/Enrique.png");
         }
         if (corporeoPortrait == null)
         {
-            corporeoPortrait = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Portraits/Musculatura.png");
-        }
-#endif
-
-        if (customFont != null) return;
-
-        ExplorationDialogueManager expDialog = FindAnyObjectByType<ExplorationDialogueManager>(FindObjectsInactive.Include);
-        if (expDialog != null && expDialog.speakerAndText != null && expDialog.speakerAndText.font != null)
-        {
-            customFont = expDialog.speakerAndText.font;
-            return;
+            corporeoPortrait = RuntimeAssetCatalog.GetSprite("Assets/Portraits/Musculatura.png");
         }
 
-        TextMeshProUGUI anyTmp = FindAnyObjectByType<TextMeshProUGUI>(FindObjectsInactive.Include);
-        if (anyTmp != null)
+        if (customFont == null)
         {
-            customFont = anyTmp.font;
+            customFont = PlayerHealthBarUI.GetCleanPixelFont();
         }
     }
 
@@ -321,7 +332,7 @@ public class PlayerInventoryAndWeaponsUI : MonoBehaviour
             bool inCombat = (battleManager != null && battleManager.state != BattleState.INACTIVE);
             bool statsMenuOpen = (PlayerLevelUpAndStatsUI.Instance != null && PlayerLevelUpAndStatsUI.Instance.IsOpen);
 
-            if (!inDialogue && (!inCombat || battleManager.state == BattleState.PLAYERTURN))
+            if (!inDialogue && (!inCombat || battleManager.state == BattleState.PLAYERTURN || battleManager.state == BattleState.DETECTIVETURN))
             {
                 if (statsMenuOpen)
                 {
@@ -476,10 +487,11 @@ public class PlayerInventoryAndWeaponsUI : MonoBehaviour
 
         if (inCombat)
         {
-            if (battleManager.state == BattleState.PLAYERTURN)
+            if (battleManager.state == BattleState.PLAYERTURN || battleManager.state == BattleState.DETECTIVETURN)
             {
+                bool targetDet = (battleManager.state == BattleState.DETECTIVETURN);
                 modalPanelRoot.SetActive(false);
-                battleManager.UseConsumableInCombat(item);
+                battleManager.UseConsumableInCombat(item, targetDet);
             }
             return;
         }
@@ -543,10 +555,11 @@ public class PlayerInventoryAndWeaponsUI : MonoBehaviour
         bool inCombat = (battleManager != null && battleManager.state != BattleState.INACTIVE);
         if (inCombat)
         {
-            if (battleManager.state == BattleState.PLAYERTURN)
+            if (battleManager.state == BattleState.PLAYERTURN || battleManager.state == BattleState.DETECTIVETURN)
             {
+                bool targetDet = (battleManager.state == BattleState.DETECTIVETURN);
                 modalPanelRoot.SetActive(false);
-                battleManager.CraftAndUseRecipeInCombat(healRecipe);
+                battleManager.CraftAndUseRecipeInCombat(healRecipe, targetDet);
             }
             return;
         }
@@ -574,6 +587,13 @@ public class PlayerInventoryAndWeaponsUI : MonoBehaviour
                 playerStats.Heal(totalHeal);
             }
 
+            string extraMsg = "";
+            if (healRecipe.detectiveAmmoRestored > 0 && DetectiveStats.Instance != null)
+            {
+                int added = DetectiveStats.Instance.ReloadAmmo(healRecipe.detectiveAmmoRestored);
+                extraMsg = $" (+{added} Balas .38 para el Detective)";
+            }
+
             if (MusicManager.Instance != null)
             {
                 MusicManager.Instance.PlayCurarseSfx();
@@ -581,7 +601,7 @@ public class PlayerInventoryAndWeaponsUI : MonoBehaviour
 
             if (feedbackBannerText != null)
             {
-                feedbackBannerText.text = $"¡INTELECTO FABRICÓ Y USÓ {healRecipe.recipeName.ToUpper()}! Recuperaste +{totalHeal} HP.";
+                feedbackBannerText.text = $"¡INTELECTO FABRICÓ Y USÓ {healRecipe.recipeName.ToUpper()}! Recuperaste +{totalHeal} HP{extraMsg}.";
                 feedbackBannerText.color = consumableGreenColor;
             }
 
@@ -874,24 +894,29 @@ public class PlayerInventoryAndWeaponsUI : MonoBehaviour
         CraftingRecipeData healRecipe = null;
         List<string> recipeLines = new List<string>();
 
+        if (inventoryManager != null)
+        {
+            inventoryManager.EnsureKnownRecipesLoaded();
+        }
         if (inventoryManager != null && inventoryManager.knownRecipes != null)
         {
+            HashSet<string> seenRecipeKeys = new HashSet<string>();
             foreach (CraftingRecipeData r in inventoryManager.knownRecipes)
             {
-                if (r == null) continue;
+                if (r == null || string.IsNullOrEmpty(r.recipeName)) continue;
+                string recipeKey = InventoryManager.GetCanonicalItemKey(r.recipeName);
+                if (!seenRecipeKeys.Add(recipeKey)) continue;
                 bool ready = inventoryManager.CanCraft(r);
                 string matA = r.materialA != null ? r.materialA.itemName : "?";
                 string matB = r.materialB != null ? r.materialB.itemName : "?";
                 string statusTag = ready ? "<color=#52E06B>[LISTA]</color>" : "<color=#888E99>[FALTAN MATERIALES]</color>";
 
-                if (r.healAmount > 0 && healRecipe == null)
+                if (r.healAmount > 0 && (healRecipe == null || (!inventoryManager.CanCraft(healRecipe) && ready)))
                 {
                     healRecipe = r;
                 }
 
-                string effect = r.damageIgnoringDefense > 0
-                    ? $"{r.damageIgnoringDefense + dmgBonus} Daño Fuego"
-                    : $"+{r.healAmount + healBonus} HP";
+                string effect = r.GetCompactEffectTag(healBonus, dmgBonus).Trim();
 
                 recipeLines.Add($"• <b>{r.recipeName}</b> ({matA} + {matB} -> {effect}) {statusTag}");
             }
@@ -1257,7 +1282,6 @@ public class PlayerInventoryAndWeaponsUI : MonoBehaviour
         tabObjetosBgImage = tabObjInner.GetComponent<Image>();
         tabObjetosButton = tabObjBorder.AddComponent<Button>();
         tabObjetosButton.targetGraphic = tabObjetosBgImage;
-        tabObjetosButton.onClick.AddListener(() => SwitchSubMenu(InventorySubMenu.Objetos));
 
         tabObjetosLabel = CreateText("Label", tabObjInner.transform, "1. OBJETOS Y CONSUMIBLES [1 / Q]", 22, TextAlignmentOptions.Center, consumableGreenColor);
         tabObjetosLabel.fontStyle = FontStyles.Bold;
@@ -1270,7 +1294,6 @@ public class PlayerInventoryAndWeaponsUI : MonoBehaviour
         tabArmasBgImage = tabArmInner.GetComponent<Image>();
         tabArmasButton = tabArmBorder.AddComponent<Button>();
         tabArmasButton.targetGraphic = tabArmasBgImage;
-        tabArmasButton.onClick.AddListener(() => SwitchSubMenu(InventorySubMenu.Armas));
 
         tabArmasLabel = CreateText("Label", tabArmInner.transform, "2. ARMAS Y EQUIPAMIENTO (RETRATO) [2 / E]", 22, TextAlignmentOptions.Center, new Color(0.65f, 0.68f, 0.74f, 1f));
         tabArmasLabel.fontStyle = FontStyles.Bold;
@@ -1287,13 +1310,19 @@ public class PlayerInventoryAndWeaponsUI : MonoBehaviour
         itemsSectionCounterText.fontStyle = FontStyles.Bold;
         SetAnchors(itemsSectionCounterText.rectTransform, new Vector2(0.02f, 0.05f), new Vector2(0.98f, 0.95f));
 
-        GameObject itemsContainerGO = CreatePanel("ItemsListContainer", itemsInner.transform, new Vector2(0.015f, 0.22f), new Vector2(0.985f, 0.915f), new Color(0f, 0f, 0f, 0f));
+        GameObject itemsContainerGO = CreatePanel("ItemsListContainer", itemsInner.transform, new Vector2(0.015f, 0.290f), new Vector2(0.985f, 0.915f), new Color(0f, 0f, 0f, 0f));
         itemsListContainer = itemsContainerGO.GetComponent<RectTransform>();
 
         // Pie de Objetos: Recetas de Intelecto y Botón Rápido
-        GameObject recipesBox = CreatePanel("RecipesFooterBox", itemsInner.transform, new Vector2(0.015f, 0.015f), new Vector2(0.985f, 0.205f), new Color(0.12f, 0.14f, 0.19f, 1f));
-        recipesStatusText = CreateText("RecipesStatusText", recipesBox.transform, "RECETAS DE INTELECTO:", 16, TextAlignmentOptions.Left, new Color(0.88f, 0.90f, 0.94f, 1f));
-        SetAnchors(recipesStatusText.rectTransform, new Vector2(0.015f, 0.06f), new Vector2(0.72f, 0.94f));
+        GameObject recipesBox = CreatePanel("RecipesFooterBox", itemsInner.transform, new Vector2(0.015f, 0.015f), new Vector2(0.985f, 0.280f), new Color(0.12f, 0.14f, 0.19f, 1f));
+        recipesStatusText = CreateText("RecipesStatusText", recipesBox.transform, "RECETAS DE INTELECTO:", 12, TextAlignmentOptions.TopLeft, new Color(0.88f, 0.90f, 0.94f, 1f));
+        recipesStatusText.enableAutoSizing = true;
+        recipesStatusText.fontSizeMin = 8f;
+        recipesStatusText.fontSizeMax = 12.5f;
+        recipesStatusText.lineSpacing = 0f;
+        recipesStatusText.margin = Vector4.zero;
+        recipesStatusText.overflowMode = TextOverflowModes.Truncate;
+        SetAnchors(recipesStatusText.rectTransform, new Vector2(0.012f, 0.04f), new Vector2(0.73f, 0.95f));
 
         GameObject quickHealBorder = CreatePanel("QuickCraftHealBtn", recipesBox.transform, new Vector2(0.74f, 0.12f), new Vector2(0.985f, 0.88f), consumableGreenColor);
         quickCraftHealBorderImage = quickHealBorder.GetComponent<Image>();
@@ -1343,7 +1372,6 @@ public class PlayerInventoryAndWeaponsUI : MonoBehaviour
 
         enriquePortraitClickButton = enriquePortraitCardRoot.AddComponent<Button>();
         enriquePortraitClickButton.targetGraphic = enriquePortraitBorderImage;
-        enriquePortraitClickButton.onClick.AddListener(CycleOrEquipWeaponFromPortrait);
 
         // B) Información detallada del arma equipada al centro del showcase (con amplio espacio para no traslapar)
         equippedWeaponNameText = CreateText("EquippedWeaponName", equippedBoxInner.transform, "ARMA EQUIPADA: PUÑOS DESNUDOS", 23, TextAlignmentOptions.Left, Color.white);
@@ -1362,7 +1390,6 @@ public class PlayerInventoryAndWeaponsUI : MonoBehaviour
         GameObject unequipInner = CreatePanel("Inner", unequipBorder.transform, new Vector2(0.015f, 0.08f), new Vector2(0.985f, 0.92f), new Color(0.09f, 0.08f, 0.10f, 1f));
         unequipWeaponButton = unequipBorder.AddComponent<Button>();
         unequipWeaponButton.targetGraphic = unequipInner.GetComponent<Image>();
-        unequipWeaponButton.onClick.AddListener(() => OnEquipWeaponClicked(null));
 
         unequipWeaponButtonLabel = CreateText("UnequipLabel", unequipInner.transform, "DESEQUIPAR ARMA", 17, TextAlignmentOptions.Center, Color.white);
         unequipWeaponButtonLabel.fontStyle = FontStyles.Bold;
@@ -1372,7 +1399,6 @@ public class PlayerInventoryAndWeaponsUI : MonoBehaviour
         GameObject cycleInner = CreatePanel("Inner", cycleBorder.transform, new Vector2(0.015f, 0.08f), new Vector2(0.985f, 0.92f), new Color(0.09f, 0.08f, 0.10f, 1f));
         changeWeaponCycleButton = cycleBorder.AddComponent<Button>();
         changeWeaponCycleButton.targetGraphic = cycleInner.GetComponent<Image>();
-        changeWeaponCycleButton.onClick.AddListener(CycleOrEquipWeaponFromPortrait);
 
         TextMeshProUGUI cycleLabel = CreateText("CycleLabel", cycleInner.transform, "CAMBIAR ARMA [CLIC]", 17, TextAlignmentOptions.Center, weaponGoldColor);
         cycleLabel.fontStyle = FontStyles.Bold;
@@ -1392,7 +1418,6 @@ public class PlayerInventoryAndWeaponsUI : MonoBehaviour
         GameObject statsBtnInner = CreatePanel("Inner", statsBtnBorder.transform, new Vector2(0.006f, 0.08f), new Vector2(0.994f, 0.92f), new Color(0.07f, 0.09f, 0.13f, 1f));
         switchToStatsButton = statsBtnBorder.AddComponent<Button>();
         switchToStatsButton.targetGraphic = statsBtnInner.GetComponent<Image>();
-        switchToStatsButton.onClick.AddListener(SwitchToStatsMenu);
 
         TextMeshProUGUI statsBtnTxt = CreateText("StatsBtnText", statsBtnInner.transform, "VER HABILIDADES Y NIVEL", 22, TextAlignmentOptions.Center, new Color(0.75f, 0.88f, 1f, 1f));
         statsBtnTxt.fontStyle = FontStyles.Bold;
@@ -1402,7 +1427,6 @@ public class PlayerInventoryAndWeaponsUI : MonoBehaviour
         GameObject closeBtnInner = CreatePanel("Inner", closeBtnBorder.transform, new Vector2(0.006f, 0.08f), new Vector2(0.994f, 0.92f), new Color(0.07f, 0.08f, 0.10f, 1f));
         closeMenuButton = closeBtnBorder.AddComponent<Button>();
         closeMenuButton.targetGraphic = closeBtnInner.GetComponent<Image>();
-        closeMenuButton.onClick.AddListener(CloseInventoryMenu);
 
         TextMeshProUGUI closeBtnTxt = CreateText("CloseBtnText", closeBtnInner.transform, "CERRAR INVENTARIO [I / ESC]", 22, TextAlignmentOptions.Center, Color.white);
         closeBtnTxt.fontStyle = FontStyles.Bold;
@@ -1427,16 +1451,20 @@ public class PlayerInventoryAndWeaponsUI : MonoBehaviour
         GameObject go = new GameObject(name, typeof(RectTransform), typeof(TextMeshProUGUI));
         go.transform.SetParent(parent, false);
         TextMeshProUGUI tmp = go.GetComponent<TextMeshProUGUI>();
-        if (customFont != null)
+        if (customFont == null)
         {
-            tmp.font = customFont;
+            customFont = PlayerHealthBarUI.GetCleanPixelFont();
         }
+        tmp.font = customFont;
         tmp.text = content;
         tmp.fontSize = fontSize;
         tmp.alignment = alignment;
         tmp.color = color;
+        tmp.fontStyle = FontStyles.Normal;
+        tmp.fontWeight = FontWeight.Regular;
         tmp.textWrappingMode = TextWrappingModes.Normal;
         tmp.overflowMode = TextOverflowModes.Overflow;
+        PlayerHealthBarUI.EnsureCleanPixelFont(tmp);
         return tmp;
     }
 
@@ -1462,6 +1490,32 @@ public class PlayerInventoryAndWeaponsUI : MonoBehaviour
             return true;
 #endif
         return false;
+    }
+
+    private void NormalizeRecipesFooterLayout()
+    {
+        if (itemsListContainer != null)
+        {
+            SetAnchors(itemsListContainer, new Vector2(0.015f, 0.290f), new Vector2(0.985f, 0.915f));
+        }
+
+        if (recipesStatusText != null)
+        {
+            RectTransform recipesBoxRT = recipesStatusText.transform.parent as RectTransform;
+            if (recipesBoxRT != null)
+            {
+                SetAnchors(recipesBoxRT, new Vector2(0.015f, 0.015f), new Vector2(0.985f, 0.280f));
+            }
+            recipesStatusText.alignment = TextAlignmentOptions.TopLeft;
+            recipesStatusText.fontSize = 12f;
+            recipesStatusText.enableAutoSizing = true;
+            recipesStatusText.fontSizeMin = 8f;
+            recipesStatusText.fontSizeMax = 12.5f;
+            recipesStatusText.lineSpacing = 0f;
+            recipesStatusText.margin = Vector4.zero;
+            recipesStatusText.overflowMode = TextOverflowModes.Truncate;
+            SetAnchors(recipesStatusText.rectTransform, new Vector2(0.012f, 0.04f), new Vector2(0.73f, 0.95f));
+        }
     }
 
     private bool WasEscapeKeyPressed()

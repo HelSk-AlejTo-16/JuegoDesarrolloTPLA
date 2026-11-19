@@ -90,6 +90,38 @@ public class CombatMundoInternoUI : MonoBehaviour
 
         CombatEnemyInstance target = battleManager.GetSelectedLivingTarget();
         string targetName = (target != null && target.data != null) ? target.data.enemyName : "Enemigo";
+        bool isDetectiveTurn = (battleManager.state == BattleState.DETECTIVETURN && battleManager.detectiveStats != null);
+
+        if (isDetectiveTurn)
+        {
+            DetectiveStats dStats = battleManager.detectiveStats;
+            if (titleText != null)
+            {
+                titleText.text = "TACTICA POLICIAL: HABILIDADES DEL DETECTIVE VARGAS";
+            }
+            if (descriptionText != null)
+            {
+                descriptionText.text = $"OBJETIVO: {targetName.ToUpper()}  |  BALAS .38: {dStats.municionActual}/{dStats.municionMaxima}\nElige que habilidad tactica ejecutar (no gasta turno si cancelas):";
+            }
+            if (insultarText != null)
+            {
+                insultarText.text = $"[1. ANALIZAR PUNTO DEBIL] - Expone la guardia de {targetName} (-4 DEF y +30% dano por 2 turnos)";
+            }
+            if (animarseText != null)
+            {
+                animarseText.text = "[2. CONCENTRACION TACTICA] - Recarga +3 balas .38 y otorga +5 ATQ y +15% Esquiva";
+            }
+            if (delirioText != null)
+            {
+                delirioText.text = $"[3. DISPARO DE SUPRESION] - Impacta a {targetName} y reduce su ataque (-5 ATQ y -4 VEL) (1 Bala)";
+            }
+            return;
+        }
+
+        if (titleText != null)
+        {
+            titleText.text = "MUNDO INTERNO: PSICOLOGIA Y EMOCIONES DE ENRIQUE";
+        }
 
         if (descriptionText != null)
         {
@@ -135,7 +167,10 @@ public class CombatMundoInternoUI : MonoBehaviour
         Hide();
         if (battleManager != null)
         {
-            battleManager.ExecuteMundoInternoInsultar();
+            if (battleManager.state == BattleState.DETECTIVETURN)
+                battleManager.ExecuteDetectiveSkill(DetectiveActionMenu.DetectiveSkillType.AnalizarPuntoDebil);
+            else
+                battleManager.ExecuteMundoInternoInsultar();
         }
     }
 
@@ -144,7 +179,10 @@ public class CombatMundoInternoUI : MonoBehaviour
         Hide();
         if (battleManager != null)
         {
-            battleManager.ExecuteMundoInternoAnimarse();
+            if (battleManager.state == BattleState.DETECTIVETURN)
+                battleManager.ExecuteDetectiveSkill(DetectiveActionMenu.DetectiveSkillType.ConcentracionTactica);
+            else
+                battleManager.ExecuteMundoInternoAnimarse();
         }
     }
 
@@ -153,7 +191,10 @@ public class CombatMundoInternoUI : MonoBehaviour
         Hide();
         if (battleManager != null)
         {
-            battleManager.ExecuteMundoInternoDelirio();
+            if (battleManager.state == BattleState.DETECTIVETURN)
+                battleManager.ExecuteDetectiveSkill(DetectiveActionMenu.DetectiveSkillType.DisparoDeSupresion);
+            else
+                battleManager.ExecuteMundoInternoDelirio();
         }
     }
 

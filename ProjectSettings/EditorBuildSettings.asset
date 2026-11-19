@@ -14,5 +14,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/02_Nivel2_Guarida.unity
     guid: 6dda7d482e6e54c47adffbb63e952cad
+  - enabled: 1
+    path: Assets/Scenes/Nivel_3.unity
+    guid: 06922c74bb74e3848bf5236d5660e2be
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

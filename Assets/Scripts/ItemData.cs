@@ -10,7 +10,9 @@ public enum ItemCategory
     // Alias de compatibilidad
     ConsumibleDirecto = ConsumibleCuracion,
     MaterialDeCalle = MaterialDeCrafteo,
-    ArtefactoCrafteado = ObjetoOfensivoDirecto
+    ArtefactoCrafteado = ObjetoOfensivoDirecto,
+    Material = MaterialDeCrafteo,
+    Consumible = ConsumibleCuracion
 }
 
 /// <summary>
@@ -48,6 +50,9 @@ public class ItemData : ScriptableObject
 
     [Tooltip("Si es true, limpia estados negativos de Enrique.")]
     public bool curesStatusEffects = false;
+
+    [Tooltip("Si es true, aturde o confunde al objetivo.")]
+    public bool confusesTarget = false;
 
     [Header(" Estadísticas de Arma (Si category == Arma)")]
     [Tooltip("Bonificación de daño físico que se suma a Corpóreo mientras esta arma esté equipada.")]

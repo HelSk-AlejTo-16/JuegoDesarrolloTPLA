@@ -119,6 +119,7 @@ public class BossVictoryTransitionUI : MonoBehaviour
             PlayerStats stats = FindAnyObjectByType<PlayerStats>();
             if (stats != null) stats.SaveProgressionSnapshot();
             if (InventoryManager.Instance != null) InventoryManager.Instance.SaveSnapshot();
+            if (DetectiveStats.Instance != null) DetectiveStats.Instance.SaveProgressionSnapshot();
 
             Time.timeScale = 1f;
             SceneManager.LoadScene(targetSceneName);

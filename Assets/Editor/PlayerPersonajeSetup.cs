@@ -416,6 +416,7 @@ public static class PlayerPersonajeSetup
 
         SetupHealthBarInScene("Assets/Scenes/01_Nivel1_SantaFelipina.unity", pixelFont);
         SetupHealthBarInScene("Assets/Scenes/02_Nivel2_Guarida.unity", pixelFont);
+        SetupHealthBarInScene("Assets/Scenes/Nivel_3.unity", pixelFont);
 
         // Reconstruir Menú Principal (Escena 00)
         MainMenuSceneBuilder.RebuildMainMenuScene();

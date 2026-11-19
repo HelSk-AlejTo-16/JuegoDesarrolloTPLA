@@ -17,6 +17,9 @@ public class CompanionFollowAI : MonoBehaviour
     [Tooltip("Nombre visible del compañero.")]
     public string companionName = "INVESTIGADOR VARGAS";
 
+    [Tooltip("Estadísticas del Detective para combate y progresión.")]
+    public DetectiveStats detectiveStats;
+
     [Tooltip("Si está activo, el investigador ya se unió a Enrique y lo sigue por el mapa.")]
     public bool isFollowingPlayer = false;
 
@@ -95,6 +98,9 @@ public class CompanionFollowAI : MonoBehaviour
     private float animTimer = 0f;
     private int currentFrameIndex = 0;
     private float baseBobPhase = 0f;
+    private float walkCyclePhase = 0f;
+    private Vector3 initialVisualLocalPos = new Vector3(0f, 0.65f, 0f);
+    private bool hasRecordedVisualLocalPos = false;
     private readonly Queue<Vector2> breadcrumbTrail = new Queue<Vector2>();
     private Vector2 lastRecordedPlayerPos;
     private bool hasRecordedPlayerPos = false;
@@ -150,7 +156,36 @@ public class CompanionFollowAI : MonoBehaviour
     private void Start()
     {
         LocateReferences();
+        EnsureWalkingFramesInitialized();
+        RemoveWorldTextLabelsOnCharacter();
         UpdatePromptVisibility(false);
+    }
+
+    private void RemoveWorldTextLabelsOnCharacter()
+    {
+        Transform badge = transform.Find("Badge_Investigador");
+        if (badge != null) badge.gameObject.SetActive(false);
+
+        if (promptText != null)
+        {
+            promptText.text = string.Empty;
+        }
+        if (promptUI != null)
+        {
+            promptUI.SetActive(false);
+        }
+    }
+
+    private void EnsureWalkingFramesInitialized()
+    {
+        if (spriteRenderer != null && spriteRenderer.transform != transform && !hasRecordedVisualLocalPos)
+        {
+            initialVisualLocalPos = spriteRenderer.transform.localPosition;
+            hasRecordedVisualLocalPos = true;
+        }
+
+        // Asegurar siempre los sprites de perfil lateral (detective_stand_side y detective_walk_1..4)
+        Capitulo2IntroNarrative.EnsureGenericInvestigatorAppearance(this);
     }
 
     private void LocateReferences()
@@ -177,7 +212,7 @@ public class CompanionFollowAI : MonoBehaviour
     }
 
     /// <summary>
-    /// Activa inmediatamente el modo de seguimiento del Investigador Privado.
+    /// Activa inmediatamente el modo de seguimiento del Investigador Privado y su integración en combate.
     /// </summary>
     public void ActivateCompanionFollow()
     {
@@ -185,8 +220,34 @@ public class CompanionFollowAI : MonoBehaviour
         isFollowingPlayer = true;
         if (promptText != null)
         {
-            promptText.text = "[E] HABLAR CON VARGAS";
+            promptText.text = string.Empty;
         }
+        if (promptUI != null)
+        {
+            promptUI.SetActive(false);
+        }
+
+        DetectiveStats stats = GetComponent<DetectiveStats>();
+        if (stats == null)
+        {
+            stats = gameObject.AddComponent<DetectiveStats>();
+        }
+        stats.hasDetectiveInParty = true;
+        detectiveStats = stats;
+        if (spriteRenderer != null && spriteRenderer.sprite != null)
+        {
+            stats.combatIdleSprite = spriteRenderer.sprite;
+            if (stats.combatPortraitSprite == null)
+            {
+                stats.combatPortraitSprite = spriteRenderer.sprite;
+            }
+        }
+        Sprite customPortrait = RuntimeAssetCatalog.GetSprite("Assets/Portraits/Detective.png");
+        if (customPortrait != null)
+        {
+            stats.combatPortraitSprite = customPortrait;
+        }
+        stats.SaveProgressionSnapshot();
     }
 
     private void Update()
@@ -395,53 +456,75 @@ public class CompanionFollowAI : MonoBehaviour
             return;
         }
 
-        // Animación por frames si no usa AnimatorController
-        if (Mathf.Abs(lastLookDirection.x) > 0.2f)
+        // Animación por frames hacia los lados (perfil lateral izquierdo/derecho)
+        if (Mathf.Abs(velocity.x) > 0.05f)
+        {
+            spriteRenderer.flipX = (velocity.x < 0f);
+        }
+        else if (Mathf.Abs(lastLookDirection.x) > 0.15f)
         {
             spriteRenderer.flipX = (lastLookDirection.x < 0f);
+        }
+        else if (playerTransform != null && isMoving)
+        {
+            float dxToPlayer = playerTransform.position.x - transform.position.x;
+            if (Mathf.Abs(dxToPlayer) > 0.08f)
+            {
+                spriteRenderer.flipX = (dxToPlayer < 0f);
+            }
         }
 
         if (!isMoving)
         {
             animTimer = 0f;
             currentFrameIndex = 0;
+            walkCyclePhase = 0f;
 
-            if (Mathf.Abs(lastLookDirection.y) > Mathf.Abs(lastLookDirection.x))
+            if (isFollowingPlayer && idleSideSprite != null)
             {
-                if (lastLookDirection.y > 0f && idleUpSprite != null)
-                    spriteRenderer.sprite = idleUpSprite;
-                else if (idleDownSprite != null)
-                    spriteRenderer.sprite = idleDownSprite;
+                spriteRenderer.sprite = idleSideSprite;
+                if (playerTransform != null)
+                {
+                    float dxToPlayer = playerTransform.position.x - transform.position.x;
+                    if (Mathf.Abs(dxToPlayer) > 0.15f)
+                    {
+                        spriteRenderer.flipX = (dxToPlayer < 0f);
+                    }
+                }
+            }
+            else if (idleDownSprite != null)
+            {
+                spriteRenderer.sprite = idleDownSprite;
+                spriteRenderer.flipX = false;
             }
             else if (idleSideSprite != null)
             {
                 spriteRenderer.sprite = idleSideSprite;
             }
-            else if (idleDownSprite != null)
-            {
-                spriteRenderer.sprite = idleDownSprite;
-            }
 
             if (spriteRenderer.transform != transform)
             {
                 baseBobPhase += Time.deltaTime * 2.4f;
-                float bob = Mathf.Sin(baseBobPhase) * 0.02f;
-                spriteRenderer.transform.localPosition = new Vector3(0f, bob, 0f);
+                float bob = Mathf.Sin(baseBobPhase) * 0.015f;
+                spriteRenderer.transform.localPosition = new Vector3(
+                    initialVisualLocalPos.x,
+                    initialVisualLocalPos.y + bob,
+                    initialVisualLocalPos.z
+                );
+                spriteRenderer.transform.localRotation = Quaternion.identity;
             }
             return;
         }
 
-        Sprite[] activeFrames = walkSideFrames;
-        if (Mathf.Abs(lastLookDirection.y) > Mathf.Abs(lastLookDirection.x))
-        {
-            activeFrames = (lastLookDirection.y > 0f && walkUpFrames != null && walkUpFrames.Length > 0)
-                ? walkUpFrames
-                : walkDownFrames;
-        }
+        Sprite[] activeFrames = (walkSideFrames != null && walkSideFrames.Length > 0)
+            ? walkSideFrames
+            : walkDownFrames;
+
+        float speedRatio = Mathf.Clamp(velocity.magnitude / Mathf.Max(1f, walkSpeed), 0.75f, 1.55f);
 
         if (activeFrames != null && activeFrames.Length > 0)
         {
-            animTimer += Time.deltaTime * animationFPS;
+            animTimer += Time.deltaTime * animationFPS * speedRatio;
             if (animTimer >= 1f)
             {
                 animTimer -= 1f;
@@ -453,13 +536,27 @@ public class CompanionFollowAI : MonoBehaviour
                 spriteRenderer.sprite = frame;
             }
         }
+
+        // Movimiento orgánico de paso (ligero bote vertical y cadencia de hombros al caminar)
+        if (spriteRenderer.transform != transform)
+        {
+            walkCyclePhase += Time.deltaTime * 12f * speedRatio;
+            float stepBounce = Mathf.Abs(Mathf.Sin(walkCyclePhase)) * 0.045f;
+            float swayAngle = Mathf.Sin(walkCyclePhase) * 2.2f;
+            spriteRenderer.transform.localPosition = new Vector3(
+                initialVisualLocalPos.x,
+                initialVisualLocalPos.y + stepBounce,
+                initialVisualLocalPos.z
+            );
+            spriteRenderer.transform.localRotation = Quaternion.Euler(0f, 0f, swayAngle);
+        }
     }
 
     private void UpdatePromptVisibility(bool visible)
     {
-        if (promptUI != null && promptUI.activeSelf != visible)
+        if (promptUI != null && promptUI.activeSelf)
         {
-            promptUI.SetActive(visible);
+            promptUI.SetActive(false);
         }
     }
 

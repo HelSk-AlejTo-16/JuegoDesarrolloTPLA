@@ -1,0 +1,720 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef45a377cb42c1f4db551c04e84a1573, type: 3}
+  m_Name: RuntimeAssetCatalog
+  m_EditorClassIdentifier: Assembly-CSharp::RuntimeAssetCatalog
+  assets:
+  - path: Assets/Music/ChillMenu_Loopable.wav
+    asset: {fileID: 8300000, guid: 23da617652842e443b69c52e3555a628, type: 3}
+  - path: Assets/Music/CrashingOut_Loopable.wav
+    asset: {fileID: 8300000, guid: be78d1516e35ef0428c6d8dc6556d2e5, type: 3}
+  - path: Assets/Music/CriticalTheme_Loopable.wav
+    asset: {fileID: 8300000, guid: 5ae7afacc5a6b4640a886da41667cbdf, type: 3}
+  - path: Assets/Sound/EfectodeSonido_AtaqueAliadoPropio/DSGNImpt_EXPLOSION-Mecha Damage_HY_PC-001.wav
+    asset: {fileID: 8300000, guid: f21f48ef1387b0b46bcfa5c43304da6a, type: 3}
+  - path: Assets/Sound/EfectodeSonido_AtaqueEnemigo/DSGNImpt_EXPLOSION-Forced Shutdown_HY_PC-006.wav
+    asset: {fileID: 8300000, guid: 40882a2709c76bb4884895db58e545a5, type: 3}
+  - path: Assets/Sound/EfectodeSonido_BotonEnCombate/DSGNMisc_HIT-Bitcrusher_HY_PC-002.wav
+    asset: {fileID: 8300000, guid: 967933068e2707b4ba59747fe7757814, type: 3}
+  - path: "Assets/Sound/EfectodeSonido_Bot\xF3ndeConfirmaci\xF3nDialogo/JDSherbert - Pixel UI SFX Pack - Select 1 (Sine).wav"
+    asset: {fileID: 8300000, guid: d99e35508bc1444caec592a24ad13b8d, type: 3}
+  - path: Assets/Sound/EfectodeSonido_Curarse/DSGNImpt_EXPLOSION-Magically_HY_PC-001.wav
+    asset: {fileID: 8300000, guid: e116e33a269c9fc44a77bb8d98058069, type: 3}
+  - path: Assets/Sound/EfectodeSonido_DisparoRevolver38/Disparo_Revolver38.wav
+    asset: {fileID: 8300000, guid: a2d06ae610c2406c94fabe9e6adcfc2e, type: 3}
+  - path: Assets/Sound/EfectodeSonido_Efecto/DSGNMisc_HIT-Zap Laser_HY_PC-005.wav
+    asset: {fileID: 8300000, guid: cd6b03c3b95371946a48f5335d21a581, type: 3}
+  - path: Assets/Sound/EfectodeSonido_Esquive/JDSherbert - Pixel UI SFX Pack - Cursor 2 (Sine).wav
+    asset: {fileID: 8300000, guid: f516fb3ff84941e7b32f92de8d7fa8cc, type: 3}
+  - path: Assets/Sound/EfectodeSonido_Fuego/DSGNImpt_EXPLOSION-Sand Impact_HY_PC-001.wav
+    asset: {fileID: 8300000, guid: 05ca85488d7de72439ae086523825cbe, type: 3}
+  - path: Assets/Sound/EfectodeSonido_RecargaRevolver/Recarga_Revolver.wav
+    asset: {fileID: 8300000, guid: 61aa760a375e49b6b5e17dbcfb3b8a2b, type: 3}
+  - path: Assets/Sound/MusicaDelMenuDesubidadeNivelMenuFindeCombate/VictoryLap_Loopable.wav
+    asset: {fileID: 8300000, guid: e1ea734aeafd9274bb5798c0a0f8d79f, type: 3}
+  - path: Assets/Sound/MusicaGameOver/Clement Panchout _ 80s Zombies Movie _ 2018.wav
+    asset: {fileID: 8300000, guid: 18da33303e4e15c43a132498a7f4a4a7, type: 3}
+  - path: "Assets/Sound/SonidoDeDa\xF1oFinalMuerte/death_3_alex.wav"
+    asset: {fileID: 8300000, guid: 4bc36fee5da654e43a2db93720e0c0d4, type: 3}
+  - path: Assets/Sound/SonidoDeEncuentro/DSGNImpt_EXPLOSION-Forced Interruption_HY_PC-006.wav
+    asset: {fileID: 8300000, guid: d4ee1e49f656d364aad17128a05016e9, type: 3}
+  - path: Assets/Sound/SonidoDePasos/FEETMisc_STEP-Boots on Concrete_HY_PC-001.wav
+    asset: {fileID: 8300000, guid: 45408f0f9c11e634991ccade749c70c8, type: 3}
+  - path: Assets/Sound/SonidoDeSubidaDeNivel/MAGSpel_CAST-Skill Ready_HY_PC-001.wav
+    asset: {fileID: 8300000, guid: 7c5f148525b899a42a6ebb0d4407b54a, type: 3}
+  - path: Assets/Sound/SonidoMuerteEnemigo/grunting_2_ian.wav
+    asset: {fileID: 8300000, guid: ac7183e51e43d9142844c9a0aba12174, type: 3}
+  - path: Assets/Data/Items/Arma_BatMadera.asset
+    asset: {fileID: 11400000, guid: a1c48290b3d74e1895210f8c34d6a103, type: 2}
+  - path: Assets/Data/Items/Arma_CadenaBicicleta.asset
+    asset: {fileID: 11400000, guid: a1c48290b3d74e1895210f8c34d6a101, type: 2}
+  - path: Assets/Data/Items/Arma_TuboPlomo.asset
+    asset: {fileID: 11400000, guid: a1c48290b3d74e1895210f8c34d6a102, type: 2}
+  - path: Assets/Data/Items/Botella_Vacia.asset
+    asset: {fileID: 11400000, guid: bb5e52ba69c1da443b5668b3f9472052, type: 2}
+  - path: Assets/Data/Items/Chile_Polvo.asset
+    asset: {fileID: 11400000, guid: ec8e9f496d730d642ae53f4a4bad2091, type: 2}
+  - path: Assets/Data/Items/Cinta_Canela.asset
+    asset: {fileID: 11400000, guid: 435d867ffffd0f14283cc3147b4c2fb5, type: 2}
+  - path: Assets/Data/Items/Item_BotellaVacia.asset
+    asset: {fileID: 11400000, guid: 651fd6e8662204f4dadef7cd8618d1a0, type: 2}
+  - path: Assets/Data/Items/Item_ChilePolvo.asset
+    asset: {fileID: 11400000, guid: cb4ba7bb6f41c80458a868ba0d50997e, type: 2}
+  - path: Assets/Data/Items/Item_Refresco.asset
+    asset: {fileID: 11400000, guid: 9a3290488ea5cae45a162d32b419f656, type: 2}
+  - path: Assets/Data/Items/Item_Torta.asset
+    asset: {fileID: 11400000, guid: b4a46ddb2b6c9f84db9410ed2fabb3f5, type: 2}
+  - path: Assets/Data/Items/Receta_BombaChile.asset
+    asset: {fileID: 11400000, guid: a580104d999574a428a918ade052d766, type: 2}
+  - path: Assets/Data/Items/Receta_VendajeRudo.asset
+    asset: {fileID: 11400000, guid: e0fa818e8d552eb4e9baeb7fbef11384, type: 2}
+  - path: Assets/Data/Enemies/Jefe_CapatazBlindado_N2.asset
+    asset: {fileID: 11400000, guid: 9073186ba3718934db05fd644bccf6a6, type: 2}
+  - path: Assets/Data/Enemies/Jefe_ElCalacas.asset
+    asset: {fileID: 11400000, guid: 584ea9fe649b5a04a86910d301567d9b, type: 2}
+  - path: Assets/Data/Enemies/Lacayo_CallejeroDebil.asset
+    asset: {fileID: 11400000, guid: 25261ec4244beec43aae50b96b1885e9, type: 2}
+  - path: Assets/Data/Enemies/Lacayo_LentoFuerte.asset
+    asset: {fileID: 11400000, guid: 44f45ff85dc202e48a82ecaa523a4229, type: 2}
+  - path: "Assets/Data/Enemies/Lacayo_Punk_Mat\xF3n_Punk.asset"
+    asset: {fileID: 11400000, guid: b6b2f552119995740a5bb9e697b3d8ee, type: 2}
+  - path: Assets/Data/Enemies/Lacayo_Punk_Punk_Navajero.asset
+    asset: {fileID: 11400000, guid: c562444b0d81ab944b3ba6ba141e6d24, type: 2}
+  - path: Assets/Data/Enemies/Lacayo_RapidoDebil.asset
+    asset: {fileID: 11400000, guid: a196610e35d92324982685325c800fac, type: 2}
+  - path: Assets/Data/Enemies/Sicario_Cuchillero_N2.asset
+    asset: {fileID: 11400000, guid: f3b213fe827999047871059ad5753caa, type: 2}
+  - path: Assets/Data/Enemies/Sicario_Verdugo_N2.asset
+    asset: {fileID: 11400000, guid: 7a55da666e92e5147878e95a8f6e3dff, type: 2}
+  - path: Assets/Animations/Homeless_2/Homeless2_Controller.controller
+    asset: {fileID: 9100000, guid: efa462ef7d29a544b9c0a075e472749c, type: 2}
+  - path: Assets/Animations/Homeless_3/Homeless3_Controller.controller
+    asset: {fileID: 9100000, guid: d9812a8267094e946b47aa6a9645492a, type: 2}
+  - path: Assets/Animations/Enemy_Punk/EnemyPunk_Controller.controller
+    asset: {fileID: 9100000, guid: ed1df1b15c727b14a8ccf5666d68df6c, type: 2}
+  - path: Assets/Fonts/Pixelzone_TMP.asset
+    asset: {fileID: 11400000, guid: c8dd6f0b63a790d4d84a95563f7b7917, type: 2}
+  - path: Assets/Fonts/Pixelzone_Font_1_10/Pixelzone.ttf
+    asset: {fileID: 12800000, guid: 66d7bb4693442784c8950814d4620a20, type: 3}
+  - path: Assets/Portraits/Detective.png
+    asset: {fileID: 21300000, guid: 04c5401cf9fc4e31848e888f7be20824, type: 3}
+  - path: Assets/Portraits/Enrique.png
+    asset: {fileID: 7353621977714259684, guid: c9dca07927a50e54ebf1342c976aef43, type: 3}
+  - path: Assets/Portraits/Intelecto.png
+    asset: {fileID: -4236815467646598101, guid: 94f272e6fb657314f88af75efe0c6812, type: 3}
+  - path: Assets/Portraits/Motricidad.png
+    asset: {fileID: 5877116541117098598, guid: 1063e020ba18db7418359539b4a1bb06, type: 3}
+  - path: Assets/Portraits/MundoInterno.png
+    asset: {fileID: -7323335376597522656, guid: f0c2a04f2d589e347972ff7cb089eb87, type: 3}
+  - path: Assets/Portraits/Musculatura.png
+    asset: {fileID: -5521872637349363059, guid: e9a9fa9274edfbe4aa7eee1bd38ab9ee, type: 3}
+  - path: Assets/Sprites/Detective/detective_stand_down.png
+    asset: {fileID: 21300000, guid: e0b3b960ff0a4765ad4c58b5a453a2c2, type: 3}
+  - path: Assets/Sprites/Detective/detective_stand_side.png
+    asset: {fileID: 21300000, guid: 132f8e2e15ac400e9c69ce396214971e, type: 3}
+  - path: Assets/Sprites/Detective/detective_walk_1.png
+    asset: {fileID: 21300000, guid: e0b3b960ff0a4765ad4c58b5a453a2d1, type: 3}
+  - path: Assets/Sprites/Detective/detective_walk_2.png
+    asset: {fileID: 21300000, guid: e0b3b960ff0a4765ad4c58b5a453a2d2, type: 3}
+  - path: Assets/Sprites/Detective/detective_walk_3.png
+    asset: {fileID: 21300000, guid: e0b3b960ff0a4765ad4c58b5a453a2d3, type: 3}
+  - path: Assets/Sprites/Detective/detective_walk_4.png
+    asset: {fileID: 21300000, guid: e0b3b960ff0a4765ad4c58b5a453a2d4, type: 3}
+  - path: Assets/Sprites/Personaje/stand_down.png
+    asset: {fileID: 21300000, guid: 064ec10a9f3378541a66326fb5d6b51f, type: 3}
+  - path: Assets/Sprites/Personaje/stand_side.png
+    asset: {fileID: 21300000, guid: d66cd1126f7423a4d990dbf99ae15b57, type: 3}
+  - path: Assets/Sprites/Personaje/stand_up.png
+    asset: {fileID: 21300000, guid: 7c5b773aa048ba1439c85061ff13e966, type: 3}
+  - path: Assets/Sprites/Personaje/walk_down_00.png
+    asset: {fileID: 21300000, guid: d5faf75ebdac9a545b10fc271df42b8e, type: 3}
+  - path: Assets/Sprites/Personaje/walk_down_01.png
+    asset: {fileID: 21300000, guid: 5bad1dee6533ec3478ccebdeb8ddfd72, type: 3}
+  - path: Assets/Sprites/Personaje/walk_down_02.png
+    asset: {fileID: 21300000, guid: d6f4cd0db2a6a0a499c68baedf11a13f, type: 3}
+  - path: Assets/Sprites/Personaje/walk_down_03.png
+    asset: {fileID: 21300000, guid: 61d01fd7fa32e0b42b65f03e4ee4cfa6, type: 3}
+  - path: Assets/Sprites/Personaje/walk_down_04.png
+    asset: {fileID: 21300000, guid: 7d1b63a4827b33348bbecac84948fa9e, type: 3}
+  - path: Assets/Sprites/Personaje/walk_down_05.png
+    asset: {fileID: 21300000, guid: 47d203cfbeb05434d89682d4d06f0597, type: 3}
+  - path: Assets/Sprites/Personaje/walk_down_06.png
+    asset: {fileID: 21300000, guid: 631f4663c5e53f8488953f1964cff896, type: 3}
+  - path: Assets/Sprites/Personaje/walk_down_07.png
+    asset: {fileID: 21300000, guid: 89cc7730e52e57446b65981fb4208a2d, type: 3}
+  - path: Assets/Sprites/Personaje/walk_side_00.png
+    asset: {fileID: 21300000, guid: 03d74f56ce3f9394db3a2f70fe2f74c3, type: 3}
+  - path: Assets/Sprites/Personaje/walk_side_01.png
+    asset: {fileID: 21300000, guid: 46a542c181974fa43a0e941e923c27a7, type: 3}
+  - path: Assets/Sprites/Personaje/walk_side_02.png
+    asset: {fileID: 21300000, guid: 2ac099778ce7fe04ea1b720008a0fd3b, type: 3}
+  - path: Assets/Sprites/Personaje/walk_side_03.png
+    asset: {fileID: 21300000, guid: 222139a07e8bc1946aba8a9b118c36c8, type: 3}
+  - path: Assets/Sprites/Personaje/walk_side_04.png
+    asset: {fileID: 21300000, guid: f6da0b54845381746978d5a3c6ec2b21, type: 3}
+  - path: Assets/Sprites/Personaje/walk_side_05.png
+    asset: {fileID: 21300000, guid: 8eb90d6e934baae44995c4a287762703, type: 3}
+  - path: Assets/Sprites/Personaje/walk_side_06.png
+    asset: {fileID: 21300000, guid: 6056d79194a36ed439eb47c0b73d6af4, type: 3}
+  - path: Assets/Sprites/Personaje/walk_side_07.png
+    asset: {fileID: 21300000, guid: 110031cce9cb27a4eb24b4d526905b6a, type: 3}
+  - path: Assets/Sprites/Personaje/walk_up_00.png
+    asset: {fileID: 21300000, guid: be314e22a274cb74ca3bec1a9712bbd2, type: 3}
+  - path: Assets/Sprites/Personaje/walk_up_01.png
+    asset: {fileID: 21300000, guid: fb1595a474307f64997f4f6f38194fa6, type: 3}
+  - path: Assets/Sprites/Personaje/walk_up_02.png
+    asset: {fileID: 21300000, guid: 0d27310edd376ba41b4361a59dfab073, type: 3}
+  - path: Assets/Sprites/Personaje/walk_up_03.png
+    asset: {fileID: 21300000, guid: d8f92f338d9696742bcfd32090592d61, type: 3}
+  - path: Assets/Sprites/Personaje/walk_up_04.png
+    asset: {fileID: 21300000, guid: ad738b5aa2cbe344bab496adb087a697, type: 3}
+  - path: Assets/Sprites/Personaje/walk_up_05.png
+    asset: {fileID: 21300000, guid: 792387887e5a67e46b3d3a837e25c0c9, type: 3}
+  - path: Assets/Sprites/Personaje/walk_up_06.png
+    asset: {fileID: 21300000, guid: db0e08c9428b7a1478b1444732400b0c, type: 3}
+  - path: Assets/Sprites/Personaje/walk_up_07.png
+    asset: {fileID: 21300000, guid: 674c08ed5277b2647abb3817eb2e46fb, type: 3}
+  - path: Assets/Sprites/Player - Cardo/Idle/1.png
+    asset: {fileID: -855298285791758126, guid: 62d50733b90665246892c1ff9eea87fd, type: 3}
+  - path: Assets/Sprites/Player - Cardo/Idle/2.png
+    asset: {fileID: 6937817954938267909, guid: e568f61977b034146b7171f95fc23637, type: 3}
+  - path: Assets/Sprites/Player - Cardo/Idle/3.png
+    asset: {fileID: -6470460504253458178, guid: d9c0fa542e46f5941b1a7e317408aea7, type: 3}
+  - path: Assets/Sprites/Player - Cardo/Idle/4.png
+    asset: {fileID: -4178046375966092550, guid: efa3f7c541ce81b4cb0db7506f940b96, type: 3}
+  - path: Assets/Sprites/Player - Cardo/Idle/5.png
+    asset: {fileID: 4130640169021434097, guid: fb5843f72fedbdb43a16750beee1f95d, type: 3}
+  - path: Assets/Sprites/Player - Cardo/Idle/6.png
+    asset: {fileID: 3465286685962602723, guid: 2ccdeeb47a9770b4db7197072e225c03, type: 3}
+  - path: Assets/Sprites/Player - Cardo/Idle/7.png
+    asset: {fileID: 7028616704906629411, guid: 2348cab41af156246a9eddefdb182340, type: 3}
+  - path: Assets/Sprites/Player - Cardo/Idle/8.png
+    asset: {fileID: 8288426215254106694, guid: c45cc912e4fac664485ce9181a057851, type: 3}
+  - path: Assets/Sprites/Player - Cardo/Idle/Hoja de sprites_ caminante pixelado.png
+    asset: {fileID: -8774169888851216240, guid: 8f104f1f88422df46bd889d849a9a3d4, type: 3}
+  - path: Assets/Sprites/Player - Cardo/Idle/Secuencia de marcha en guardia pixel art.png
+    asset: {fileID: 1314373102871507923, guid: d2567ed7838e8d64684b4bfdb8f25500, type: 3}
+  - path: Assets/Sprites/PlaceholderSquare.png
+    asset: {fileID: 21300000, guid: 772719238401dd143a404f42f632d60b, type: 3}
+  - path: Assets/Sprites/PostApocalypse_AssetPack_v1.1.2/Objects/Trash-can_1.png
+    asset: {fileID: 1627231872001444879, guid: 837161ae208b78d4da768120a5faa2c5, type: 3}
+  - path: Assets/Sprites/PostApocalypse_AssetPack_v1.1.2/Objects/Trash-can_2.png
+    asset: {fileID: -7069057552694309806, guid: dca6e5100b6101842b2899a5f34ccd0a, type: 3}
+  - path: Assets/Sprites/PostApocalypse_AssetPack_v1.1.2/Objects/Trash-bag_1.png
+    asset: {fileID: 4246170627001207689, guid: eb1e2e724f159b049a3897fcfcd12447, type: 3}
+  - path: Assets/Sprites/PostApocalypse_AssetPack_v1.1.2/Objects/Trash-bag_2.png
+    asset: {fileID: -1532483168066049674, guid: 88d27b1d4a81bcb439f85beb1697104d, type: 3}
+  - path: Assets/Sprites/PostApocalypse_AssetPack_v1.1.2/Objects/Barrel_red_1.png
+    asset: {fileID: 5616564157133464122, guid: dfe884b6f6f44d24e98f608ec48ff9d8, type: 3}
+  - path: Assets/Sprites/PostApocalypse_AssetPack_v1.1.2/Objects/Pickable/Ammo-crate_Blue.png
+    asset: {fileID: 8071718276002031428, guid: 32ab506b8dad0cc41a6cc72a3a2e97eb, type: 3}
+  - path: Assets/Sprites/PostApocalypse_AssetPack_v1.1.2/Objects/Pickable/Ammo-crate_Green.png
+    asset: {fileID: -2410386525710666851, guid: a7b138ae15b7e394f99eec3ed60b8e68, type: 3}
+  - path: Assets/Sprites/PostApocalypse_AssetPack_v1.1.2/Objects/Pickable/Ammo-crate_Red.png
+    asset: {fileID: -1654697517976419279, guid: 06e034c5d3c9fa242aac98e35fd7436d, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/ENVIRONMENT/column.png
+    asset: {fileID: 21300000, guid: 213fc13db2584140b131449ed43759e7, type: 3}
+  - path: Assets/NewStuff/torch_1.png
+    asset: {fileID: 21300000, guid: 7d13579d086143b3be8ac900e6d2615c, type: 3}
+  - path: Assets/NewStuff/torch_2.png
+    asset: {fileID: 21300000, guid: cea2a8ca01d74c4e872d5dc85eb08de6, type: 3}
+  - path: Assets/NewStuff/torch_3.png
+    asset: {fileID: 21300000, guid: 7da42925038443a9afa26088ba349a2b, type: 3}
+  - path: Assets/NewStuff/torch_4.png
+    asset: {fileID: 21300000, guid: 8f3642cfa831498b914ea52733a8908b, type: 3}
+  - path: Assets/NewStuff/Streets of Fight files/Assets/Sprites/Enemy-Punk/Hurt/hurt1.png
+    asset: {fileID: 21300000, guid: 67fa7b9c9aa64b029f09a4ed5a1b5f37, type: 3}
+  - path: Assets/NewStuff/Streets of Fight files/Assets/Sprites/Enemy-Punk/Hurt/hurt2.png
+    asset: {fileID: 21300000, guid: 93ca181eec9d49fe99dc40bd8911870e, type: 3}
+  - path: Assets/NewStuff/Streets of Fight files/Assets/Sprites/Enemy-Punk/Hurt/hurt3.png
+    asset: {fileID: 21300000, guid: 2b47b10740694f9db9a6616b93dcc6da, type: 3}
+  - path: Assets/NewStuff/Streets of Fight files/Assets/Sprites/Enemy-Punk/Hurt/hurt4.png
+    asset: {fileID: 21300000, guid: f58955956ec74c9ba678d73a8a0fa0e8, type: 3}
+  - path: Assets/NewStuff/Streets of Fight files/Assets/Sprites/Enemy-Punk/Idle/idle1.png
+    asset: {fileID: 21300000, guid: bfd7388d029e463a9aff19c1a69363e4, type: 3}
+  - path: Assets/NewStuff/Streets of Fight files/Assets/Sprites/Enemy-Punk/Idle/idle2.png
+    asset: {fileID: 21300000, guid: 2281094f37754c10beaa7866a2bb8cbc, type: 3}
+  - path: Assets/NewStuff/Streets of Fight files/Assets/Sprites/Enemy-Punk/Idle/idle3.png
+    asset: {fileID: 21300000, guid: 3f5988e35d9c453cae301864e934694f, type: 3}
+  - path: Assets/NewStuff/Streets of Fight files/Assets/Sprites/Enemy-Punk/Idle/idle4.png
+    asset: {fileID: 21300000, guid: 092a49960ac0425a84f7bf1048ecc81f, type: 3}
+  - path: Assets/NewStuff/Streets of Fight files/Assets/Sprites/Enemy-Punk/Punch/punch1.png
+    asset: {fileID: 21300000, guid: 7f4034fb918443619fc43b3b08e6e7a6, type: 3}
+  - path: Assets/NewStuff/Streets of Fight files/Assets/Sprites/Enemy-Punk/Punch/punch2.png
+    asset: {fileID: 21300000, guid: c32f25b8f55d42a2a261d54494f31f95, type: 3}
+  - path: Assets/NewStuff/Streets of Fight files/Assets/Sprites/Enemy-Punk/Punch/punch3.png
+    asset: {fileID: 21300000, guid: ce2d07957d714d678969dde7e0dae27b, type: 3}
+  - path: Assets/NewStuff/Streets of Fight files/Assets/Sprites/Enemy-Punk/Walk/walk1.png
+    asset: {fileID: 21300000, guid: 8e69171f2cf4429c96650fb0e75bb502, type: 3}
+  - path: Assets/NewStuff/Streets of Fight files/Assets/Sprites/Enemy-Punk/Walk/walk2.png
+    asset: {fileID: 21300000, guid: f09eafc21bcc448eaa071366194037f0, type: 3}
+  - path: Assets/NewStuff/Streets of Fight files/Assets/Sprites/Enemy-Punk/Walk/walk3.png
+    asset: {fileID: 21300000, guid: be7b0a2f9d314dad8f11440977968ccc, type: 3}
+  - path: Assets/NewStuff/Streets of Fight files/Assets/Sprites/Enemy-Punk/Walk/walk4.png
+    asset: {fileID: 21300000, guid: 582bf559b2a54b87b7e64842eef2f79b, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/Idle/sprites/f-01.png
+    asset: {fileID: 21300000, guid: b582877558454268a0f14efe0a02f563, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/Idle/sprites/f-02.png
+    asset: {fileID: 21300000, guid: b42f45ef77544872afa538875dedda99, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/Idle/sprites/f-03.png
+    asset: {fileID: 21300000, guid: 939f45da499143aaa40a0473147760f0, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/Idle/sprites/f-04.png
+    asset: {fileID: 21300000, guid: a554de131c0f4cc29265dcfdad92368a, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/Walk/sprites/f-01.png
+    asset: {fileID: 21300000, guid: bf7ec140e2144d04add54461f79d4d60, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/Walk/sprites/f-02.png
+    asset: {fileID: 21300000, guid: 27f34cbdca25499098bfc966786804f6, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/Walk/sprites/f-03.png
+    asset: {fileID: 21300000, guid: e809e1ab192d41b5b64d1e09122a8c0e, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/Walk/sprites/f-04.png
+    asset: {fileID: 21300000, guid: 7346fe0a1cee4ab59e59b549f75245d3, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/Walk/sprites/f-05.png
+    asset: {fileID: 21300000, guid: 5c188a4041ef45b6adbb15bd73d2e04e, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/Walk/sprites/f-06.png
+    asset: {fileID: 21300000, guid: ae0ad20365da4867b8fe6566f8f4a3f3, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/Punch/sprites/f-01.png
+    asset: {fileID: 21300000, guid: cd639f69c078417cadd3e6a6131e63c0, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/Punch/sprites/f-02.png
+    asset: {fileID: 21300000, guid: 722ab91a27134c09a9edfa4be2b66c71, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/Punch/sprites/f-03.png
+    asset: {fileID: 21300000, guid: 34d81f62479440d6893f8290463b9a92, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/Punch/sprites/f-04.png
+    asset: {fileID: 21300000, guid: 0cba67dd84ed439b80d28b3a7781a7d3, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/Punch/sprites/f-05.png
+    asset: {fileID: 21300000, guid: 8697e3a633b446528324282de496097f, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/Punch/sprites/f-06.png
+    asset: {fileID: 21300000, guid: 9742cc151bcd453cb94f3809a3358c52, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/Kick/sprites/f-01.png
+    asset: {fileID: 21300000, guid: b34e2ecd9d17449b974c52584bd6d215, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/Kick/sprites/f-02.png
+    asset: {fileID: 21300000, guid: 7b3d1984fb064a6091d051dd8bdca1a9, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/Kick/sprites/f-03.png
+    asset: {fileID: 21300000, guid: 47e30003f603484380a88f4b0857ccad, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/Kick/sprites/f-04.png
+    asset: {fileID: 21300000, guid: 138736f0580142dd8d4d911903a2a3d9, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/Kick/sprites/f-05.png
+    asset: {fileID: 21300000, guid: 7e7c312857444e008e7ff35e9114de77, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/Flying Kick/sprites/f-01.png
+    asset: {fileID: 21300000, guid: 00410d8f2b1c4707a48596bb8b26f5e8, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/Flying Kick/sprites/f-02.png
+    asset: {fileID: 21300000, guid: dff99894db0c429eaa6e22dc1feddbd3, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/crouch-kick/sprites/f-01.png
+    asset: {fileID: 21300000, guid: 21371ae12f354d088c9bc430034d4b32, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/crouch-kick/sprites/f-02.png
+    asset: {fileID: 21300000, guid: 930a1aa8327b42b394b6072ab7f7e567, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/crouch-kick/sprites/f-03.png
+    asset: {fileID: 21300000, guid: f048e4ead7c444258216926776a3e808, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/crouch-kick/sprites/f-04.png
+    asset: {fileID: 21300000, guid: ac7e29b61e6f4667b2817e3c94b2d28a, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/crouch-kick/sprites/f-05.png
+    asset: {fileID: 21300000, guid: 3aaa376965284da0b3271f0f89bdc449, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/Hurt/sprites/f-01.png
+    asset: {fileID: 21300000, guid: 02c96e8c4c484422b8f8a2ff02e18942, type: 3}
+  - path: Assets/NewStuff/gothicvania church files/Assets/SPRITES/player/Hurt/sprites/f-02.png
+    asset: {fileID: 21300000, guid: 53877ad7348444a08d64c7ae277eff0c, type: 3}
+  - path: Assets/Scripts/AnimacionAtaque.png
+    asset: {fileID: -8611215156956540440, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+  - path: Assets/Scripts/AtaqueExplosion.png
+    asset: {fileID: -8999740785698678360, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+  - path: Assets/Sprites/Homeless_2/Attack_1.png
+    asset: {fileID: -8915327726919978405, guid: 957f199142aceab4a9f4efd9c4fe9d2a, type: 3}
+  - path: Assets/Sprites/Homeless_2/Attack_2.png
+    asset: {fileID: -837275676153275556, guid: 5c2c5bbea02754e4c8bee2b62acba2df, type: 3}
+  - path: Assets/Sprites/Homeless_2/Attack_3.png
+    asset: {fileID: -8910899737472627771, guid: cf4cf2ae01c2d1744a6e8e72516ea950, type: 3}
+  - path: Assets/Sprites/Homeless_2/Dead.png
+    asset: {fileID: 2649847697073447219, guid: 34c455f05e0b1df4d8b25528a8b5b3b1, type: 3}
+  - path: Assets/Sprites/Homeless_2/Hurt.png
+    asset: {fileID: -2048800907179887802, guid: 19fa3cec99b0eae4296aad4d11d6a0e3, type: 3}
+  - path: Assets/Sprites/Homeless_2/Idle.png
+    asset: {fileID: 4723107735738678597, guid: 62e046f4e2106f247a8afce47507648f, type: 3}
+  - path: Assets/Sprites/Homeless_2/Idle_2.png
+    asset: {fileID: -6188768998144020764, guid: 5a03abe89fd40914f9662d6f7b5b2fe7, type: 3}
+  - path: Assets/Sprites/Homeless_2/Jump.png
+    asset: {fileID: 7460046300004610927, guid: 213299187017f0649a58deba9e6d0e19, type: 3}
+  - path: Assets/Sprites/Homeless_2/Run.png
+    asset: {fileID: 4944230376442633554, guid: 3d9854592b149ce45b5852214c86a2a4, type: 3}
+  - path: Assets/Sprites/Homeless_2/Walk.png
+    asset: {fileID: 4035959289877228764, guid: f6c2747b57f8c794ca4ae89e7a33be2b, type: 3}
+  - path: Assets/Sprites/Homeless_3/Attack_1.png
+    asset: {fileID: -8915327726919978405, guid: 01f4a60b0de8e9940ac6cbf2dc8b8c21, type: 3}
+  - path: Assets/Sprites/Homeless_3/Attack_2.png
+    asset: {fileID: -837275676153275556, guid: be2e27e2c5fa8f442ba76cb022d18834, type: 3}
+  - path: Assets/Sprites/Homeless_3/Dead.png
+    asset: {fileID: 2649847697073447219, guid: 1fd23dae521044246a5205c6c3fa232d, type: 3}
+  - path: Assets/Sprites/Homeless_3/Hurt.png
+    asset: {fileID: -2048800907179887802, guid: 614c90c7e1db8de43b30f5e901743e24, type: 3}
+  - path: Assets/Sprites/Homeless_3/Idle.png
+    asset: {fileID: 4723107735738678597, guid: 95ea710d024db8d4b88957d3d8f09c2a, type: 3}
+  - path: Assets/Sprites/Homeless_3/Idle_2.png
+    asset: {fileID: -6188768998144020764, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
+  - path: Assets/Sprites/Homeless_3/Jump.png
+    asset: {fileID: 7460046300004610927, guid: 2c9e5e0c8b4fd9f4a972ab1fbbedeb7b, type: 3}
+  - path: Assets/Sprites/Homeless_3/Run.png
+    asset: {fileID: 4944230376442633554, guid: 1ba825f42c8fb7c42841c211a0c9f60b, type: 3}
+  - path: Assets/Sprites/Homeless_3/Special.png
+    asset: {fileID: -9068871714124230211, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
+  - path: Assets/Sprites/Homeless_3/Walk.png
+    asset: {fileID: 4035959289877228764, guid: 1055445982dae434f8e207aaeff889c2, type: 3}
+  spriteSheets:
+  - path: Assets/Scripts/AnimacionAtaque.png
+    sprites:
+    - {fileID: -8611215156956540440, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -8566513870148484236, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -8555818736607657332, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -8344885816691612991, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -8247259343428982952, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -8019301290270811141, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -7667409624605371746, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -7663555437872608062, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -7571824089539060695, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -7267582822055093801, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -6760860028363418966, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -6136640675690138416, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -5970272180655915401, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -5420009383794247115, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -5263662169583589973, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -5251103723137387403, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -5121098420321182421, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -4730367823470583034, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -4634892163172862629, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -4344381293197693312, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -4291919970716859757, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -4085136872766459917, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -3791844325688852611, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -2313031770941374921, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -2309084559911986419, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -1763290559840578568, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -1645036992909234991, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -1574346903464004359, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -1440605272934959937, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -1379216271228163870, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -1102624811185080379, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -722754131157359132, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -629631902208631816, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -359840350184616370, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -270396204613245519, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: -127834736267891169, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 28002734732264364, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 309972932606114334, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 455538067167071359, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 536565020401856760, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 541714488232477478, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 559617415227604837, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 565423884864618587, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 1020890664207761888, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 1492090652737681735, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 1717008924240609991, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 2617999103979434534, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 2681078464717223194, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 3344571435492975972, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 3431674177554190176, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 3584422560334119528, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 3740329887451835105, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 4458540657747743961, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 5107702571275317766, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 5574759105993453696, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 5652976414885545549, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 5660505165430783797, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 5803206368863002265, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 5888779966332985301, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 5964570496653740263, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 6139557052569665077, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 6392631950913426897, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 6449390437038046302, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 6877872077566834369, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 7086834781119891286, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 7183153234187437875, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 7382703909973013133, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 7402601317099067800, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 8305045234124786693, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 8347017222306194456, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 8388730558046168402, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+    - {fileID: 9218660888619770873, guid: a52d4d37a83c11f4b82cc048cc364645, type: 3}
+  - path: Assets/Scripts/AtaqueExplosion.png
+    sprites:
+    - {fileID: -8999740785698678360, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -8582655890782815124, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -8017450493918440439, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -7718359878741400322, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -7437482992966381788, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -7404448274090094814, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -7310731190618744293, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -7227045604086019744, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -7092016084292749340, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -6745501961819457728, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -6586142836222118898, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -6225282888740397940, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -6029648729718962485, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -5951014941819915304, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -5292361405163893048, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -5291094687736881267, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -5131117647872722369, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -5068253483006069583, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -4837616806610794698, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -4270181378891537896, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -3943801519450331906, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -3739353260267502284, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -3578040196241116474, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -3157436123480219070, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -3104070190701657616, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -3103026875339779263, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -2884694661852465565, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -2816474735566545939, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -1662095870437717382, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -1432701514198054555, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -1407330429357696660, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -1349397872947885751, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -1205153233657138720, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -1175118713788082671, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -1172191403412423493, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -1071745656646806612, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -958094915314971483, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -938521782945761472, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -601657565729097034, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -332582014101691124, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: -185324033312271945, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 226507474488130396, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 227587796220193463, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 396169248788828575, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 589497204257022916, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 612603913939573027, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 689865691048084610, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 960429639981198652, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 1472304860338496306, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 1547966857603378559, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 1568062558883233169, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 1657633739279520574, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 1714684092471204029, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 2001115603633517309, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 2336464258007187857, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 2384228642555904707, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 2430420360559234726, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 2434387484895313610, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 2435346523189644607, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 2946202806525035655, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 3224849192916231285, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 3291911519801125995, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 3353966617435288291, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 3416681001798563033, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 4010235887203815768, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 4376054114101435948, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 4597148133001668855, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 5317174739057534550, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 5438762319154253072, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 5501553545415758872, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 5651740152310973582, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 5757268965682646493, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 6037619670351786050, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 6103010655943685249, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 6389295887647412139, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 6577758868883380720, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 6888149631314924493, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 7211360981330061686, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 7233853642294575335, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 7529705200629121155, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 7613058550481189206, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 7677690905158791731, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 7684266002814907590, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 7686753883499110322, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 7824565618301855884, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 7861419495724857809, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 8529744025969544691, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 8945609513524083033, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 8958234466896939096, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+    - {fileID: 9163030066494783923, guid: 1b319c20ce845c9408fa864904979a23, type: 3}
+  - path: Assets/Sprites/Homeless_2/Attack_1.png
+    sprites:
+    - {fileID: -8915327726919978405, guid: 957f199142aceab4a9f4efd9c4fe9d2a, type: 3}
+    - {fileID: 4416717768442454902, guid: 957f199142aceab4a9f4efd9c4fe9d2a, type: 3}
+    - {fileID: -8053095777402275025, guid: 957f199142aceab4a9f4efd9c4fe9d2a, type: 3}
+    - {fileID: 4688295478533005478, guid: 957f199142aceab4a9f4efd9c4fe9d2a, type: 3}
+    - {fileID: 3156989228384878200, guid: 957f199142aceab4a9f4efd9c4fe9d2a, type: 3}
+    - {fileID: -4176445809780997858, guid: 957f199142aceab4a9f4efd9c4fe9d2a, type: 3}
+    - {fileID: 9111255474114485651, guid: 957f199142aceab4a9f4efd9c4fe9d2a, type: 3}
+    - {fileID: -6197699949570948299, guid: 957f199142aceab4a9f4efd9c4fe9d2a, type: 3}
+    - {fileID: 5610570195965040114, guid: 957f199142aceab4a9f4efd9c4fe9d2a, type: 3}
+    - {fileID: -4186573142144889428, guid: 957f199142aceab4a9f4efd9c4fe9d2a, type: 3}
+  - path: Assets/Sprites/Homeless_2/Attack_2.png
+    sprites:
+    - {fileID: -837275676153275556, guid: 5c2c5bbea02754e4c8bee2b62acba2df, type: 3}
+    - {fileID: -8404040051688745268, guid: 5c2c5bbea02754e4c8bee2b62acba2df, type: 3}
+    - {fileID: -3526194569594660169, guid: 5c2c5bbea02754e4c8bee2b62acba2df, type: 3}
+    - {fileID: 950650993592285724, guid: 5c2c5bbea02754e4c8bee2b62acba2df, type: 3}
+  - path: Assets/Sprites/Homeless_2/Attack_3.png
+    sprites:
+    - {fileID: -8910899737472627771, guid: cf4cf2ae01c2d1744a6e8e72516ea950, type: 3}
+    - {fileID: -5464336490339650859, guid: cf4cf2ae01c2d1744a6e8e72516ea950, type: 3}
+    - {fileID: -1132038362817505424, guid: cf4cf2ae01c2d1744a6e8e72516ea950, type: 3}
+    - {fileID: -6574224857763752514, guid: cf4cf2ae01c2d1744a6e8e72516ea950, type: 3}
+  - path: Assets/Sprites/Homeless_2/Dead.png
+    sprites:
+    - {fileID: 2649847697073447219, guid: 34c455f05e0b1df4d8b25528a8b5b3b1, type: 3}
+    - {fileID: -8293461521501190705, guid: 34c455f05e0b1df4d8b25528a8b5b3b1, type: 3}
+    - {fileID: -1631342717326862633, guid: 34c455f05e0b1df4d8b25528a8b5b3b1, type: 3}
+    - {fileID: -3927913518680497933, guid: 34c455f05e0b1df4d8b25528a8b5b3b1, type: 3}
+  - path: Assets/Sprites/Homeless_2/Hurt.png
+    sprites:
+    - {fileID: -2048800907179887802, guid: 19fa3cec99b0eae4296aad4d11d6a0e3, type: 3}
+    - {fileID: 490842205202310979, guid: 19fa3cec99b0eae4296aad4d11d6a0e3, type: 3}
+    - {fileID: -3720053754089064719, guid: 19fa3cec99b0eae4296aad4d11d6a0e3, type: 3}
+  - path: Assets/Sprites/Homeless_2/Idle.png
+    sprites:
+    - {fileID: 4723107735738678597, guid: 62e046f4e2106f247a8afce47507648f, type: 3}
+    - {fileID: -7385789195546760866, guid: 62e046f4e2106f247a8afce47507648f, type: 3}
+    - {fileID: 3234629978573100161, guid: 62e046f4e2106f247a8afce47507648f, type: 3}
+    - {fileID: 6373048116405451881, guid: 62e046f4e2106f247a8afce47507648f, type: 3}
+    - {fileID: 7264182050183361747, guid: 62e046f4e2106f247a8afce47507648f, type: 3}
+    - {fileID: -2834552850196481573, guid: 62e046f4e2106f247a8afce47507648f, type: 3}
+    - {fileID: 3278449094680734212, guid: 62e046f4e2106f247a8afce47507648f, type: 3}
+  - path: Assets/Sprites/Homeless_2/Idle_2.png
+    sprites:
+    - {fileID: -6188768998144020764, guid: 5a03abe89fd40914f9662d6f7b5b2fe7, type: 3}
+    - {fileID: 8893443453730532091, guid: 5a03abe89fd40914f9662d6f7b5b2fe7, type: 3}
+    - {fileID: -2638866428267449571, guid: 5a03abe89fd40914f9662d6f7b5b2fe7, type: 3}
+    - {fileID: 8150759692636176867, guid: 5a03abe89fd40914f9662d6f7b5b2fe7, type: 3}
+    - {fileID: 7579204882187213897, guid: 5a03abe89fd40914f9662d6f7b5b2fe7, type: 3}
+    - {fileID: -5366198773294189, guid: 5a03abe89fd40914f9662d6f7b5b2fe7, type: 3}
+    - {fileID: 789186541819579165, guid: 5a03abe89fd40914f9662d6f7b5b2fe7, type: 3}
+    - {fileID: 6601435321489166827, guid: 5a03abe89fd40914f9662d6f7b5b2fe7, type: 3}
+    - {fileID: 8295018443228217620, guid: 5a03abe89fd40914f9662d6f7b5b2fe7, type: 3}
+  - path: Assets/Sprites/Homeless_2/Jump.png
+    sprites:
+    - {fileID: 7460046300004610927, guid: 213299187017f0649a58deba9e6d0e19, type: 3}
+    - {fileID: 7034338576483803127, guid: 213299187017f0649a58deba9e6d0e19, type: 3}
+    - {fileID: 6054277451648750542, guid: 213299187017f0649a58deba9e6d0e19, type: 3}
+    - {fileID: 6937500446539429301, guid: 213299187017f0649a58deba9e6d0e19, type: 3}
+    - {fileID: 3580086529375993838, guid: 213299187017f0649a58deba9e6d0e19, type: 3}
+    - {fileID: 3630178267427638470, guid: 213299187017f0649a58deba9e6d0e19, type: 3}
+    - {fileID: 3900142949445631465, guid: 213299187017f0649a58deba9e6d0e19, type: 3}
+    - {fileID: 3967418731061993063, guid: 213299187017f0649a58deba9e6d0e19, type: 3}
+    - {fileID: 3330681223243198311, guid: 213299187017f0649a58deba9e6d0e19, type: 3}
+    - {fileID: -5679318689324892672, guid: 213299187017f0649a58deba9e6d0e19, type: 3}
+    - {fileID: 8986021004954451436, guid: 213299187017f0649a58deba9e6d0e19, type: 3}
+    - {fileID: -7810803537696417755, guid: 213299187017f0649a58deba9e6d0e19, type: 3}
+  - path: Assets/Sprites/Homeless_2/Run.png
+    sprites:
+    - {fileID: 4944230376442633554, guid: 3d9854592b149ce45b5852214c86a2a4, type: 3}
+    - {fileID: -2274363484027164459, guid: 3d9854592b149ce45b5852214c86a2a4, type: 3}
+    - {fileID: 8284087734974297348, guid: 3d9854592b149ce45b5852214c86a2a4, type: 3}
+    - {fileID: 5304202850863732263, guid: 3d9854592b149ce45b5852214c86a2a4, type: 3}
+    - {fileID: 2833043080597125133, guid: 3d9854592b149ce45b5852214c86a2a4, type: 3}
+    - {fileID: -2217414122262695004, guid: 3d9854592b149ce45b5852214c86a2a4, type: 3}
+    - {fileID: -4440497016933152808, guid: 3d9854592b149ce45b5852214c86a2a4, type: 3}
+    - {fileID: 8676454946275842879, guid: 3d9854592b149ce45b5852214c86a2a4, type: 3}
+  - path: Assets/Sprites/Homeless_2/Walk.png
+    sprites:
+    - {fileID: 4035959289877228764, guid: f6c2747b57f8c794ca4ae89e7a33be2b, type: 3}
+    - {fileID: -982904232830982447, guid: f6c2747b57f8c794ca4ae89e7a33be2b, type: 3}
+    - {fileID: -350908408369970039, guid: f6c2747b57f8c794ca4ae89e7a33be2b, type: 3}
+    - {fileID: -5409570386352685021, guid: f6c2747b57f8c794ca4ae89e7a33be2b, type: 3}
+    - {fileID: 1553940418269799609, guid: f6c2747b57f8c794ca4ae89e7a33be2b, type: 3}
+    - {fileID: 2416434504916517810, guid: f6c2747b57f8c794ca4ae89e7a33be2b, type: 3}
+    - {fileID: -6428935122508569504, guid: f6c2747b57f8c794ca4ae89e7a33be2b, type: 3}
+    - {fileID: 7144598999076838305, guid: f6c2747b57f8c794ca4ae89e7a33be2b, type: 3}
+  - path: Assets/Sprites/Homeless_3/Attack_1.png
+    sprites:
+    - {fileID: -8915327726919978405, guid: 01f4a60b0de8e9940ac6cbf2dc8b8c21, type: 3}
+    - {fileID: 4416717768442454902, guid: 01f4a60b0de8e9940ac6cbf2dc8b8c21, type: 3}
+    - {fileID: -8053095777402275025, guid: 01f4a60b0de8e9940ac6cbf2dc8b8c21, type: 3}
+    - {fileID: 4688295478533005478, guid: 01f4a60b0de8e9940ac6cbf2dc8b8c21, type: 3}
+    - {fileID: 3156989228384878200, guid: 01f4a60b0de8e9940ac6cbf2dc8b8c21, type: 3}
+  - path: Assets/Sprites/Homeless_3/Attack_2.png
+    sprites:
+    - {fileID: -837275676153275556, guid: be2e27e2c5fa8f442ba76cb022d18834, type: 3}
+    - {fileID: -8404040051688745268, guid: be2e27e2c5fa8f442ba76cb022d18834, type: 3}
+    - {fileID: -3526194569594660169, guid: be2e27e2c5fa8f442ba76cb022d18834, type: 3}
+  - path: Assets/Sprites/Homeless_3/Dead.png
+    sprites:
+    - {fileID: 2649847697073447219, guid: 1fd23dae521044246a5205c6c3fa232d, type: 3}
+    - {fileID: -8293461521501190705, guid: 1fd23dae521044246a5205c6c3fa232d, type: 3}
+    - {fileID: -1631342717326862633, guid: 1fd23dae521044246a5205c6c3fa232d, type: 3}
+    - {fileID: -3927913518680497933, guid: 1fd23dae521044246a5205c6c3fa232d, type: 3}
+  - path: Assets/Sprites/Homeless_3/Hurt.png
+    sprites:
+    - {fileID: -2048800907179887802, guid: 614c90c7e1db8de43b30f5e901743e24, type: 3}
+    - {fileID: 490842205202310979, guid: 614c90c7e1db8de43b30f5e901743e24, type: 3}
+    - {fileID: -3720053754089064719, guid: 614c90c7e1db8de43b30f5e901743e24, type: 3}
+  - path: Assets/Sprites/Homeless_3/Idle.png
+    sprites:
+    - {fileID: 4723107735738678597, guid: 95ea710d024db8d4b88957d3d8f09c2a, type: 3}
+    - {fileID: -7385789195546760866, guid: 95ea710d024db8d4b88957d3d8f09c2a, type: 3}
+    - {fileID: 3234629978573100161, guid: 95ea710d024db8d4b88957d3d8f09c2a, type: 3}
+    - {fileID: 6373048116405451881, guid: 95ea710d024db8d4b88957d3d8f09c2a, type: 3}
+    - {fileID: 7264182050183361747, guid: 95ea710d024db8d4b88957d3d8f09c2a, type: 3}
+    - {fileID: -2834552850196481573, guid: 95ea710d024db8d4b88957d3d8f09c2a, type: 3}
+  - path: Assets/Sprites/Homeless_3/Idle_2.png
+    sprites:
+    - {fileID: -6188768998144020764, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
+    - {fileID: 8893443453730532091, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
+    - {fileID: -2638866428267449571, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
+    - {fileID: 8150759692636176867, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
+    - {fileID: 7579204882187213897, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
+    - {fileID: -5366198773294189, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
+    - {fileID: 789186541819579165, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
+    - {fileID: 6601435321489166827, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
+    - {fileID: 8295018443228217620, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
+    - {fileID: -7230391701638731982, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
+    - {fileID: -1917972503027654631, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
+  - path: Assets/Sprites/Homeless_3/Jump.png
+    sprites:
+    - {fileID: 7460046300004610927, guid: 2c9e5e0c8b4fd9f4a972ab1fbbedeb7b, type: 3}
+    - {fileID: 7034338576483803127, guid: 2c9e5e0c8b4fd9f4a972ab1fbbedeb7b, type: 3}
+    - {fileID: 6054277451648750542, guid: 2c9e5e0c8b4fd9f4a972ab1fbbedeb7b, type: 3}
+    - {fileID: 6937500446539429301, guid: 2c9e5e0c8b4fd9f4a972ab1fbbedeb7b, type: 3}
+    - {fileID: 3580086529375993838, guid: 2c9e5e0c8b4fd9f4a972ab1fbbedeb7b, type: 3}
+    - {fileID: 3630178267427638470, guid: 2c9e5e0c8b4fd9f4a972ab1fbbedeb7b, type: 3}
+    - {fileID: 3900142949445631465, guid: 2c9e5e0c8b4fd9f4a972ab1fbbedeb7b, type: 3}
+    - {fileID: 3967418731061993063, guid: 2c9e5e0c8b4fd9f4a972ab1fbbedeb7b, type: 3}
+    - {fileID: 3330681223243198311, guid: 2c9e5e0c8b4fd9f4a972ab1fbbedeb7b, type: 3}
+    - {fileID: -5679318689324892672, guid: 2c9e5e0c8b4fd9f4a972ab1fbbedeb7b, type: 3}
+    - {fileID: 8986021004954451436, guid: 2c9e5e0c8b4fd9f4a972ab1fbbedeb7b, type: 3}
+    - {fileID: -7810803537696417755, guid: 2c9e5e0c8b4fd9f4a972ab1fbbedeb7b, type: 3}
+    - {fileID: 7239986427860625178, guid: 2c9e5e0c8b4fd9f4a972ab1fbbedeb7b, type: 3}
+    - {fileID: -3499918286812187939, guid: 2c9e5e0c8b4fd9f4a972ab1fbbedeb7b, type: 3}
+    - {fileID: -141085772950971166, guid: 2c9e5e0c8b4fd9f4a972ab1fbbedeb7b, type: 3}
+    - {fileID: -3388347748468855017, guid: 2c9e5e0c8b4fd9f4a972ab1fbbedeb7b, type: 3}
+  - path: Assets/Sprites/Homeless_3/Run.png
+    sprites:
+    - {fileID: 4944230376442633554, guid: 1ba825f42c8fb7c42841c211a0c9f60b, type: 3}
+    - {fileID: -2274363484027164459, guid: 1ba825f42c8fb7c42841c211a0c9f60b, type: 3}
+    - {fileID: 8284087734974297348, guid: 1ba825f42c8fb7c42841c211a0c9f60b, type: 3}
+    - {fileID: 5304202850863732263, guid: 1ba825f42c8fb7c42841c211a0c9f60b, type: 3}
+    - {fileID: 2833043080597125133, guid: 1ba825f42c8fb7c42841c211a0c9f60b, type: 3}
+    - {fileID: -2217414122262695004, guid: 1ba825f42c8fb7c42841c211a0c9f60b, type: 3}
+    - {fileID: -4440497016933152808, guid: 1ba825f42c8fb7c42841c211a0c9f60b, type: 3}
+    - {fileID: 8676454946275842879, guid: 1ba825f42c8fb7c42841c211a0c9f60b, type: 3}
+  - path: Assets/Sprites/Homeless_3/Special.png
+    sprites:
+    - {fileID: -9068871714124230211, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
+    - {fileID: -5513262646514174557, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
+    - {fileID: -6198531488440642195, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
+    - {fileID: 6701770154028129973, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
+    - {fileID: 4992887672371064048, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
+    - {fileID: -3184613127404677753, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
+    - {fileID: 8424837872123440092, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
+    - {fileID: 3798137279224281753, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
+    - {fileID: 4026758805451945358, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
+    - {fileID: -7511474146149648203, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
+    - {fileID: 4579650692572802719, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
+    - {fileID: -3165374164444364719, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
+    - {fileID: -1987673134061919338, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
+  - path: Assets/Sprites/Homeless_3/Walk.png
+    sprites:
+    - {fileID: 4035959289877228764, guid: 1055445982dae434f8e207aaeff889c2, type: 3}
+    - {fileID: -982904232830982447, guid: 1055445982dae434f8e207aaeff889c2, type: 3}
+    - {fileID: -350908408369970039, guid: 1055445982dae434f8e207aaeff889c2, type: 3}
+    - {fileID: -5409570386352685021, guid: 1055445982dae434f8e207aaeff889c2, type: 3}
+    - {fileID: 1553940418269799609, guid: 1055445982dae434f8e207aaeff889c2, type: 3}
+    - {fileID: 2416434504916517810, guid: 1055445982dae434f8e207aaeff889c2, type: 3}
+    - {fileID: -6428935122508569504, guid: 1055445982dae434f8e207aaeff889c2, type: 3}
+    - {fileID: 7144598999076838305, guid: 1055445982dae434f8e207aaeff889c2, type: 3}

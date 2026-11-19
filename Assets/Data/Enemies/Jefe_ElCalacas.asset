@@ -14,84 +14,64 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   enemyName: El Calacas
   enemyType: 2
-  maxHP: 130
-  attack: 14
-  defense: 5
-  motricidad: 9
+  maxHP: 220
+  attack: 18
+  defense: 6
+  motricidad: 14
+  EXP_Reward: 300
+  primaryAttackName: Cuchillada de Sombras
+  secondaryAttackName: Patada Giratoria Mortal
   placeholderColor: {r: 0.48, g: 0.16, b: 0.65, a: 1}
-  enemySprite: {fileID: 4723107735738678597, guid: 95ea710d024db8d4b88957d3d8f09c2a, type: 3}
-  animatorController: {fileID: 9100000, guid: d9812a8267094e946b47aa6a9645492a, type: 2}
+  enemySprite: {fileID: 21300000, guid: b582877558454268a0f14efe0a02f563, type: 3}
+  animatorController: {fileID: 0}
   idleFrames:
-  - {fileID: 4723107735738678597, guid: 95ea710d024db8d4b88957d3d8f09c2a, type: 3}
-  - {fileID: -7385789195546760866, guid: 95ea710d024db8d4b88957d3d8f09c2a, type: 3}
-  - {fileID: 3234629978573100161, guid: 95ea710d024db8d4b88957d3d8f09c2a, type: 3}
-  - {fileID: 6373048116405451881, guid: 95ea710d024db8d4b88957d3d8f09c2a, type: 3}
-  - {fileID: 7264182050183361747, guid: 95ea710d024db8d4b88957d3d8f09c2a, type: 3}
-  - {fileID: -2834552850196481573, guid: 95ea710d024db8d4b88957d3d8f09c2a, type: 3}
-  idleAltFrames:
-  - {fileID: -6188768998144020764, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
-  - {fileID: 8893443453730532091, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
-  - {fileID: -2638866428267449571, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
-  - {fileID: 8150759692636176867, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
-  - {fileID: 7579204882187213897, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
-  - {fileID: -5366198773294189, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
-  - {fileID: 789186541819579165, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
-  - {fileID: 6601435321489166827, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
-  - {fileID: 8295018443228217620, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
-  - {fileID: -7230391701638731982, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
-  - {fileID: -1917972503027654631, guid: 086161497afca6e4a9aedb5f4e454af6, type: 3}
+  - {fileID: 21300000, guid: b582877558454268a0f14efe0a02f563, type: 3}
+  - {fileID: 21300000, guid: b42f45ef77544872afa538875dedda99, type: 3}
+  - {fileID: 21300000, guid: 939f45da499143aaa40a0473147760f0, type: 3}
+  - {fileID: 21300000, guid: a554de131c0f4cc29265dcfdad92368a, type: 3}
+  idleAltFrames: []
   walkFrames:
-  - {fileID: 4035959289877228764, guid: 1055445982dae434f8e207aaeff889c2, type: 3}
-  - {fileID: -982904232830982447, guid: 1055445982dae434f8e207aaeff889c2, type: 3}
-  - {fileID: -350908408369970039, guid: 1055445982dae434f8e207aaeff889c2, type: 3}
-  - {fileID: -5409570386352685021, guid: 1055445982dae434f8e207aaeff889c2, type: 3}
-  - {fileID: 1553940418269799609, guid: 1055445982dae434f8e207aaeff889c2, type: 3}
-  - {fileID: 2416434504916517810, guid: 1055445982dae434f8e207aaeff889c2, type: 3}
-  - {fileID: -6428935122508569504, guid: 1055445982dae434f8e207aaeff889c2, type: 3}
-  - {fileID: 7144598999076838305, guid: 1055445982dae434f8e207aaeff889c2, type: 3}
+  - {fileID: 21300000, guid: bf7ec140e2144d04add54461f79d4d60, type: 3}
+  - {fileID: 21300000, guid: 27f34cbdca25499098bfc966786804f6, type: 3}
+  - {fileID: 21300000, guid: e809e1ab192d41b5b64d1e09122a8c0e, type: 3}
+  - {fileID: 21300000, guid: 7346fe0a1cee4ab59e59b549f75245d3, type: 3}
+  - {fileID: 21300000, guid: 5c188a4041ef45b6adbb15bd73d2e04e, type: 3}
+  - {fileID: 21300000, guid: ae0ad20365da4867b8fe6566f8f4a3f3, type: 3}
   runFrames:
-  - {fileID: 4944230376442633554, guid: 1ba825f42c8fb7c42841c211a0c9f60b, type: 3}
-  - {fileID: -2274363484027164459, guid: 1ba825f42c8fb7c42841c211a0c9f60b, type: 3}
-  - {fileID: 8284087734974297348, guid: 1ba825f42c8fb7c42841c211a0c9f60b, type: 3}
-  - {fileID: 5304202850863732263, guid: 1ba825f42c8fb7c42841c211a0c9f60b, type: 3}
-  - {fileID: 2833043080597125133, guid: 1ba825f42c8fb7c42841c211a0c9f60b, type: 3}
-  - {fileID: -2217414122262695004, guid: 1ba825f42c8fb7c42841c211a0c9f60b, type: 3}
-  - {fileID: -4440497016933152808, guid: 1ba825f42c8fb7c42841c211a0c9f60b, type: 3}
-  - {fileID: 8676454946275842879, guid: 1ba825f42c8fb7c42841c211a0c9f60b, type: 3}
+  - {fileID: 21300000, guid: bf7ec140e2144d04add54461f79d4d60, type: 3}
+  - {fileID: 21300000, guid: 27f34cbdca25499098bfc966786804f6, type: 3}
+  - {fileID: 21300000, guid: e809e1ab192d41b5b64d1e09122a8c0e, type: 3}
+  - {fileID: 21300000, guid: 7346fe0a1cee4ab59e59b549f75245d3, type: 3}
+  - {fileID: 21300000, guid: 5c188a4041ef45b6adbb15bd73d2e04e, type: 3}
+  - {fileID: 21300000, guid: ae0ad20365da4867b8fe6566f8f4a3f3, type: 3}
   attackFrames:
-  - {fileID: -8915327726919978405, guid: 01f4a60b0de8e9940ac6cbf2dc8b8c21, type: 3}
-  - {fileID: 4416717768442454902, guid: 01f4a60b0de8e9940ac6cbf2dc8b8c21, type: 3}
-  - {fileID: -8053095777402275025, guid: 01f4a60b0de8e9940ac6cbf2dc8b8c21, type: 3}
-  - {fileID: 4688295478533005478, guid: 01f4a60b0de8e9940ac6cbf2dc8b8c21, type: 3}
-  - {fileID: 3156989228384878200, guid: 01f4a60b0de8e9940ac6cbf2dc8b8c21, type: 3}
+  - {fileID: 21300000, guid: cd639f69c078417cadd3e6a6131e63c0, type: 3}
+  - {fileID: 21300000, guid: 722ab91a27134c09a9edfa4be2b66c71, type: 3}
+  - {fileID: 21300000, guid: 34d81f62479440d6893f8290463b9a92, type: 3}
+  - {fileID: 21300000, guid: 0cba67dd84ed439b80d28b3a7781a7d3, type: 3}
+  - {fileID: 21300000, guid: 8697e3a633b446528324282de496097f, type: 3}
+  - {fileID: 21300000, guid: 9742cc151bcd453cb94f3809a3358c52, type: 3}
   attack2Frames:
-  - {fileID: -837275676153275556, guid: be2e27e2c5fa8f442ba76cb022d18834, type: 3}
-  - {fileID: -8404040051688745268, guid: be2e27e2c5fa8f442ba76cb022d18834, type: 3}
-  - {fileID: -3526194569594660169, guid: be2e27e2c5fa8f442ba76cb022d18834, type: 3}
-  attack3Frames: []
+  - {fileID: 21300000, guid: b34e2ecd9d17449b974c52584bd6d215, type: 3}
+  - {fileID: 21300000, guid: 7b3d1984fb064a6091d051dd8bdca1a9, type: 3}
+  - {fileID: 21300000, guid: 47e30003f603484380a88f4b0857ccad, type: 3}
+  - {fileID: 21300000, guid: 138736f0580142dd8d4d911903a2a3d9, type: 3}
+  - {fileID: 21300000, guid: 7e7c312857444e008e7ff35e9114de77, type: 3}
+  attack3Frames:
+  - {fileID: 21300000, guid: 00410d8f2b1c4707a48596bb8b26f5e8, type: 3}
+  - {fileID: 21300000, guid: dff99894db0c429eaa6e22dc1feddbd3, type: 3}
   specialFrames:
-  - {fileID: -9068871714124230211, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
-  - {fileID: -5513262646514174557, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
-  - {fileID: -6198531488440642195, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
-  - {fileID: 6701770154028129973, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
-  - {fileID: 4992887672371064048, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
-  - {fileID: -3184613127404677753, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
-  - {fileID: 8424837872123440092, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
-  - {fileID: 3798137279224281753, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
-  - {fileID: 4026758805451945358, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
-  - {fileID: -7511474146149648203, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
-  - {fileID: 4579650692572802719, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
-  - {fileID: -3165374164444364719, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
-  - {fileID: -1987673134061919338, guid: 2296b5052002d914ebf4911fd8ab62bf, type: 3}
+  - {fileID: 21300000, guid: 21371ae12f354d088c9bc430034d4b32, type: 3}
+  - {fileID: 21300000, guid: 930a1aa8327b42b394b6072ab7f7e567, type: 3}
+  - {fileID: 21300000, guid: f048e4ead7c444258216926776a3e808, type: 3}
+  - {fileID: 21300000, guid: ac7e29b61e6f4667b2817e3c94b2d28a, type: 3}
+  - {fileID: 21300000, guid: 3aaa376965284da0b3271f0f89bdc449, type: 3}
   hurtFrames:
-  - {fileID: -2048800907179887802, guid: 614c90c7e1db8de43b30f5e901743e24, type: 3}
-  - {fileID: 490842205202310979, guid: 614c90c7e1db8de43b30f5e901743e24, type: 3}
-  - {fileID: -3720053754089064719, guid: 614c90c7e1db8de43b30f5e901743e24, type: 3}
+  - {fileID: 21300000, guid: 02c96e8c4c484422b8f8a2ff02e18942, type: 3}
+  - {fileID: 21300000, guid: 53877ad7348444a08d64c7ae277eff0c, type: 3}
   deadFrames:
-  - {fileID: 2649847697073447219, guid: 1fd23dae521044246a5205c6c3fa232d, type: 3}
-  - {fileID: -8293461521501190705, guid: 1fd23dae521044246a5205c6c3fa232d, type: 3}
-  - {fileID: -1631342717326862633, guid: 1fd23dae521044246a5205c6c3fa232d, type: 3}
-  - {fileID: -3927913518680497933, guid: 1fd23dae521044246a5205c6c3fa232d, type: 3}
+  - {fileID: 21300000, guid: 02c96e8c4c484422b8f8a2ff02e18942, type: 3}
+  - {fileID: 21300000, guid: 53877ad7348444a08d64c7ae277eff0c, type: 3}
   halfHealthDialogueLines:
   - 'EL CALACAS: "Nada mal para un simple repartidor de Santa Felipina... Pero apenas estoy calentando."'
   - 'VOZ [MUNDO INTERNO]: "El aire se vuelve helado. Ten cuidado, Enrique."'
